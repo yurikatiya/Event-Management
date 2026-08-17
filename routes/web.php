@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('landing');
 });
 
 Route::middleware('guest')->group(function () {

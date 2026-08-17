@@ -1,11 +1,244 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+    --color-r27-blue: #00a1ee;
+    --color-r27-blue-dark: #008fd4;
+    --color-r27-light: #eaf8ff;
+    --color-r27-navy: #102a43;
+}
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+
+/* =========================================================
+   LOGIN BACKGROUND
+========================================================= */
+
+.login-page {
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(0, 161, 238, 0.14),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(100, 180, 255, 0.12),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #f5fbff 0%,
+            #eef8ff 45%,
+            #f8fbff 100%
+        );
+}
+
+
+/* =========================================================
+   DECORATIVE BACKGROUND
+========================================================= */
+
+.bg-circle {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+}
+
+.bg-circle-one {
+    width: 500px;
+    height: 500px;
+    top: -260px;
+    left: -180px;
+    background: rgba(0, 161, 238, 0.08);
+}
+
+.bg-circle-two {
+    width: 420px;
+    height: 420px;
+    right: -200px;
+    bottom: -220px;
+    background: rgba(0, 161, 238, 0.07);
+}
+
+
+/* =========================================================
+   BRAND PANEL
+========================================================= */
+
+.brand-panel {
+    background:
+        linear-gradient(
+            135deg,
+            #00a1ee 0%,
+            #159de1 45%,
+            #4b91df 100%
+        );
+
+    box-shadow:
+        0 30px 70px rgba(0, 120, 190, 0.20);
+}
+
+
+/* =========================================================
+   ABSTRACT SHAPES
+========================================================= */
+
+.abstract-shape {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+}
+
+.abstract-one {
+    width: 420px;
+    height: 420px;
+    right: -160px;
+    top: -120px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.abstract-two {
+    width: 330px;
+    height: 330px;
+    left: -150px;
+    bottom: -130px;
+    background: rgba(80, 80, 220, 0.22);
+}
+
+.abstract-three {
+    width: 240px;
+    height: 240px;
+    right: 80px;
+    bottom: -130px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-box {
+    background: rgba(255, 255, 255, 0.96);
+
+    box-shadow:
+        0 15px 35px rgba(0, 70, 130, 0.12);
+}
+
+
+/* =========================================================
+   LOGIN CARD
+========================================================= */
+
+.login-card {
+    box-shadow:
+        0 30px 80px rgba(25, 70, 100, 0.12);
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.login-input {
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.login-input:focus {
+    outline: none;
+
+    border-color: #00a1ee;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(0, 161, 238, 0.10);
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-button {
+    background:
+        linear-gradient(
+            90deg,
+            #5b6ee1 0%,
+            #00a1ee 55%,
+            #09b9d4 100%
+        );
+
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        filter 180ms ease;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.03);
+
+    box-shadow:
+        0 15px 30px rgba(0, 161, 238, 0.25);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   FLOATING EFFECT
+========================================================= */
+
+@keyframes floating {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+.floating {
+    animation: floating 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+
+    .brand-panel {
+        min-height: 430px;
+    }
+
 }
