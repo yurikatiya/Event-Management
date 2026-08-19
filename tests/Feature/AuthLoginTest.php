@@ -56,4 +56,51 @@ class AuthLoginTest extends TestCase
         $response->assertRedirect('/participant/dashboard');
         $this->assertAuthenticatedAs(User::where('username', 'participant')->first());
     }
+
+    public function test_user_can_login_with_email_and_redirect_to_landing_page(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'user@r27.com',
+            'password' => Hash::make('password123'),
+            'role' => 'user',
+        ]);
+
+        $response = $this->post('/login', [
+            'identifier' => 'user@r27.com',
+            'password' => 'password123',
+        ]);
+
+        $response->assertRedirect('/');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_invalid_login_returns_validation_error_without_expired_page(): void
+    {
+        $response = $this->from('/login')->post('/login', [
+            'identifier' => 'unknown@example.com',
+            'password' => 'wrong-password',
+        ]);
+
+        $response->assertRedirect('/login');
+        $response->assertSessionHasErrors('identifier');
+        $this->assertGuest();
+    }
+
+    public function test_guest_can_register_and_is_redirected_to_landing_page(): void
+    {
+        $response = $this->post('/register', [
+            'name' => 'New User',
+            'username' => 'newuser',
+            'email' => 'newuser@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+        ]);
+
+        $response->assertRedirect('/');
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'username' => 'newuser',
+            'role' => 'user',
+        ]);
+    }
 }

@@ -603,12 +603,12 @@
 
 
 
-                        {{-- EMAIL --}}
+                        {{-- EMAIL OR USERNAME --}}
 
                         <div class="mb-5">
 
                             <label
-                                for="email"
+                                for="identifier"
                                 class="
                                     mb-2
                                     block
@@ -665,13 +665,14 @@
 
                                 <input
                                     id="email"
-                                    name="email"
-                                    type="email"
-                                    value="{{ old('email') }}"
+                                    id="identifier"
+                                    name="identifier"
+                                    type="text"
+                                    value="{{ old('identifier') }}"
                                     required
                                     autofocus
                                     autocomplete="username"
-                                    placeholder="you@company.com"
+                                    placeholder="you@company.com atau username"
                                     class="
                                         login-input
                                         h-13
@@ -691,7 +692,7 @@
                             </div>
 
 
-                            @error('email')
+                            @error('identifier')
 
                                 <p
                                     class="

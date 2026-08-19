@@ -81,18 +81,33 @@
                 {{-- AUTH BUTTON --}}
                 <div class="flex items-center gap-2">
 
-                    <a href="{{ route('login') }}"
-                       class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700
-                              transition hover:bg-slate-100 sm:block">
-                        Sign In
-                    </a>
+                    @guest
+                        <a href="{{ route('login') }}"
+                           class="hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700
+                                  transition hover:bg-slate-100 sm:block">
+                            Sign In
+                        </a>
 
-                    <a href="{{ route('login') }}"
-                       class="rounded-xl bg-[#00a1ee] px-5 py-2.5 text-sm font-semibold text-white
-                              shadow-lg shadow-[#00a1ee]/20 transition
-                              hover:-translate-y-0.5 hover:bg-[#008fd4]">
-                        Sign Up
-                    </a>
+                        <a href="{{ route('register') }}"
+                           class="rounded-xl bg-[#00a1ee] px-5 py-2.5 text-sm font-semibold text-white
+                                  shadow-lg shadow-[#00a1ee]/20 transition
+                                  hover:-translate-y-0.5 hover:bg-[#008fd4]">
+                            Sign Up
+                        </a>
+                    @else
+                        <span class="hidden text-sm font-semibold text-slate-700 sm:block">
+                            {{ Auth::user()->name }}
+                        </span>
+
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                    class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold
+                                           text-slate-700 transition hover:bg-slate-100">
+                                Logout
+                            </button>
+                        </form>
+                    @endguest
 
                 </div>
 
