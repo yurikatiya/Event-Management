@@ -1,0 +1,1 @@
+@include('admin.categories.partials.form', ['title' => 'Tambah Kategori', 'subtitle' => 'Buat kategori baru untuk mengelompokkan event.', 'formAction' => route('admin.categories.store'), 'method' => 'POST', 'category' => null])

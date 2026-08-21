@@ -1,0 +1,2 @@
+@props(['icon' => 'bi-inbox', 'title' => 'Belum ada data.', 'description' => null])
+<div {{ $attributes->merge(['class' => 'py-12 text-center text-slate-400']) }}><i class="bi {{ $icon }} mb-2 block text-2xl"></i><p class="text-xs font-semibold">{{ $title }}</p>@if($description)<p class="mt-1 text-[10px]">{{ $description }}</p>@endif</div>

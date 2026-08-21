@@ -1,0 +1,1 @@
+@include('admin.categories.partials.form', ['title' => 'Edit Kategori', 'subtitle' => 'Perbarui informasi kategori event.', 'formAction' => route('admin.categories.update', $category), 'method' => 'PUT', 'category' => $category])

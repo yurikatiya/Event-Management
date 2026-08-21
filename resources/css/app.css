@@ -23,6 +23,42 @@ body {
     font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Stable CMS shell dimensions keep the dashboard aligned while assets load. */
+.admin-shell {
+    min-height: 100vh;
+    display: flex;
+}
+
+.admin-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 30;
+    width: 14rem;
+    overflow-y: auto;
+}
+
+.admin-main {
+    min-width: 0;
+    flex: 1 1 0%;
+    margin-left: 14rem;
+}
+
+@media (max-width: 1023px) {
+    .admin-shell {
+        display: block;
+    }
+
+    .admin-sidebar {
+        position: static;
+        width: 100%;
+        overflow-y: visible;
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+}
+
 
 /* =========================================================
    LOGIN BACKGROUND

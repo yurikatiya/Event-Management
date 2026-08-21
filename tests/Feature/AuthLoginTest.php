@@ -74,6 +74,24 @@ class AuthLoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    public function test_admin_can_login_with_identifier_and_redirect_to_dashboard(): void
+    {
+        $admin = User::factory()->create([
+            'username' => 'dashboard-admin',
+            'email' => 'dashboard-admin@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'admin',
+        ]);
+
+        $response = $this->post('/login', [
+            'identifier' => 'dashboard-admin',
+            'password' => 'password123',
+        ]);
+
+        $response->assertRedirect('/dashboard');
+        $this->assertAuthenticatedAs($admin);
+    }
+
     public function test_invalid_login_returns_validation_error_without_expired_page(): void
     {
         $response = $this->from('/login')->post('/login', [

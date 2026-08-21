@@ -49,7 +49,7 @@ class AuthController extends Controller
             return redirect()->intended($user->role === 'admin' ? '/admin/dashboard' : '/participant/dashboard');
         }
 
-        return redirect()->intended('/');
+        return redirect()->intended($user->role === 'admin' ? '/dashboard' : '/');
     }
 
     public function register(Request $request)

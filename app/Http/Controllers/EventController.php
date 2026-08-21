@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+use App\Models\Event;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
+
+class EventController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $events = Event::with('category')
+            ->when($request->filled('search'), fn ($query) => $query->where('name', 'like', '%' . $request->string('search') . '%'))
+            ->when($request->filled('status'), fn ($query) => $query->where('status', $request->string('status')))
+            ->latest('start_date')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.events.index', compact('events'));
+    }
+
+    public function create(): View
+    {
+        return view('admin.events.create', ['categories' => Category::orderBy('name')->get()]);
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $data = $this->validatedData($request);
+        $data['poster'] = $request->file('poster')?->store('events', 'public');
+        $event = Event::create($data + ['created_by' => $request->user()->id]);
+
+        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil dibuat.");
+    }
+
+    public function edit(Event $event): View
+    {
+        return view('admin.events.edit', [
+            'event' => $event,
+            'categories' => Category::orderBy('name')->get(),
+        ]);
+    }
+
+    public function update(Request $request, Event $event): RedirectResponse
+    {
+        $data = $this->validatedData($request);
+        if ($request->hasFile('poster')) {
+            Storage::disk('public')->delete($event->poster);
+            $data['poster'] = $request->file('poster')->store('events', 'public');
+        } else {
+            unset($data['poster']);
+        }
+        $event->update($data);
+
+        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil diperbarui.");
+    }
+
+    public function destroy(Event $event): RedirectResponse
+    {
+        if ($event->poster) {
+            Storage::disk('public')->delete($event->poster);
+        }
+
+        $event->delete();
+
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil dihapus.');
+    }
+
+    private function validatedData(Request $request): array
+    {
+        return $request->validate([
+            'category_id' => ['required', 'exists:categories,id'],
+            'name' => ['required', 'string', 'max:150'],
+            'description' => ['required', 'string'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'start_time' => ['nullable', 'date_format:H:i'],
+            'end_time' => ['nullable', 'date_format:H:i', 'after:start_time'],
+            'location' => ['required', 'string', 'max:255'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'organizer' => ['nullable', 'string', 'max:150'],
+            'quota' => ['nullable', 'integer', 'min:1'],
+            'poster' => ['nullable', 'image', 'max:2048'],
+            'status' => ['required', 'in:draft,upcoming,ongoing,completed,cancelled'],
+        ]);
+    }
+}
