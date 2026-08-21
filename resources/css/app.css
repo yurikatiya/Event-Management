@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Inter", "Plus Jakarta Sans", sans-serif;
 
     --color-r27-blue: #00a1ee;
     --color-r27-blue-dark: #008fd4;
@@ -20,12 +21,13 @@ html {
 
 body {
     margin: 0;
-    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", "Plus Jakarta Sans", sans-serif;
 }
 
 /* Stable CMS shell dimensions keep the dashboard aligned while assets load. */
 .admin-shell {
     min-height: 100vh;
+    width: 100%;
     display: flex;
 }
 
@@ -33,28 +35,114 @@ body {
     position: fixed;
     inset: 0 auto 0 0;
     z-index: 30;
-    width: 14rem;
-    overflow-y: auto;
+    display: flex;
+    width: 16rem;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 200ms ease;
 }
 
 .admin-main {
     min-width: 0;
-    flex: 1 1 0%;
-    margin-left: 14rem;
+    width: calc(100% - 16rem);
+    flex: 0 0 calc(100% - 16rem);
+    margin-left: 16rem;
 }
 
-@media (max-width: 1023px) {
-    .admin-shell {
-        display: block;
+.admin-navbar {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.admin-navbar-actions {
+    margin-left: auto;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.75rem;
+    white-space: nowrap;
+}
+
+.admin-navbar-profile {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    border-left: 1px solid #e2e8f0;
+    padding-left: 0.75rem;
+}
+
+.admin-sidebar nav {
+    min-height: 0;
+    flex: 1 1 0%;
+    overflow-y: auto;
+}
+
+.admin-overlay {
+    display: none;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    min-height: 2.75rem;
+    border: 1px solid #e5eaf0;
+    border-radius: 0.75rem;
+    background: #f8fafc;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    color: #334155;
+    outline: none;
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.form-input:focus {
+    border-color: #2196e8;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(33, 150, 232, 0.12);
+}
+
+.form-error {
+    margin-top: 0.375rem;
+    font-size: 0.75rem;
+    color: #e85d5d;
+}
+
+@media (max-width: 767px) {
+    .admin-navbar-actions {
+        gap: 0.5rem;
     }
 
     .admin-sidebar {
-        position: static;
-        width: 100%;
-        overflow-y: visible;
+        width: min(16rem, 86vw);
+        transform: translateX(-110%) !important;
+        box-shadow: 10px 0 30px rgba(15, 23, 42, 0.12);
+    }
+
+    .admin-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .admin-overlay.is-visible {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        background: rgba(15, 23, 42, 0.35);
     }
 
     .admin-main {
+        width: 100%;
+        flex-basis: 100%;
         margin-left: 0;
     }
 }

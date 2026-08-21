@@ -22,12 +22,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.legacy');
-    Route::resource('/admin/categories', CategoryController::class)
+    Route::resource('/categories', CategoryController::class)
         ->except('show')
         ->names('admin.categories');
-    Route::resource('/admin/events', EventController::class)
+    Route::resource('/events', EventController::class)
         ->except('show')
         ->names('admin.events');
+    Route::redirect('/admin/categories', '/categories', 301);
+    Route::redirect('/admin/events', '/events', 301);
 });
 
 Route::middleware(['auth', 'role:participant'])->prefix('participant')->name('participant.')->group(function () {

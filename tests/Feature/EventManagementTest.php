@@ -62,4 +62,27 @@ class EventManagementTest extends TestCase
             ->assertSee('Published Launch')
             ->assertDontSee('Draft Launch');
     }
+
+    public function test_events_page_uses_the_shared_admin_layout(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->get(route('admin.events.index'));
+
+        $response->assertOk()
+            ->assertSee('R27 CMS')
+            ->assertSee('Creative Event Management')
+            ->assertSee('Event Management')
+            ->assertSee('Events')
+            ->assertDontSee('Admin Dashboard');
+    }
+
+    public function test_legacy_events_url_redirects_to_canonical_events_page(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->get('/admin/events')
+            ->assertRedirect('/events');
+    }
 }
