@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Sponsor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +30,10 @@ class EventController extends Controller
 
     public function create(): View
     {
-        return view('admin.events.create', ['categories' => Category::orderBy('name')->get()]);
+        return view('admin.events.create', [
+            'categories' => Category::orderBy('name')->get(),
+            'sponsors' => Sponsor::orderBy('name')->get(),
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -37,6 +41,7 @@ class EventController extends Controller
         $data = $this->validatedData($request);
         $data['poster'] = $request->file('poster')?->store('events', 'public');
         $event = Event::create($data + ['created_by' => $request->user()->id]);
+        $event->sponsors()->sync($request->input('sponsor_ids', []));
 
         return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil dibuat.");
     }
@@ -46,6 +51,7 @@ class EventController extends Controller
         return view('admin.events.edit', [
             'event' => $event,
             'categories' => Category::orderBy('name')->get(),
+            'sponsors' => Sponsor::orderBy('name')->get(),
         ]);
     }
 
@@ -59,6 +65,7 @@ class EventController extends Controller
             unset($data['poster']);
         }
         $event->update($data);
+        $event->sponsors()->sync($request->input('sponsor_ids', []));
 
         return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil diperbarui.");
     }
@@ -89,6 +96,8 @@ class EventController extends Controller
             'organizer' => ['nullable', 'string', 'max:150'],
             'quota' => ['nullable', 'integer', 'min:1'],
             'poster' => ['nullable', 'image', 'max:2048'],
+            'sponsor_ids' => ['nullable', 'array'],
+            'sponsor_ids.*' => ['integer', 'exists:sponsors,id'],
             'status' => ['required', 'in:draft,upcoming,ongoing,completed,cancelled'],
         ]);
     }
