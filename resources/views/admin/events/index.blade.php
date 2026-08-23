@@ -10,10 +10,6 @@
                 <h1 class="text-2xl font-bold text-gray-900">Events</h1>
                 <p class="mt-1 text-sm text-gray-500">Kelola semua event dan jadwal kegiatan</p>
             </div>
-            <a href="{{ route('admin.events.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
-                <i class="bi bi-plus-lg"></i>
-                <span>Tambah Event</span>
-            </a>
         </header>
 
         @if (session('success'))
@@ -26,21 +22,30 @@
             <form method="GET" class="flex flex-col gap-3 md:flex-row md:items-center">
                 <div class="relative flex-1">
                     <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
-                    <input name="search" value="{{ request('search') }}" placeholder="Cari event..." class="h-10 w-full rounded-xl border border-gray-200 bg-gray-50 pl-9 pr-3 text-sm text-gray-700 outline-none transition focus:border-sky-400 focus:bg-white">
+                    <input name="search" value="{{ request('search') }}" placeholder="Search events..." class="h-12 w-full rounded-xl border border-gray-200 bg-white pl-11 pr-3 text-base text-gray-700 outline-none transition focus:border-sky-400">
                 </div>
-                <div class="relative md:w-52">
+                <div class="relative md:w-44">
+                    <i class="bi bi-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-600"></i>
+                    <select name="category_id" class="h-12 w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 pr-10 text-base text-slate-600 outline-none transition focus:border-sky-400">
+                        <option value="">Category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @selected((string) request('category_id') === (string) $category->id)>{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="relative md:w-44">
                     <i class="bi bi-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
-                    <select name="status" class="h-10 w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 pr-9 text-sm text-gray-600 outline-none transition focus:border-sky-400 focus:bg-white">
-                        <option value="">Semua Status</option>
+                    <select name="status" class="h-12 w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 pr-10 text-base text-slate-600 outline-none transition focus:border-sky-400">
+                        <option value="">Status</option>
                         @foreach (['draft' => 'Draft', 'upcoming' => 'Segera', 'ongoing' => 'Aktif', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $value => $label)
                             <option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 text-sm font-medium text-white hover:bg-sky-600">
-                    <i class="bi bi-funnel"></i>
-                    <span>Filter</span>
-                </button>
+                <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-sky-500 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
+                    <i class="bi bi-plus text-lg leading-none" aria-hidden="true"></i>
+                    <span>Tambah Event</span>
+                </a>
             </form>
         </div>
 
