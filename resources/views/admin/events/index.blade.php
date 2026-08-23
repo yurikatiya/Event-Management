@@ -1,10 +1,115 @@
 @extends('layouts.admin')
+
 @section('title', 'Events')
+
 @section('content')
-<div class="mx-auto max-w-[1400px] p-5 sm:p-8">
-    <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p class="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Event Management</p><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Events</h1><p class="mt-2 text-sm text-slate-500">Manage all events organized and managed by R27 Creative Agency.</p></div><a href="{{ route('admin.events.create') }}" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"><i class="bi bi-plus-lg me-2"></i>Add Event</a></div>
-    @if(session('success'))<x-admin.alert>{{ session('success') }}</x-admin.alert>@endif
-    <div class="mb-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"><form method="GET" class="flex flex-col gap-3 md:flex-row"><div class="relative flex-1"><i class="bi bi-search absolute left-3 top-3 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search events..." class="h-10 w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 text-sm outline-none focus:border-blue-400 focus:bg-white"></div><select name="status" class="h-10 rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm outline-none focus:border-blue-400"><option value="">All status</option>@foreach(['draft','upcoming','ongoing','completed','cancelled'] as $status)<option value="{{ $status }}" @selected(request('status') === $status)>{{ ucfirst($status) }}</option>@endforeach</select><button class="h-10 rounded-xl bg-slate-900 px-4 text-sm font-semibold text-white"><i class="bi bi-funnel me-1"></i>Filter</button></form></div>
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div class="overflow-x-auto"><table class="w-full min-w-[800px] text-left"><thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-400"><tr><th class="px-6 py-4">No</th><th class="px-6 py-4">Event</th><th class="px-6 py-4">Category</th><th class="px-6 py-4">Date</th><th class="px-6 py-4">Location</th><th class="px-6 py-4">Status</th><th class="px-6 py-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-slate-100">@forelse($events as $event)<tr class="hover:bg-blue-50/30"><td class="px-6 py-4 text-sm text-slate-400">{{ $events->firstItem() + $loop->index }}</td><td class="px-6 py-4"><p class="text-sm font-semibold text-slate-800">{{ $event->name }}</p><p class="mt-1 text-xs text-slate-400">{{ \Illuminate\Support\Str::limit($event->description, 50) }}</p></td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->category?->name ?? '-' }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->start_date?->format('d M Y') }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->location }}</td><td class="px-6 py-4"><x-admin.status-badge :status="$event->status" /></td><td class="px-6 py-4"><div class="flex justify-end gap-2"><a href="{{ route('admin.events.edit', $event) }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:border-blue-300 hover:text-blue-600"><i class="bi bi-pencil me-1"></i>Edit</a><form method="POST" action="{{ route('admin.events.destroy', $event) }}" onsubmit="return confirm('Hapus event ini?')">@csrf @method('DELETE')<button class="rounded-lg border border-red-100 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"><i class="bi bi-trash me-1"></i>Delete</button></form></div></td></tr>@empty<tr><td colspan="7"><x-admin.empty-state icon="bi-calendar-x" title="No events yet" description="Add your first event to get started." /></td></tr>@endforelse</tbody></table></div>@if($events->hasPages())<div class="border-t border-slate-100 px-6 py-4">{{ $events->links() }}</div>@endif</div>
+<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="mx-auto max-w-[1400px]">
+        <header class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Events</h1>
+                <p class="mt-1 text-sm text-gray-500">Kelola semua event dan jadwal kegiatan</p>
+            </div>
+            <a href="{{ route('admin.events.create') }}" class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
+                <i class="bi bi-plus-lg"></i>
+                <span>Tambah Event</span>
+            </a>
+        </header>
+
+        @if (session('success'))
+            <div class="mb-6">
+                <x-admin.alert>{{ session('success') }}</x-admin.alert>
+            </div>
+        @endif
+
+        <div class="mb-6 rounded-2xl border border-gray-100 bg-white p-4">
+            <form method="GET" class="flex flex-col gap-3 md:flex-row md:items-center">
+                <div class="relative flex-1">
+                    <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400"></i>
+                    <input name="search" value="{{ request('search') }}" placeholder="Cari event..." class="h-10 w-full rounded-xl border border-gray-200 bg-gray-50 pl-9 pr-3 text-sm text-gray-700 outline-none transition focus:border-sky-400 focus:bg-white">
+                </div>
+                <div class="relative md:w-52">
+                    <i class="bi bi-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
+                    <select name="status" class="h-10 w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 pr-9 text-sm text-gray-600 outline-none transition focus:border-sky-400 focus:bg-white">
+                        <option value="">Semua Status</option>
+                        @foreach (['draft' => 'Draft', 'upcoming' => 'Segera', 'ongoing' => 'Aktif', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $value => $label)
+                            <option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 text-sm font-medium text-white hover:bg-sky-600">
+                    <i class="bi bi-funnel"></i>
+                    <span>Filter</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[900px] text-left">
+                    <thead class="border-b border-gray-100 bg-gray-50/80">
+                        <tr class="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                            <th class="px-6 py-4">Nama Event</th>
+                            <th class="px-6 py-4">Kategori</th>
+                            <th class="px-6 py-4">Tanggal</th>
+                            <th class="px-6 py-4">Lokasi</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse ($events as $event)
+                            @php
+                                $statusLabel = match ($event->status) {
+                                    'upcoming' => 'Segera',
+                                    'ongoing' => 'Aktif',
+                                    'completed' => 'Selesai',
+                                    'cancelled' => 'Dibatalkan',
+                                    default => 'Draft',
+                                };
+                                $statusClass = match ($event->status) {
+                                    'upcoming' => 'bg-sky-50 text-sky-600',
+                                    'ongoing' => 'bg-emerald-50 text-emerald-600',
+                                    'completed' => 'bg-slate-50 text-slate-600',
+                                    'cancelled' => 'bg-rose-50 text-rose-600',
+                                    default => 'bg-amber-50 text-amber-600',
+                                };
+                            @endphp
+                            <tr class="transition hover:bg-sky-50/30">
+                                <td class="px-6 py-5">
+                                    <p class="text-sm font-bold text-gray-900">{{ $event->name }}</p>
+                                </td>
+                                <td class="px-6 py-5 text-sm text-gray-600">{{ $event->category?->name ?? '-' }}</td>
+                                <td class="px-6 py-5 text-sm text-gray-600">{{ $event->start_date?->format('d M Y') ?? '-' }}</td>
+                                <td class="px-6 py-5 text-sm text-gray-600">{{ $event->location }}</td>
+                                <td class="px-6 py-5"><span class="inline-flex rounded-full px-3 py-1 text-xs font-medium {{ $statusClass }}">{{ $statusLabel }}</span></td>
+                                <td class="px-6 py-5">
+                                    <div class="flex justify-end gap-2">
+                                        <a href="{{ route('admin.events.edit', $event) }}" title="Edit event" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 p-2 text-sky-600 hover:bg-sky-100">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form method="POST" action="{{ route('admin.events.destroy', $event) }}" onsubmit="return confirm('Hapus event ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Hapus event" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 p-2 text-rose-600 hover:bg-rose-100">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6"><x-admin.empty-state icon="bi-calendar-x" title="Belum ada event" description="Tambahkan event pertama Anda untuk memulai." /></td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            @if ($events->hasPages())
+                <div class="border-t border-gray-100 px-6 py-4">{{ $events->links() }}</div>
+            @endif
+        </div>
+    </div>
 </div>
 @endsection
