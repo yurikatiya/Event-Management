@@ -43,7 +43,7 @@
                     </select>
                 </div>
                 <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-sky-500 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
-                    <i class="bi bi-plus-lg text-base" aria-hidden="true"></i>
+                    <i class="bi bi-plus text-lg leading-none" aria-hidden="true"></i>
                     <span>Tambah Event</span>
                 </a>
             </form>
