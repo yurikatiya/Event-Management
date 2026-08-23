@@ -15,12 +15,16 @@ class EventController extends Controller
     {
         $events = Event::with('category')
             ->when($request->filled('search'), fn ($query) => $query->where('name', 'like', '%' . $request->string('search') . '%'))
+            ->when($request->filled('category_id'), fn ($query) => $query->where('category_id', $request->integer('category_id')))
             ->when($request->filled('status'), fn ($query) => $query->where('status', $request->string('status')))
             ->latest('start_date')
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.events.index', compact('events'));
+        return view('admin.events.index', [
+            'events' => $events,
+            'categories' => Category::orderBy('name')->get(),
+        ]);
     }
 
     public function create(): View
