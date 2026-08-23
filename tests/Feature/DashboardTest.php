@@ -17,12 +17,16 @@ class DashboardTest extends TestCase
         $this->actingAs($admin)
             ->get(route('admin.dashboard'))
             ->assertOk()
-            ->assertSee('Welcome back, Admin!')
+            ->assertSee('Dashboard')
+            ->assertSee('Selamat datang kembali, Admin. Ini ringkasan hari ini.')
             ->assertSee('Total Events')
-            ->assertSee('Upcoming Events')
-            ->assertSee('Partners')
-            ->assertSee('Sponsors')
-            ->assertSee('Event Overview');
+            ->assertSee('Total Tim')
+            ->assertSee('Sponsor Aktif')
+            ->assertSee('Total Gallery')
+            ->assertSee('Tech Summit 2026')
+            ->assertSee('Sponsor Teratas')
+            ->assertSee('Ringkasan Konten')
+            ->assertSee('Aktivitas Terkini');
     }
 
     public function test_non_admin_cannot_access_admin_dashboard(): void

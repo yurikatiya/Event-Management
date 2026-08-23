@@ -1,16 +1,106 @@
 @extends('layouts.admin')
 
 @section('title', 'Dashboard')
+
 @section('content')
-<div class="mx-auto max-w-[1400px] p-5 sm:p-8">
-    <section class="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-        <div><p class="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Overview</p><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Welcome back, Admin!</h1><p class="mt-2 text-sm text-slate-500">Manage R27 Creative Agency events and digital content from one place.</p></div>
-        <div class="flex gap-3"><button class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 shadow-sm hover:border-blue-300 hover:text-blue-600"><i class="bi bi-download me-2"></i>Export</button><a href="{{ route('admin.events.create') }}" class="rounded-xl bg-[#2196e8] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600"><i class="bi bi-plus-lg me-2"></i>Add Event</a></div>
-    </section>
-    <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"><x-admin.stat-card label="Total Events" :value="$metrics['events']" caption="All events in the system" icon="bi-calendar-event" tone="blue" /><x-admin.stat-card label="Upcoming Events" :value="$metrics['upcomingEvents']" caption="Scheduled public events" icon="bi-calendar-check" tone="green" /><x-admin.stat-card label="Partners" :value="$metrics['partners']" caption="Active agency partners" icon="bi-buildings" tone="amber" /><x-admin.stat-card label="Sponsors" :value="$metrics['sponsors']" caption="Registered sponsors" icon="bi-award" tone="navy" /></section>
-    <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-start justify-between"><div><h2 class="flex items-center gap-2 text-lg font-semibold text-[#16324f]"><i class="bi bi-bar-chart-line text-blue-500"></i>Event Overview</h2><p class="mt-1 text-sm text-slate-400">Monthly event statistics for {{ now()->year }}</p></div><span class="rounded-lg bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-600">This year</span></div><div class="mt-8 flex h-52 items-end gap-2 border-b border-l border-slate-100 px-2 sm:gap-4">@foreach($monthlyTotals as $total)<div class="group flex h-full flex-1 flex-col justify-end"><div class="rounded-t-lg bg-blue-500 transition hover:bg-blue-600" style="height: {{ $total ? max(8, min(100, $total * 14)) : 3 }}%" title="{{ $total }} events"></div><span class="mt-3 text-center text-[10px] text-slate-400">{{ $monthlyLabels[$loop->index] }}</span></div>@endforeach</div></section>
-    <section class="mt-6 grid gap-6 xl:grid-cols-[1.2fr_0.8fr]"><div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><div class="flex items-center justify-between"><div><h2 class="text-lg font-semibold text-[#16324f]"><i class="bi bi-calendar2-week me-2 text-blue-500"></i>Upcoming Events</h2><p class="mt-1 text-sm text-slate-400">Your next public events</p></div><a href="{{ route('admin.events.index') }}" class="text-xs font-semibold text-blue-600">View all</a></div><div class="mt-5 space-y-3">@forelse($upcomingEvents as $event)<div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3"><div class="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-lg bg-blue-50 text-blue-600"><span class="text-sm font-bold">{{ $event->start_date?->format('d') }}</span><span class="text-[9px] uppercase">{{ $event->start_date?->format('M') }}</span></div><div class="min-w-0 flex-1"><p class="truncate text-sm font-semibold text-slate-800">{{ $event->name }}</p><p class="mt-1 truncate text-xs text-slate-400">{{ $event->category?->name ?? 'General' }} · {{ $event->location }}</p></div><x-admin.status-badge :status="$event->status" /></div>@empty<x-admin.empty-state icon="bi-calendar-x" title="No upcoming events" /></div>@endforelse</div></div><div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold text-[#16324f]"><i class="bi bi-clock-history me-2 text-blue-500"></i>Recent Activities</h2><p class="mt-1 text-sm text-slate-400">Latest agency updates</p><div class="mt-5 divide-y divide-slate-100">@forelse($recentActivities as $activity)<div class="flex gap-3 py-3 first:pt-0"><span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-xs text-blue-600"><i class="bi {{ $activity['icon'] }}"></i></span><div><p class="text-sm font-semibold text-slate-700">{{ $activity['title'] }}</p><p class="mt-1 text-xs text-slate-400">{{ $activity['description'] }}</p><p class="mt-1 text-[10px] text-slate-400">{{ $activity['created_at']->diffForHumans() }}</p></div></div>@empty<x-admin.empty-state icon="bi-clock" title="No recent activity" /></div>@endforelse</div></div></section>
-    <section class="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"><h2 class="text-lg font-semibold text-[#16324f]"><i class="bi bi-pie-chart me-2 text-blue-500"></i>Event Status</h2><div class="mt-5 grid gap-3 sm:grid-cols-5">@foreach(['draft','upcoming','ongoing','completed','cancelled'] as $status)<div class="rounded-xl bg-slate-50 p-4 text-center"><span class="block text-xs font-medium text-slate-500">{{ ucfirst($status) }}</span><strong class="mt-2 block text-xl text-slate-800">{{ $statusCounts[$status] ?? 0 }}</strong></div>@endforeach</div></section>
-    <section class="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm"><div class="flex items-center justify-between border-b border-slate-100 px-6 py-5"><div><h2 class="text-lg font-semibold text-[#16324f]"><i class="bi bi-list-ul me-2 text-blue-500"></i>Recent Events</h2><p class="mt-1 text-sm text-slate-400">Latest event content in the system</p></div><a href="{{ route('admin.events.index') }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:border-blue-300 hover:text-blue-600">Manage Events</a></div><div class="overflow-x-auto"><table class="w-full min-w-[720px] text-left"><thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-400"><tr><th class="px-6 py-4">Event</th><th class="px-6 py-4">Category</th><th class="px-6 py-4">Date</th><th class="px-6 py-4">Location</th><th class="px-6 py-4">Status</th><th class="px-6 py-4 text-right">Action</th></tr></thead><tbody class="divide-y divide-slate-100">@forelse($recentEvents as $event)<tr class="hover:bg-blue-50/30"><td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $event->name }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->category?->name ?? '-' }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->start_date?->format('d M Y') }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $event->location }}</td><td class="px-6 py-4"><x-admin.status-badge :status="$event->status" /></td><td class="px-6 py-4 text-right"><a href="{{ route('admin.events.edit', $event) }}" class="text-sm font-semibold text-blue-600"><i class="bi bi-pencil-square me-1"></i>Edit</a></td></tr>@empty<tr><td colspan="6"><x-admin.empty-state icon="bi-calendar-x" title="No events yet" /></td></tr>@endforelse</tbody></table></div></section>
+@php
+    $stats = [
+        ['label' => 'Total Events', 'value' => '48', 'trend' => '+12% vs bulan lalu', 'icon' => 'bi-calendar-event', 'iconStyle' => 'background-color: #e0f2fe; color: #0284c7;'],
+        ['label' => 'Total Tim', 'value' => '24', 'trend' => '+3% vs bulan lalu', 'icon' => 'bi-person', 'iconStyle' => 'background-color: #ede9fe; color: #7c3aed;'],
+        ['label' => 'Sponsor Aktif', 'value' => '16', 'trend' => '+8% vs bulan lalu', 'icon' => 'bi-star', 'iconStyle' => 'background-color: #fef3c7; color: #d97706;'],
+        ['label' => 'Total Gallery', 'value' => '312', 'trend' => '+24% vs bulan lalu', 'icon' => 'bi-image', 'iconStyle' => 'background-color: #d1fae5; color: #059669;'],
+    ];
+
+    $events = [
+        ['initials' => 'TE', 'name' => 'Tech Summit 2026', 'meta' => 'Technology · 20 Agt 2026', 'status' => 'Aktif', 'statusClass' => 'bg-emerald-100 text-emerald-700'],
+        ['initials' => 'DE', 'name' => 'Design Week Jakarta', 'meta' => 'Design · 15 Sep 2026', 'status' => 'Draft', 'statusClass' => 'bg-amber-100 text-amber-700'],
+        ['initials' => 'ST', 'name' => 'StartupFest Indonesia', 'meta' => 'Bisnis · 3 Okt 2026', 'status' => 'Aktif', 'statusClass' => 'bg-emerald-100 text-emerald-700'],
+        ['initials' => 'HA', 'name' => 'Hackathon Nasional', 'meta' => 'Technology · 18 Okt 2026', 'status' => 'Segera', 'statusClass' => 'bg-sky-100 text-sky-700'],
+        ['initials' => 'CR', 'name' => 'Creative Economy Expo', 'meta' => 'Ekonomi · 5 Nov 2026', 'status' => 'Draft', 'statusClass' => 'bg-amber-100 text-amber-700'],
+    ];
+
+    $sponsors = ['Telkom Indonesia', 'Bank BRI', 'Gojek', 'Tokopedia'];
+    $contentSummary = [
+        ['label' => 'Kategori', 'value' => 12],
+        ['label' => 'Layanan', 'value' => 8],
+        ['label' => 'Partner', 'value' => 20],
+        ['label' => 'Tim', 'value' => 24],
+    ];
+    $activities = [
+        ['label' => 'Event baru ditambahkan', 'time' => '2 menit lalu', 'dot' => 'bg-sky-400'],
+        ['label' => 'Foto gallery diupload (12 foto)', 'time' => '35 menit lalu', 'dot' => 'bg-emerald-400'],
+        ['label' => 'Sponsor baru: Bank BNI', 'time' => '1 jam lalu', 'dot' => 'bg-amber-400'],
+        ['label' => 'Tim member diperbarui', 'time' => '3 jam lalu', 'dot' => 'bg-violet-400'],
+    ];
+@endphp
+
+<div class="dashboard-page min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="mx-auto max-w-[1400px]">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
+            <p class="mt-1 text-base text-slate-400">Selamat datang kembali, Admin. Ini ringkasan hari ini.</p>
+        </header>
+
+        <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            @foreach ($stats as $stat)
+                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <div class="flex items-start justify-between gap-4">
+                        <p class="pt-2 text-sm font-medium uppercase tracking-wide text-slate-400">{{ $stat['label'] }}</p>
+                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style="{{ $stat['iconStyle'] }}"><i class="bi {{ $stat['icon'] }} text-lg"></i></span>
+                    </div>
+                    <p class="mt-4 text-4xl font-bold tracking-tight text-slate-900">{{ $stat['value'] }}</p>
+                    <p class="mt-3 text-sm font-medium text-emerald-500" style="color: #00a870;">{{ $stat['trend'] }}</p>
+                </article>
+            @endforeach
+        </section>
+
+        <section class="mt-10 grid items-start gap-6 xl:grid-cols-[1.55fr_0.85fr]">
+            <div class="space-y-6">
+                <article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                    <h2 class="text-lg font-bold text-slate-800">Event Terbaru</h2>
+                    <div class="mt-6 divide-y divide-slate-100">
+                        @foreach ($events as $event)
+                            <div class="flex items-center gap-4 py-3.5 first:pt-0 last:pb-0">
+                                <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sm font-bold text-sky-600">{{ $event['initials'] }}</span>
+                                <div class="min-w-0 flex-1"><p class="truncate text-base font-medium text-slate-800">{{ $event['name'] }}</p><p class="mt-0.5 text-sm text-slate-400">{{ $event['meta'] }}</p></div>
+                                <span class="shrink-0 rounded-full px-3 py-1 text-xs font-medium {{ $event['statusClass'] }}">{{ $event['status'] }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </article>
+
+                <article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                    <h2 class="text-lg font-bold text-slate-800">Sponsor Teratas</h2>
+                    <div class="mt-5 divide-y divide-slate-100">
+                        @foreach ($sponsors as $sponsor)
+                            <div class="flex items-center gap-4 py-3 first:pt-0 last:pb-0"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sm font-semibold text-sky-600">{{ $loop->iteration }}</span><p class="flex-1 text-base text-slate-600">{{ $sponsor }}</p><span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-700">Platinum</span></div>
+                        @endforeach
+                    </div>
+                </article>
+            </div>
+
+            <div class="space-y-6">
+                <article class="rounded-2xl bg-sky-600 p-7 text-white shadow-sm">
+                    <h2 class="text-lg font-bold">Ringkasan Konten</h2>
+                    <p class="mt-1 text-sm text-sky-100">Status semua konten CMS</p>
+                    <div class="mt-8 space-y-4">
+                        @foreach ($contentSummary as $item)
+                            <div><div class="mb-1.5 flex items-center justify-between text-sm"><span>{{ $item['label'] }}</span><strong>{{ $item['value'] }}</strong></div><div class="h-2 overflow-hidden rounded-full bg-sky-400/60"><div class="h-full rounded-full bg-white" style="width: {{ ($item['value'] / 24) * 100 }}%"></div></div></div>
+                        @endforeach
+                    </div>
+                    <div class="mt-8 border-t border-sky-500 pt-5 text-sm font-medium">Total konten aktif: 84</div>
+                </article>
+
+                <article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                    <h2 class="text-lg font-bold text-slate-800">Aktivitas Terkini</h2>
+                    <div class="mt-5 divide-y divide-slate-100">
+                        @foreach ($activities as $activity)
+                            <div class="flex gap-4 py-3.5 first:pt-0 last:pb-0"><span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full {{ $activity['dot'] }}"></span><div><p class="text-base text-slate-600">{{ $activity['label'] }}</p><p class="mt-1 text-sm text-slate-400">{{ $activity['time'] }}</p></div></div>
+                        @endforeach
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
 </div>
 @endsection

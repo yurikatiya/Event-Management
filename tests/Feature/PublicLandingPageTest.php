@@ -18,7 +18,7 @@ class PublicLandingPageTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Create. Connect. Experience.');
         $response->assertSee('Sign In');
-        $response->assertSee('Sign Up');
+        $response->assertDontSee('Sign Up');
     }
 
     public function test_homepage_only_shows_approved_events(): void
