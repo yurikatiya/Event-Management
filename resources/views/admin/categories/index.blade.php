@@ -1,5 +1,78 @@
 @extends('layouts.admin')
+
 @section('title', 'Categories')
+
 @section('content')
-<div class="mx-auto max-w-[1400px] p-5 sm:p-8"><div class="mb-6 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><p class="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Event Management</p><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Categories</h1><p class="mt-2 text-sm text-slate-500">Organize R27 events with clear categories.</p></div><a href="{{ route('admin.categories.create') }}" class="rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"><i class="bi bi-plus-lg me-2"></i>Add Category</a></div>@if(session('success'))<x-admin.alert>{{ session('success') }}</x-admin.alert>@endif @if(session('error'))<div class="mb-5"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>@endif<div class="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"><div class="flex items-center justify-between border-b border-slate-100 px-6 py-5"><div><h2 class="text-lg font-semibold text-[#16324f]">Event Categories</h2><p class="mt-1 text-sm text-slate-400">{{ $categories->total() }} categories available</p></div><i class="bi bi-tags text-xl text-blue-500"></i></div><div class="overflow-x-auto"><table class="w-full min-w-[650px] text-left"><thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-400"><tr><th class="px-6 py-4">ID</th><th class="px-6 py-4">Name</th><th class="px-6 py-4">Description</th><th class="px-6 py-4">Events</th><th class="px-6 py-4 text-right">Actions</th></tr></thead><tbody class="divide-y divide-slate-100">@forelse($categories as $category)<tr class="hover:bg-blue-50/30"><td class="px-6 py-4 text-sm text-slate-400">#{{ $category->id }}</td><td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $category->name }}</td><td class="px-6 py-4 text-sm text-slate-500">{{ $category->description ? \Illuminate\Support\Str::limit($category->description, 80) : 'No description' }}</td><td class="px-6 py-4"><span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">{{ $category->events_count }}</span></td><td class="px-6 py-4"><div class="flex justify-end gap-2"><a href="{{ route('admin.categories.edit', $category) }}" class="rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:border-blue-300 hover:text-blue-600"><i class="bi bi-pencil me-1"></i>Edit</a><form method="POST" action="{{ route('admin.categories.destroy', $category) }}" onsubmit="return confirm('Hapus kategori ini?')">@csrf @method('DELETE')<button class="rounded-lg border border-red-100 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"><i class="bi bi-trash me-1"></i>Delete</button></form></div></td></tr>@empty<tr><td colspan="5"><x-admin.empty-state icon="bi-tags" title="No categories yet" description="Add a category to organize your events." /></td></tr>@endforelse</tbody></table></div>@if($categories->hasPages())<div class="border-t border-slate-100 px-6 py-4">{{ $categories->links() }}</div>@endif</div></div>
+@php
+    $categoryColors = [
+        ['dot' => 'bg-sky-600', 'badge' => 'bg-slate-50 text-slate-600'],
+        ['dot' => 'bg-amber-500', 'badge' => 'bg-slate-50 text-slate-600'],
+        ['dot' => 'bg-emerald-500', 'badge' => 'bg-slate-50 text-slate-600'],
+        ['dot' => 'bg-blue-500', 'badge' => 'bg-slate-50 text-slate-600'],
+        ['dot' => 'bg-red-500', 'badge' => 'bg-slate-50 text-slate-600'],
+        ['dot' => 'bg-violet-500', 'badge' => 'bg-slate-50 text-slate-600'],
+    ];
+@endphp
+
+<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <div class="mx-auto max-w-[1400px]">
+        <header class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="relative w-full sm:w-[318px]">
+                <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i>
+                <form method="GET">
+                    <input name="search" value="{{ request('search') }}" placeholder="Search categories..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
+                </form>
+            </div>
+            <a href="{{ route('admin.categories.create') }}" class="inline-flex shrink-0 items-center justify-center gap-2 self-end rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 sm:self-auto">
+                <i class="bi bi-plus-lg"></i>
+                <span>Add Category</span>
+            </a>
+        </header>
+
+        @if (session('success'))
+            <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div>
+        @endif
+        @if (session('error'))
+            <div class="mb-5"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>
+        @endif
+
+        <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            @forelse ($categories as $category)
+                @php($color = $categoryColors[$loop->index % count($categoryColors)])
+                <article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                    <div class="flex items-start justify-between gap-4">
+                        <h2 class="flex min-w-0 items-center gap-2 text-lg font-bold text-slate-800">
+                            <span class="h-3.5 w-3.5 shrink-0 rounded-full {{ $color['dot'] }}"></span>
+                            <span class="truncate">{{ $category->name }}</span>
+                        </h2>
+                        <span class="shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold {{ $color['badge'] }}">{{ $category->events_count }} Events</span>
+                    </div>
+                    <p class="mt-7 min-h-6 text-base leading-6 text-slate-500">{{ $category->description ?: 'No description available.' }}</p>
+                    <div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-5">
+                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-sky-600">
+                            <i class="bi bi-pencil-square text-base"></i>
+                            <span>Edit Inline</span>
+                        </a>
+                        <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" onsubmit="return confirm('Hapus kategori ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-600">
+                                <i class="bi bi-trash3-fill text-base"></i>
+                                <span>Delete</span>
+                            </button>
+                        </form>
+                    </div>
+                </article>
+            @empty
+                <div class="rounded-2xl border border-slate-200 bg-white p-10 shadow-sm lg:col-span-2">
+                    <x-admin.empty-state icon="bi-tags" title="No categories yet" description="Add a category to organize your events." />
+                </div>
+            @endforelse
+        </section>
+
+        @if ($categories->hasPages())
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm">{{ $categories->links() }}</div>
+        @endif
+    </div>
+</div>
 @endsection
