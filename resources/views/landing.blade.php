@@ -70,6 +70,11 @@
                         Events
                     </a>
 
+                    <a href="#team"
+                       class="text-sm font-medium text-slate-600 transition hover:text-[#00a1ee]">
+                        Our Team
+                    </a>
+
                     <a href="#contact"
                        class="text-sm font-medium text-slate-600 transition hover:text-[#00a1ee]">
                         Contact
@@ -653,6 +658,22 @@
 
             </div>
 
+        </section>
+
+
+        {{-- =====================================================
+            TEAM
+        ====================================================== --}}
+
+        <section id="team" class="bg-[#f7fbfe] py-28">
+            <div class="mx-auto max-w-7xl px-6">
+                <div class="max-w-2xl"><span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">The People Behind</span><h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Our <span class="text-[#00a1ee]">Team.</span></h2></div>
+                <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    @foreach ($teams as $team)
+                        <article class="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm"><div class="mx-auto flex h-40 w-40 items-center justify-center overflow-hidden rounded-3xl bg-[#eaf8ff] text-5xl text-[#00a1ee]">@if ($team->photo)<img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}" class="h-full w-full object-cover">@else<i class="bi bi-person-fill"></i>@endif</div><h3 class="mt-6 text-xl font-bold text-slate-900">{{ $team->name }}</h3><p class="mt-1 text-sm font-medium text-[#00a1ee]">{{ $team->position }}</p>@if ($team->bio)<p class="mt-3 text-sm leading-6 text-slate-500">{{ $team->bio }}</p>@endif</article>
+                    @endforeach
+                </div>
+            </div>
         </section>
 
 

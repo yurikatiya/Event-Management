@@ -12,6 +12,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             EventSeeder::class,
+            ServiceSeeder::class,
+            PartnerSeeder::class,
+            TeamSeeder::class,
         ]);
     }
 }
