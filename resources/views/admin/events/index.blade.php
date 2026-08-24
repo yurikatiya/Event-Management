@@ -37,7 +37,7 @@
                     <i class="bi bi-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
                     <select name="status" class="h-12 w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 pr-10 text-base text-slate-600 outline-none transition focus:border-sky-400">
                         <option value="">Status</option>
-                        @foreach (['draft' => 'Draft', 'upcoming' => 'Segera', 'ongoing' => 'Aktif', 'completed' => 'Selesai', 'cancelled' => 'Dibatalkan'] as $value => $label)
+                        @foreach (['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'] as $value => $label)
                             <option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
@@ -66,17 +66,13 @@
                         @forelse ($events as $event)
                             @php
                                 $statusLabel = match ($event->status) {
-                                    'upcoming' => 'Segera',
-                                    'ongoing' => 'Aktif',
-                                    'completed' => 'Selesai',
-                                    'cancelled' => 'Dibatalkan',
+                                    'published' => 'Published',
+                                    'archived' => 'Archived',
                                     default => 'Draft',
                                 };
                                 $statusClass = match ($event->status) {
-                                    'upcoming' => 'bg-sky-50 text-sky-600',
-                                    'ongoing' => 'bg-emerald-50 text-emerald-600',
-                                    'completed' => 'bg-slate-50 text-slate-600',
-                                    'cancelled' => 'bg-rose-50 text-rose-600',
+                                    'published' => 'bg-emerald-50 text-emerald-600',
+                                    'archived' => 'bg-slate-50 text-slate-600',
                                     default => 'bg-amber-50 text-amber-600',
                                 };
                             @endphp
@@ -85,7 +81,15 @@
                                     <p class="text-sm font-bold text-gray-900">{{ $event->name }}</p>
                                 </td>
                                 <td class="px-6 py-5 text-sm text-gray-600">{{ $event->category?->name ?? '-' }}</td>
-                                <td class="px-6 py-5 text-sm text-gray-600">{{ $event->start_date?->format('d M Y') ?? '-' }}</td>
+                                <td class="px-6 py-5 text-sm text-gray-600">
+                                    @if (! $event->start_date)
+                                        -
+                                    @elseif ($event->end_date && $event->start_date->year !== $event->end_date->year)
+                                        {{ $event->start_date->year }}-{{ $event->end_date->year }}
+                                    @else
+                                        {{ $event->start_date->year }}
+                                    @endif
+                                </td>
                                 <td class="px-6 py-5 text-sm text-gray-600">{{ $event->location }}</td>
                                 <td class="px-6 py-5"><span class="inline-flex rounded-full px-3 py-1 text-xs font-medium {{ $statusClass }}">{{ $statusLabel }}</span></td>
                                 <td class="px-6 py-5">

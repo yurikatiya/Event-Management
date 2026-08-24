@@ -37,12 +37,12 @@
 
                     <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
                         <div>
-                            <label for="start_date" class="mb-1.5 block text-sm font-medium text-slate-700">Date &amp; Time</label>
+                            <label for="start_date" class="mb-1.5 block text-sm font-medium text-slate-700">Date</label>
                             <div class="relative">
                                 <button type="button" class="absolute left-2 top-1/2 z-10 flex h-7 w-7 -translate-y-1/2 items-center justify-center text-sky-500" aria-label="Pilih tanggal" onclick="document.getElementById('start_date').showPicker?.()">
                                     <i class="bi bi-calendar3 text-lg" aria-hidden="true"></i>
                                 </button>
-                                <input id="start_date" type="date" name="start_date" value="{{ old('start_date', $event?->start_date?->format('Y-m-d')) }}" required class="date-input form-input h-11 rounded-xl border-slate-200 pl-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400" style="padding-left: 3rem;">
+                                <input id="start_date" type="date" name="start_date" value="{{ old('start_date', $event?->start_date?->format('Y-m-d')) }}" class="date-input form-input h-11 rounded-xl border-slate-200 pl-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400" style="padding-left: 3rem;">
                             </div>
                             @error('start_date') <p class="form-error">{{ $message }}</p> @enderror
                         </div>
@@ -83,52 +83,11 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
-                        <div>
-                            <label for="start_time" class="mb-1.5 block text-sm font-medium text-slate-700">Start Time</label>
-                            <div class="relative">
-                                <input id="start_time" type="time" name="start_time" value="{{ old('start_time', $event?->start_time) }}" class="time-input form-input h-11 rounded-xl border-slate-200 pr-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
-                                <i class="bi bi-clock pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="end_time" class="mb-1.5 block text-sm font-medium text-slate-700">End Time</label>
-                            <div class="relative">
-                                <input id="end_time" type="time" name="end_time" value="{{ old('end_time', $event?->end_time) }}" class="time-input form-input h-11 rounded-xl border-slate-200 pr-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
-                                <i class="bi bi-clock pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="end_date" class="mb-1.5 block text-sm font-medium text-slate-700">End Date</label>
-                            <div class="relative">
-                                <i class="bi bi-calendar3 pointer-events-none absolute left-3 top-1/2 z-10 -translate-y-1/2 text-sky-500" aria-hidden="true"></i>
-                                <input id="end_date" type="date" name="end_date" value="{{ old('end_date', $event?->end_date?->format('Y-m-d')) }}" class="date-input form-input h-11 rounded-xl border-slate-200 pl-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400" style="padding-left: 3rem;">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="organizer" class="mb-1.5 block text-sm font-medium text-slate-700">Organizer</label>
-                            <input id="organizer" name="organizer" value="{{ old('organizer', $event?->organizer) }}" placeholder="Organizer name" class="form-input h-11 rounded-xl border-slate-200 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
-                        <div>
-                            <label for="address" class="mb-1.5 block text-sm font-medium text-slate-700">Address</label>
-                            <div class="relative">
-                                <i class="bi bi-geo-alt pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sky-500" aria-hidden="true"></i>
-                                <input id="address" name="address" value="{{ old('address', $event?->address) }}" placeholder="Full address" class="form-input h-11 rounded-xl border-slate-200 pl-12 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400" style="padding-left: 3rem;">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="quota" class="mb-1.5 block text-sm font-medium text-slate-700">Quota</label>
-                            <input id="quota" type="number" min="1" name="quota" value="{{ old('quota', $event?->quota) }}" placeholder="Optional quota" class="form-input h-11 rounded-xl border-slate-200 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
-                        </div>
-                    </div>
                 </section>
 
                 <aside class="space-y-6">
                     <div>
-                        <label class="mb-2 block text-base font-semibold text-slate-600">Upload Banner Image</label>
+                        <label class="mb-2 block text-base font-semibold text-slate-600">Cover Image</label>
                         <label for="poster" class="group relative flex min-h-[275px] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-800 bg-sky-950 p-4 text-center transition hover:border-sky-400">
                             @if ($event?->poster)
                                 <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->name }} banner" class="absolute inset-0 h-full w-full object-cover opacity-80">
@@ -138,26 +97,25 @@
                             @endif
                             <span class="relative flex flex-col items-center gap-3 rounded-xl bg-white/90 px-5 py-4 text-sm font-semibold text-sky-600 shadow-sm">
                                 <i class="bi bi-upload text-2xl"></i>
-                                <span>Change Banner</span>
+                                <span>{{ $event?->poster ? 'Change Cover' : 'Add Cover' }}</span>
                             </span>
                             <input id="poster" type="file" name="poster" accept="image/*" class="sr-only">
                         </label>
-                        <p class="mt-2 text-xs text-slate-400">PNG, JPG up to 2MB</p>
+                        <p class="mt-2 text-xs text-slate-400">PNG, JPG up to 2MB. Cover wajib untuk event baru.</p>
                         @error('poster') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="rounded-2xl border border-slate-200 bg-white p-5">
-                        <div class="flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-base font-semibold text-slate-600">Status Toggle</p>
-                                <p class="mt-1 text-sm font-semibold text-slate-800">Set as Active</p>
-                            </div>
-                            <label class="relative inline-flex cursor-pointer items-center">
-                                <input type="hidden" name="status" value="draft">
-                                <input type="checkbox" name="status" value="ongoing" class="peer sr-only" @checked(old('status', $event?->status ?? 'draft') === 'ongoing')>
-                                <span class="h-6 w-11 rounded-full bg-slate-300 after:absolute after:left-[3px] after:top-[3px] after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all peer-checked:bg-sky-500 peer-checked:after:translate-x-5"></span>
-                            </label>
+                        <label for="status" class="mb-2 block text-base font-semibold text-slate-600">Status</label>
+                        <div class="relative">
+                            <select id="status" name="status" required class="form-input h-11 w-full appearance-none rounded-xl border-slate-200 pr-10 text-sm focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
+                                @foreach (['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'] as $value => $label)
+                                    <option value="{{ $value }}" @selected(old('status', $event?->status ?? 'draft') === $value)>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            <i class="bi bi-chevron-down pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
                         </div>
+                        @error('status') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                 </aside>
             </div>
