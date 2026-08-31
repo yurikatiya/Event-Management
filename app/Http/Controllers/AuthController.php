@@ -49,7 +49,7 @@ class AuthController extends Controller
             return redirect()->intended($user->role === 'admin' ? '/admin/dashboard' : '/participant/dashboard');
         }
 
-        return redirect()->intended($user->role === 'admin' ? '/dashboard' : '/');
+        return redirect()->intended($user->role === 'admin' ? '/dashboard' : '/participant/dashboard');
     }
 
     public function register(Request $request)
@@ -72,7 +72,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended('/');
+        return redirect()->intended('/login');
     }
 
     public function logout(Request $request)
@@ -82,6 +82,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

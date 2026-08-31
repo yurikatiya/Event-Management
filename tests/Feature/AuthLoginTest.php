@@ -57,7 +57,7 @@ class AuthLoginTest extends TestCase
         $this->assertAuthenticatedAs(User::where('username', 'participant')->first());
     }
 
-    public function test_user_can_login_with_email_and_redirect_to_landing_page(): void
+    public function test_user_can_login_with_email_and_redirect_to_participant_dashboard(): void
     {
         $user = User::factory()->create([
             'email' => 'user@r27.com',
@@ -70,7 +70,7 @@ class AuthLoginTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/participant/dashboard');
         $this->assertAuthenticatedAs($user);
     }
 
@@ -104,7 +104,7 @@ class AuthLoginTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_guest_can_register_and_is_redirected_to_landing_page(): void
+    public function test_guest_can_register_and_is_redirected_to_login_page(): void
     {
         $response = $this->post('/register', [
             'name' => 'New User',
@@ -114,7 +114,7 @@ class AuthLoginTest extends TestCase
             'password_confirmation' => 'password123',
         ]);
 
-        $response->assertRedirect('/');
+        $response->assertRedirect('/login');
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
             'username' => 'newuser',

@@ -7,12 +7,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\TeamController;
-use App\Models\Team;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('landing', ['teams' => Team::where('status', 'published')->orderBy('order')->get()]);
-});
+Route::redirect('/', '/login');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
