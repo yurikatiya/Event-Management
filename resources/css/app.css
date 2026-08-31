@@ -127,6 +127,64 @@ body {
     color: #e85d5d;
 }
 
+body.theme-dark {
+    background-color: #020817 !important;
+    color: #e2e8f0;
+}
+
+.theme-dark .admin-sidebar {
+    background-color: #0f172a !important;
+    border-color: rgba(148, 163, 184, 0.18) !important;
+}
+
+.theme-dark .admin-sidebar a,
+.theme-dark .admin-sidebar p {
+    color: #cbd5e1 !important;
+}
+
+.theme-dark .bg-white,
+.theme-dark .bg-slate-50,
+.theme-dark .bg-sky-50,
+.theme-dark .bg-blue-50,
+.theme-dark .bg-amber-100,
+.theme-dark .bg-violet-100,
+.theme-dark .bg-emerald-100 {
+    background-color: #0f172a !important;
+}
+
+.theme-dark .border-slate-200,
+.theme-dark .border-slate-100,
+.theme-dark .border-slate-300,
+.theme-dark .border-slate-50 {
+    border-color: rgba(148, 163, 184, 0.18) !important;
+}
+
+.theme-dark .text-slate-900,
+.theme-dark .text-slate-800,
+.theme-dark .text-slate-700,
+.theme-dark .text-slate-600,
+.theme-dark .text-slate-500,
+.theme-dark .text-slate-400 {
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .text-slate-400 {
+    color: #94a3b8 !important;
+}
+
+.theme-dark .form-input {
+    background: #0f172a !important;
+    border-color: rgba(148, 163, 184, 0.22) !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .rounded-2xl,
+.theme-dark .rounded-3xl,
+.theme-dark .rounded-xl,
+.theme-dark .rounded-lg {
+    box-shadow: none !important;
+}
+
 @media (max-width: 767px) {
     .admin-navbar-actions {
         gap: 0.5rem;

@@ -673,6 +673,43 @@
 
         </section>
 
+        @php
+            $publishedGalleries = \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get();
+        @endphp
+
+        @if ($publishedGalleries->isNotEmpty())
+            <section id="gallery" class="bg-[#f7fbfe] py-28">
+                <div class="mx-auto max-w-7xl px-6">
+                    <div class="mb-10 max-w-2xl">
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                            Gallery
+                        </span>
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                            Moments from our
+                            <span class="text-[#00a1ee]">
+                                latest work.
+                            </span>
+                        </h2>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                        @foreach ($publishedGalleries as $gallery)
+                            <article class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+                                <div class="h-72 overflow-hidden bg-slate-100">
+                                    <img src="{{ asset('storage/' . $gallery->file_path) }}" alt="{{ $gallery->title ?? 'Gallery image' }}" class="h-full w-full object-cover transition duration-500 hover:scale-105">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-slate-900">{{ $gallery->title }}</h3>
+                                    @if ($gallery->description)
+                                        <p class="mt-3 text-sm leading-6 text-slate-500">{{ $gallery->description }}</p>
+                                    @endif
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
 
     {{-- =====================================================
         EVENTS

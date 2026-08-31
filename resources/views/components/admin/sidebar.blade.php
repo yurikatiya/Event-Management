@@ -1,7 +1,6 @@
 <aside class="admin-sidebar border-r border-slate-200 bg-white">
-    <div class="flex h-16 items-center gap-3 border-b border-slate-100 px-5">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-400 text-sm font-bold text-white">R27</div>
-        <div class="leading-tight"><p class="text-sm font-bold text-slate-900">R27 CMS</p><p class="text-[10px] text-slate-400">Creative Event Management</p></div>
+    <div class="flex h-16 items-center border-b border-slate-100 px-5">
+        <img src="{{ asset('Images/logo-r27.png') }}" alt="R27 logo" class="h-10 w-auto object-contain" />
     </div>
     <nav class="space-y-1 p-4">
         <p class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Workspace</p>
@@ -14,12 +13,12 @@
             <a href="{{ $route ? route($route) : '#' }}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium {{ $routePattern && request()->routeIs($routePattern) ? 'bg-sky-50 text-sky-500' : 'text-slate-600 hover:bg-sky-50 hover:text-sky-500' }}"><i class="bi {{ $icon }} {{ $routePattern && request()->routeIs($routePattern) ? 'text-sky-500' : 'text-slate-400' }}"></i>{{ $label }}</a>
         @endforeach
         <p class="px-3 pb-2 pt-6 text-[10px] font-bold uppercase tracking-wider text-slate-400">Content Management</p>
-        @foreach ([['Gallery', 'bi-images'], ['Company Profile', 'bi-building']] as [$label, $icon])
-            <a href="#" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-sky-50 hover:text-sky-500"><i class="bi {{ $icon }} text-slate-400"></i>{{ $label }}</a>
+        @foreach ([['Gallery', 'bi-images', 'admin.gallery.index'], ['Company Profile', 'bi-building', null]] as [$label, $icon, $route])
+            <a href="{{ $route ? route($route) : '#' }}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium {{ $route && request()->routeIs('admin.gallery.*') ? 'bg-sky-50 text-sky-500' : 'text-slate-600 hover:bg-sky-50 hover:text-sky-500' }}"><i class="bi {{ $icon }} {{ $route && request()->routeIs('admin.gallery.*') ? 'text-sky-500' : 'text-slate-400' }}"></i>{{ $label }}</a>
         @endforeach
         <p class="px-3 pb-2 pt-6 text-[10px] font-bold uppercase tracking-wider text-slate-400">System</p>
-        @foreach ([['Settings', 'bi-gear']] as [$label, $icon])
-            <a href="#" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-sky-50 hover:text-sky-500"><i class="bi {{ $icon }} text-slate-400"></i>{{ $label }}</a>
+        @foreach ([['Settings', 'bi-gear', 'admin.settings']] as [$label, $icon, $route])
+            <a href="{{ route($route) }}" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium {{ request()->routeIs('admin.settings') ? 'bg-sky-50 text-sky-500' : 'text-slate-600 hover:bg-sky-50 hover:text-sky-500' }}"><i class="bi {{ $icon }} {{ request()->routeIs('admin.settings') ? 'text-sky-500' : 'text-slate-400' }}"></i>{{ $label }}</a>
         @endforeach
     </nav>
     <div class="mt-auto shrink-0 border-t border-slate-100 p-4">

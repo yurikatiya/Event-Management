@@ -24,6 +24,13 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'company_name',
+        'company_email',
+        'company_phone',
+        'company_address',
+        'company_description',
+        'admin_notifications_enabled',
+        'dark_mode',
     ];
 
     /**
@@ -46,6 +53,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'admin_notifications_enabled' => 'boolean',
+            'dark_mode' => 'boolean',
         ];
     }
 

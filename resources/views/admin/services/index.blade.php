@@ -10,7 +10,7 @@
                 <h1 class="text-2xl font-bold text-slate-900">Services</h1>
                 <p class="mt-1 text-sm text-slate-500">Kelola layanan dan produk INCO.</p>
             </div>
-            <a href="{{ route('admin.services.create') }}" class="inline-flex items-center justify-center gap-2 self-end rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sky-600 sm:self-auto"><i class="bi bi-plus-lg"></i>Add Service</a>
+            <a href="{{ route('admin.services.create') }}" class="inline-flex h-11 w-11 items-center justify-center self-end rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)] sm:self-auto" style="line-height: 1;" title="Add Service" aria-label="Add Service">+</a>
         </header>
 
         @if (session('success')) <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div> @endif

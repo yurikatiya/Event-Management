@@ -42,9 +42,8 @@
                         @endforeach
                     </select>
                 </div>
-                <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-sky-500 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
-                    <i class="bi bi-plus text-lg leading-none" aria-hidden="true"></i>
-                    <span>Tambah Event</span>
+                <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Event" aria-label="Tambah Event">
+                    +
                 </a>
             </form>
         </div>

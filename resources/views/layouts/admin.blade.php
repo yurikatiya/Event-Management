@@ -8,7 +8,10 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-[#f5f9fd] font-sans text-slate-700 antialiased">
+@php
+    $isDarkMode = (bool) (auth()->user()?->dark_mode ?? false);
+@endphp
+<body class="{{ $isDarkMode ? 'theme-dark' : 'theme-light' }} bg-[#f5f9fd] font-sans text-slate-700 antialiased">
     <div class="admin-shell">
         <x-admin.sidebar />
         <div class="admin-overlay" data-admin-overlay></div>
