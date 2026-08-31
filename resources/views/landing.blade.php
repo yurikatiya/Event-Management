@@ -675,7 +675,34 @@
 
         @php
             $publishedGalleries = \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get();
+            $activeSponsors = \App\Models\Sponsor::query()->whereIn('status', ['active', 'published'])->orderBy('tier')->latest()->get();
         @endphp
+
+        @if ($activeSponsors->isNotEmpty())
+            <section class="bg-white py-24">
+                <div class="mx-auto max-w-7xl px-6">
+                    <div class="mb-10 text-center">
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">Our Partners</span>
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                            Trusted by
+                            <span class="text-[#00a1ee]">brands and communities</span>
+                        </h2>
+                    </div>
+
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        @foreach ($activeSponsors as $sponsor)
+                            <div class="flex h-28 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+                                @if ($sponsor->logo)
+                                    <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->name }}" class="max-h-16 max-w-full object-contain">
+                                @else
+                                    <span class="text-lg font-bold text-slate-700">{{ $sponsor->name }}</span>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
 
         @if ($publishedGalleries->isNotEmpty())
             <section id="gallery" class="bg-[#f7fbfe] py-28">
