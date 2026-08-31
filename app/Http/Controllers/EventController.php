@@ -43,7 +43,7 @@ class EventController extends Controller
         $event = Event::create($data + ['created_by' => $request->user()->id]);
         $event->sponsors()->sync($request->input('sponsor_ids', []));
 
-        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil dibuat.");
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil ditambahkan.');
     }
 
     public function edit(Event $event): View
@@ -67,7 +67,7 @@ class EventController extends Controller
         $event->update($data);
         $event->sponsors()->sync($request->input('sponsor_ids', []));
 
-        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil diperbarui.");
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil diperbarui.');
     }
 
     public function destroy(Event $event): RedirectResponse

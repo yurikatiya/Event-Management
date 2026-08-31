@@ -10,14 +10,6 @@
             <p class="mt-1 text-base text-slate-400">Kelola informasi akun, keamanan, dan pengaturan website Anda.</p>
         </header>
 
-        @if (session('success'))
-            <div class="mb-6"><x-admin.alert>{{ session('success') }}</x-admin.alert></div>
-        @endif
-
-        @if (session('error'))
-            <div class="mb-6"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>
-        @endif
-
         <div class="grid gap-6 xl:grid-cols-2">
             <form method="POST" action="{{ route('admin.settings.store') }}" class="space-y-6">
                 @csrf
@@ -179,20 +171,6 @@
                             </div>
                             <span class="relative inline-flex h-6 w-11 items-center">
                                 <input id="admin_notifications_enabled" name="admin_notifications_enabled" type="checkbox" value="1" @checked(old('admin_notifications_enabled', $user->admin_notifications_enabled ?? true)) class="peer sr-only">
-                                <span class="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-sky-500"></span>
-                                <span class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-5"></span>
-                            </span>
-                        </label>
-                    </div>
-
-                    <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
-                        <label for="dark_mode" class="flex cursor-pointer items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm font-semibold text-slate-700">Dark mode</p>
-                                <p class="mt-1 text-xs text-slate-500">Aktifkan tampilan gelap pada dashboard admin.</p>
-                            </div>
-                            <span class="relative inline-flex h-6 w-11 items-center">
-                                <input id="dark_mode" name="dark_mode" type="checkbox" value="1" @checked(old('dark_mode', $user->dark_mode ?? false)) class="peer sr-only">
                                 <span class="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-sky-500"></span>
                                 <span class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-5"></span>
                             </span>

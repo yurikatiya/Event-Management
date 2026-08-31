@@ -26,7 +26,7 @@ class TeamController extends Controller
         $data['photo'] = $request->file('photo')?->store('teams', 'public');
         Team::create($data);
 
-        return redirect()->route('admin.teams.index')->with('success', 'Anggota team berhasil ditambahkan.');
+        return redirect()->route('admin.teams.index')->with('success', 'Anggota tim berhasil ditambahkan.');
     }
 
     public function edit(Team $team): View
@@ -43,7 +43,7 @@ class TeamController extends Controller
         }
         $team->update($data);
 
-        return redirect()->route('admin.teams.index')->with('success', 'Anggota team berhasil diperbarui.');
+        return redirect()->route('admin.teams.index')->with('success', 'Data anggota tim berhasil diperbarui.');
     }
 
     public function destroy(Team $team): RedirectResponse
@@ -51,7 +51,7 @@ class TeamController extends Controller
         Storage::disk('public')->delete($team->photo);
         $team->delete();
 
-        return redirect()->route('admin.teams.index')->with('success', 'Anggota team berhasil dihapus.');
+        return redirect()->route('admin.teams.index')->with('success', 'Anggota tim berhasil dihapus.');
     }
 
     public function toggleStatus(Team $team): RedirectResponse

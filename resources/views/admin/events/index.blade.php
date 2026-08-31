@@ -12,12 +12,6 @@
             </div>
         </header>
 
-        @if (session('success'))
-            <div class="mb-6">
-                <x-admin.alert>{{ session('success') }}</x-admin.alert>
-            </div>
-        @endif
-
         <div class="mb-6 rounded-2xl border border-gray-100 bg-white p-4">
             <form method="GET" class="flex flex-col gap-3 md:flex-row md:items-center">
                 <div class="relative flex-1">

@@ -13,7 +13,6 @@
             <a href="{{ route('admin.services.create') }}" class="inline-flex h-11 w-11 items-center justify-center self-end rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)] sm:self-auto" style="line-height: 1;" title="Add Service" aria-label="Add Service">+</a>
         </header>
 
-        @if (session('success')) <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div> @endif
         <form method="GET" class="mb-6 max-w-[360px]">
             <div class="relative"><i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search services..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm outline-none focus:border-sky-400"></div>
         </form>

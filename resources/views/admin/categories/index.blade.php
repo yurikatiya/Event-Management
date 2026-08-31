@@ -28,13 +28,6 @@
             </a>
         </header>
 
-        @if (session('success'))
-            <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div>
-        @endif
-        @if (session('error'))
-            <div class="mb-5"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>
-        @endif
-
         <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
             @forelse ($categories as $category)
                 @php($color = $categoryColors[$loop->index % count($categoryColors)])

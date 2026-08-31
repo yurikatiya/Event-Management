@@ -15,14 +15,6 @@
             </a>
         </header>
 
-        @if (session('success'))
-            <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div>
-        @endif
-
-        @if (session('error'))
-            <div class="mb-5"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>
-        @endif
-
         <section class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($galleries as $gallery)
                 <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">

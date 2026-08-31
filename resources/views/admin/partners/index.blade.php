@@ -9,7 +9,6 @@
             <div><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Partners</h1><p class="mt-1 text-base text-slate-400">{{ $partners->total() }} mitra strategis</p></div>
             <a href="{{ route('admin.partners.create') }}" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Partner" aria-label="Tambah Partner">+</a>
         </header>
-        @if (session('success')) <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div> @endif
         <form method="GET" class="mb-6 max-w-sm"><div class="relative"><i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search partners..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm outline-none focus:border-sky-400"></div></form>
         @php($partnerIcons = ['GEKRAFS Jabar' => 'bi-people', 'Chlorine' => 'bi-droplet', 'Telkom University' => 'bi-building', 'UPI' => 'bi-book', 'R27 Creative Agency' => 'bi-palette', 'Digital Breeze' => 'bi-wind', 'Metalabs' => 'bi-cpu'])
         <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">

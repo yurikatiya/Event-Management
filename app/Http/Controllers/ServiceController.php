@@ -32,7 +32,7 @@ class ServiceController extends Controller
         $data['image'] = $request->file('image')?->store('services', 'public');
         Service::create($data);
 
-        return redirect()->route('admin.services.index')->with('success', 'Service berhasil ditambahkan.');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil ditambahkan.');
     }
 
     public function edit(Service $service): View
@@ -49,7 +49,7 @@ class ServiceController extends Controller
         }
         $service->update($data);
 
-        return redirect()->route('admin.services.index')->with('success', 'Service berhasil diperbarui.');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function destroy(Service $service): RedirectResponse
@@ -57,7 +57,7 @@ class ServiceController extends Controller
         Storage::disk('public')->delete($service->image);
         $service->delete();
 
-        return redirect()->route('admin.services.index')->with('success', 'Service berhasil dihapus.');
+        return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil dihapus.');
     }
 
     public function toggleStatus(Service $service): RedirectResponse
