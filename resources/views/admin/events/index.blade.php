@@ -3,11 +3,12 @@
 @section('title', 'Events')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Events</h1>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-600">Creative Event Management</p>
+                <h1 class="mt-2 text-2xl font-bold text-gray-900">Event Management</h1>
                 <p class="mt-1 text-sm text-gray-500">Kelola semua event dan jadwal kegiatan</p>
             </div>
         </header>

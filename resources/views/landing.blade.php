@@ -674,8 +674,16 @@
         </section>
 
         @php
-            $publishedGalleries = \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get();
-            $activeSponsors = \App\Models\Sponsor::query()->whereIn('status', ['active', 'published'])->orderBy('tier')->latest()->get();
+            $galleryTableExists = \Illuminate\Support\Facades\Schema::hasTable('galleries');
+            $sponsorTableExists = \Illuminate\Support\Facades\Schema::hasTable('sponsors');
+
+            $publishedGalleries = $galleryTableExists
+                ? \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get()
+                : collect();
+
+            $activeSponsors = $sponsorTableExists
+                ? \App\Models\Sponsor::query()->whereIn('status', ['active', 'published'])->orderBy('tier')->latest()->get()
+                : collect();
         @endphp
 
         @if ($activeSponsors->isNotEmpty())

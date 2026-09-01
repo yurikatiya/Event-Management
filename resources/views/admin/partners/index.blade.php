@@ -3,7 +3,7 @@
 @section('title', 'Partners')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-[#f1f8ff] px-4 py-8 sm:px-8 lg:px-10">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-8 lg:px-10">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-8 flex items-center justify-between gap-4">
             <div><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Partners</h1><p class="mt-1 text-base text-slate-400">{{ $partners->total() }} mitra strategis</p></div>

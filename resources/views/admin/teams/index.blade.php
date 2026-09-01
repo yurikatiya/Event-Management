@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Teams')
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-[#f1f8ff] px-4 py-8 sm:px-8 lg:px-10"><div class="mx-auto max-w-[1400px]">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-8 lg:px-10"><div class="mx-auto max-w-[1400px]">
     <header class="mb-8 flex items-center justify-between gap-4"><div><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Teams</h1><p class="mt-1 text-base text-slate-400">{{ $teams->total() }} anggota team</p></div><a href="{{ route('admin.teams.create') }}" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Team" aria-label="Tambah Team">+</a></header>
     <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         @forelse ($teams as $team)

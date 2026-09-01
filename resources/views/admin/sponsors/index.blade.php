@@ -3,7 +3,7 @@
 @section('title', 'Sponsors')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-[#f1f8ff] px-4 py-8 sm:px-8 lg:px-10">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-8 lg:px-10">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-8 flex items-center justify-between gap-4">
             <div>

@@ -3,7 +3,7 @@
 @section('title', 'Settings')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-6xl">
         <header class="mb-8">
             <h1 class="text-3xl font-bold tracking-tight text-slate-900">Settings</h1>

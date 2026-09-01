@@ -3,7 +3,7 @@
 @section('title', 'Tambah Foto')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-3xl">
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div class="mb-6">

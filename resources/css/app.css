@@ -123,15 +123,6 @@ body {
     padding-right: 0.2rem;
 }
 
-.sidebar-nav {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    margin-top: 0.3rem;
-}
-
 .nav-item {
     display: flex;
     align-items: center;
@@ -141,9 +132,11 @@ body {
     color: rgba(255, 255, 255, 0.92);
     font-size: 0.9rem;
     font-weight: 600;
-    transition: all 180ms ease;
+    transition: background-color 180ms ease, color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
     text-decoration: none;
     min-height: 2.5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .nav-item i {
@@ -156,6 +149,7 @@ body {
     font-size: 0.95rem;
     opacity: 0.95;
     line-height: 1;
+    transition: color 180ms ease;
 }
 
 .nav-item span {
@@ -168,14 +162,26 @@ body {
 }
 
 .nav-item.active {
-    background: transparent;
-    color: #ffffff;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 0.45rem 0.7rem;
-    min-height: 2.1rem;
-    width: auto;
-    margin-right: 0;
+    background: #ffffff;
+    color: #0d63d6;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+    border-radius: 9999px;
+    padding: 0.7rem 1.35rem 0.7rem 0.9rem;
+    min-height: 2.7rem;
+    width: calc(100% - 0.6rem);
+    margin-right: 0.25rem;
+    margin-left: 0.08rem;
+    transform: translateX(0.08rem);
+}
+
+.nav-item.active i,
+.nav-item.active span {
+    color: #0d63d6;
+}
+
+.nav-item.active:hover {
+    background: #ffffff;
+    color: #0d63d6;
 }
 
 .upgrade-link {
@@ -192,7 +198,7 @@ body {
 .admin-main {
     flex: 1;
     min-width: 0;
-    background: #f5f7fb;
+    background: #ffffff;
 }
 
 .admin-navbar {
@@ -389,7 +395,7 @@ body {
 .dashboard-shell-content {
     min-height: calc(100vh - 4rem);
     padding: 1.5rem 1.25rem 2rem;
-    background: #f5f7fb;
+    background: #ffffff;
 }
 
 .dashboard-stat-card,

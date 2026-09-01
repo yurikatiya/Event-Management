@@ -88,11 +88,16 @@ class EventController extends Controller
             'name' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string'],
             'start_date' => ['nullable', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'start_time' => ['nullable', 'date_format:H:i'],
+            'end_time' => ['nullable', 'date_format:H:i'],
             'location' => ['required', 'string', 'max:255'],
-            'poster' => [$request->isMethod('post') ? 'required' : 'nullable', 'image', 'max:2048'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'organizer' => ['nullable', 'string', 'max:255'],
+            'poster' => ['nullable', 'image', 'max:2048'],
             'sponsor_ids' => ['nullable', 'array'],
             'sponsor_ids.*' => ['integer', 'exists:sponsors,id'],
-            'status' => ['required', 'in:draft,published,archived'],
+            'status' => ['required', 'in:draft,published,archived,upcoming,completed,pending,approved,rejected'],
         ]);
     }
 }

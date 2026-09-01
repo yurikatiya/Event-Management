@@ -3,7 +3,7 @@
 @section('title', 'Services')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>

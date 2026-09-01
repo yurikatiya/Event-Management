@@ -14,7 +14,7 @@
     ];
 @endphp
 
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="relative w-full sm:w-[318px]">
