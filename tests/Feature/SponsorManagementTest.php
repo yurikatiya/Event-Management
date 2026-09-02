@@ -52,7 +52,7 @@ class SponsorManagementTest extends TestCase
         ]);
     }
 
-    public function test_active_sponsor_appears_on_landing_page(): void
+    public function test_root_redirects_to_login_page(): void
     {
         Sponsor::create([
             'name' => 'Bank BNI',
@@ -62,7 +62,6 @@ class SponsorManagementTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertOk()
-            ->assertSee('Bank BNI');
+            ->assertRedirect('/login');
     }
 }

@@ -74,6 +74,17 @@ class AuthLoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    public function test_user_role_can_access_participant_dashboard(): void
+    {
+        $user = User::factory()->create([
+            'role' => 'user',
+        ]);
+
+        $this->actingAs($user)
+            ->get('/participant/dashboard')
+            ->assertOk();
+    }
+
     public function test_admin_can_login_with_identifier_and_redirect_to_dashboard(): void
     {
         $admin = User::factory()->create([

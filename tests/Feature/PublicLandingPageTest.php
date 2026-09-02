@@ -11,11 +11,10 @@ class PublicLandingPageTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_root_page_is_public_and_renders_landing_view(): void
+    public function test_root_page_redirects_to_login(): void
     {
         $response = $this->get('/');
 
-        $response->assertOk()
-            ->assertSee('R27');
+        $response->assertRedirect('/login');
     }
 }

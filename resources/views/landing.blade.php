@@ -676,13 +676,20 @@
         @php
             $galleryTableExists = \Illuminate\Support\Facades\Schema::hasTable('galleries');
             $sponsorTableExists = \Illuminate\Support\Facades\Schema::hasTable('sponsors');
+            $galleryHasStatusColumn = $galleryTableExists && \Illuminate\Support\Facades\Schema::hasColumn('galleries', 'status');
+            $sponsorHasStatusColumn = $sponsorTableExists && \Illuminate\Support\Facades\Schema::hasColumn('sponsors', 'status');
+            $sponsorHasTierColumn = $sponsorTableExists && \Illuminate\Support\Facades\Schema::hasColumn('sponsors', 'tier');
 
-            $publishedGalleries = $galleryTableExists
+            $publishedGalleries = $galleryHasStatusColumn
                 ? \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get()
                 : collect();
 
-            $activeSponsors = $sponsorTableExists
-                ? \App\Models\Sponsor::query()->whereIn('status', ['active', 'published'])->orderBy('tier')->latest()->get()
+            $activeSponsors = $sponsorTableExists && $sponsorHasStatusColumn
+                ? \App\Models\Sponsor::query()
+                    ->when($sponsorHasStatusColumn, fn ($query) => $query->whereIn('status', ['active', 'published']))
+                    ->when($sponsorHasTierColumn, fn ($query) => $query->orderBy('tier'))
+                    ->latest()
+                    ->get()
                 : collect();
         @endphp
 

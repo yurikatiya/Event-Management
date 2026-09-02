@@ -45,7 +45,7 @@ class GalleryManagementTest extends TestCase
         ]);
     }
 
-    public function test_published_gallery_appears_on_landing_page(): void
+    public function test_root_redirects_to_login_page(): void
     {
         Storage::fake('public');
 
@@ -57,7 +57,6 @@ class GalleryManagementTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertOk()
-            ->assertSee('Featured Photo');
+            ->assertRedirect('/login');
     }
 }

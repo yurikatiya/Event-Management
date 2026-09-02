@@ -10,7 +10,15 @@ class RoleMiddleware
 {
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (! $request->user() || ! in_array($request->user()->role, $roles, true)) {
+        if (! $request->user()) {
+            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        }
+
+        $allowedRoles = collect($roles)
+            ->flatMap(fn (string $role) => $role === 'participant' ? ['participant', 'user'] : [$role])
+            ->all();
+
+        if (! in_array($request->user()->role, $allowedRoles, true)) {
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
 
