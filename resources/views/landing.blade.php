@@ -796,14 +796,33 @@
                                 bg-white shadow-sm transition duration-300
                                 hover:-translate-y-2 hover:shadow-xl">
 
-                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+                    <div class="digigame-slider relative h-64 overflow-hidden bg-[#eaf8ff]">
 
                         <img
                             src="{{ asset('images/events/digigame.jpg') }}"
-                            alt="Digigame"
-                            class="h-full w-full object-cover transition duration-500
-                                group-hover:scale-105"
+                            alt="Digigame 1"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-700 group-hover:scale-105"
                         >
+
+                        <img
+                            src="{{ asset('images/events/akademi-kampung-kb.jpg') }}"
+                            alt="Digigame 2"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:scale-105"
+                        >
+
+                        <img
+                            src="{{ asset('images/events/pasti-preneur.jpg') }}"
+                            alt="Digigame 3"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:scale-105"
+                        >
+
+                        <button type="button" class="digigame-prev absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/20 text-lg font-bold text-white shadow-md backdrop-blur-sm transition hover:bg-white/30">
+                            ‹
+                        </button>
+
+                        <button type="button" class="digigame-next absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/20 text-lg font-bold text-white shadow-md backdrop-blur-sm transition hover:bg-white/30">
+                            ›
+                        </button>
 
                     </div>
 
@@ -1448,6 +1467,44 @@
             </div>
 
         </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.digigame-slider').forEach(function (slider) {
+                    const slides = slider.querySelectorAll('.digigame-slide');
+                    const prevBtn = slider.querySelector('.digigame-prev');
+                    const nextBtn = slider.querySelector('.digigame-next');
+
+                    if (slides.length < 2 || !prevBtn || !nextBtn) {
+                        return;
+                    }
+
+                    let currentIndex = 0;
+
+                    function showSlide(index) {
+                        slides.forEach(function (slide, slideIndex) {
+                            const isActive = slideIndex === index;
+
+                            slide.classList.toggle('opacity-100', isActive);
+                            slide.classList.toggle('opacity-0', !isActive);
+                            slide.style.zIndex = isActive ? '1' : '0';
+                        });
+                    }
+
+                    prevBtn.addEventListener('click', function () {
+                        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                        showSlide(currentIndex);
+                    });
+
+                    nextBtn.addEventListener('click', function () {
+                        currentIndex = (currentIndex + 1) % slides.length;
+                        showSlide(currentIndex);
+                    });
+
+                    showSlide(currentIndex);
+                });
+            });
+        </script>
 
 </body>
 
