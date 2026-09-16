@@ -102,7 +102,7 @@ body {
 
 .sidebar-menu-shell {
     position: relative;
-    background: linear-gradient(180deg, #0d63d6 0%, #0d63d6 100%);
+    background: #0ea5e9;
     padding: 1rem 0.6rem 1rem;
     margin-top: 1rem;
     overflow: hidden;
