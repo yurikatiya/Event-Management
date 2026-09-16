@@ -178,6 +178,37 @@
             applyTheme(nextDarkMode);
             syncThemePreference(nextDarkMode);
         });
+
+        const profileMenu = document.querySelector('[data-profile-menu]');
+        const profileToggle = document.querySelector('[data-profile-toggle]');
+        const profileDropdown = document.querySelector('[data-profile-dropdown]');
+        const profileChevron = document.querySelector('[data-profile-chevron]');
+
+        const closeProfileMenu = () => {
+            profileDropdown?.classList.add('invisible', 'translate-y-2', 'opacity-0');
+            profileDropdown?.classList.remove('visible', 'translate-y-0');
+            profileToggle?.setAttribute('aria-expanded', 'false');
+            profileChevron?.classList.remove('rotate-180');
+        };
+
+        profileToggle?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isOpen = profileDropdown?.classList.contains('visible');
+            if (isOpen) {
+                closeProfileMenu();
+                return;
+            }
+            profileDropdown?.classList.remove('invisible', 'translate-y-2', 'opacity-0');
+            profileDropdown?.classList.add('visible', 'translate-y-0');
+            profileToggle.setAttribute('aria-expanded', 'true');
+            profileChevron?.classList.add('rotate-180');
+        });
+        document.addEventListener('click', (event) => {
+            if (!profileMenu?.contains(event.target)) closeProfileMenu();
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeProfileMenu();
+        });
     </script>
     @stack('scripts')
 </body>
