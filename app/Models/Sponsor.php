@@ -15,6 +15,8 @@ class Sponsor extends Model
         'phone',
         'logo',
         'description',
+        'tier',
+        'status',
     ];
 
     public function eventSponsors()

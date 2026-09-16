@@ -3,20 +3,15 @@
 @section('title', 'Events')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Events</h1>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-sky-600">Creative Event Management</p>
+                <h1 class="mt-2 text-2xl font-bold text-gray-900">Event Management</h1>
                 <p class="mt-1 text-sm text-gray-500">Kelola semua event dan jadwal kegiatan</p>
             </div>
         </header>
-
-        @if (session('success'))
-            <div class="mb-6">
-                <x-admin.alert>{{ session('success') }}</x-admin.alert>
-            </div>
-        @endif
 
         <div class="mb-6 rounded-2xl border border-gray-100 bg-white p-4">
             <form method="GET" class="flex flex-col gap-3 md:flex-row md:items-center">
@@ -42,9 +37,8 @@
                         @endforeach
                     </select>
                 </div>
-                <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-sky-500 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-600">
-                    <i class="bi bi-plus text-lg leading-none" aria-hidden="true"></i>
-                    <span>Tambah Event</span>
+                <a href="{{ route('admin.events.create') }}" class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Event" aria-label="Tambah Event">
+                    +
                 </a>
             </form>
         </div>

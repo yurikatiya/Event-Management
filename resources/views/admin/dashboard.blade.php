@@ -34,7 +34,7 @@
     ];
 @endphp
 
-<div class="dashboard-page min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="dashboard-page dashboard-shell-content">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-8">
             <h1 class="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
@@ -43,7 +43,7 @@
 
         <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($stats as $stat)
-                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dashboard-stat-card">
                     <div class="flex items-start justify-between gap-4">
                         <p class="pt-2 text-sm font-medium uppercase tracking-wide text-slate-400">{{ $stat['label'] }}</p>
                         <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style="{{ $stat['iconStyle'] }}"><i class="bi {{ $stat['icon'] }} text-lg"></i></span>
@@ -55,7 +55,7 @@
         </section>
 
         <section class="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch mb-6">
-            <article class="lg:col-span-2 h-full bg-white rounded-3xl p-6 shadow-sm flex flex-col">
+            <article class="lg:col-span-2 h-full bg-white rounded-3xl p-6 shadow-sm flex flex-col dashboard-panel-card">
                 <h2 class="text-lg font-bold text-slate-800">Event Terbaru</h2>
                 <div class="mt-6 flex-1 divide-y divide-slate-100">
                     @foreach ($events as $event)
@@ -68,7 +68,7 @@
                 </div>
             </article>
 
-            <article class="lg:col-span-1 h-full bg-sky-500 rounded-3xl p-6 text-white shadow-sm flex flex-col justify-between">
+            <article class="lg:col-span-1 h-full bg-sky-500 rounded-3xl p-6 text-white shadow-sm flex flex-col justify-between dashboard-highlight-card">
                 <div>
                     <h2 class="text-lg font-bold text-white">Ringkasan Konten</h2>
                     <p class="mt-1 text-sm text-sky-100">Status semua konten CMS</p>
@@ -83,7 +83,7 @@
         </section>
 
         <section class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dashboard-panel-card">
                 <h2 class="text-lg font-bold text-slate-800">Sponsor Teratas</h2>
                 <div class="mt-5 divide-y divide-slate-100">
                     @foreach ($sponsors as $sponsor)
@@ -92,7 +92,7 @@
                 </div>
             </article>
 
-            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dashboard-panel-card">
                 <h2 class="text-lg font-bold text-slate-800">Aktivitas Terkini</h2>
                 <div class="mt-5 divide-y divide-slate-100">
                     @foreach ($activities as $activity)

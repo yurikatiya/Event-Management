@@ -166,19 +166,18 @@
                             We Create
 
                             <span class="text-[#00a1ee]">
-                                Experiences
+                                Creative Experiences
                             </span>
 
-                            That Matter.
+                            That Matter Impact.
 
                         </h1>
 
 
                         <p class="mt-7 max-w-xl text-lg leading-8 text-slate-600">
-                            R27 Creative Agency menghadirkan konsep kreatif,
-                            event, activation, branding, serta pengalaman digital
-                            yang dirancang untuk membuat setiap momen lebih
-                            bermakna dan berkesan.
+                           R27 Creative Agency mengembangkan konsep kreatif, event, 
+                           activation, branding, serta berbagai program kolaboratif yang 
+                           menghubungkan brand, komunitas, dan ekosistem kreatif.
                         </p>
 
 
@@ -190,7 +189,7 @@
                                       text-white shadow-xl shadow-[#00a1ee]/20
                                       transition hover:-translate-y-1 hover:bg-[#008fd4]">
 
-                                Explore Our Events
+                                Explore Our Work
 
                                 <span class="transition group-hover:translate-x-1">
                                     →
@@ -235,7 +234,7 @@
                                 </p>
 
                                 <p class="mt-1 text-xs text-slate-500">
-                                    Based Approach
+                                    Solutions
                                 </p>
                             </div>
 
@@ -245,11 +244,11 @@
 
                             <div>
                                 <p class="text-2xl font-bold text-slate-900">
-                                    Impact
+                                    Collaborative
                                 </p>
 
                                 <p class="mt-1 text-xs text-slate-500">
-                                    Driven
+                                    Approach
                                 </p>
                             </div>
 
@@ -288,7 +287,7 @@
                                         <h2 class="mt-5 text-5xl font-bold leading-tight text-white">
                                             Ideas.
                                             <br>
-                                            Events.
+                                            Creative.
                                             <br>
                                             Impact.
                                         </h2>
@@ -299,9 +298,8 @@
                                         <div class="mb-4 h-px w-full bg-white/20"></div>
 
                                         <p class="text-sm leading-6 text-white/75">
-                                            Turning creative ideas into meaningful
-                                            experiences through activation,
-                                            branding and events.
+                                            Turning creative ideas into meaningful experiences 
+                                            through events, activation, branding, and collaboration.
                                         </p>
                                     </div>
 
@@ -340,7 +338,7 @@
 
                                     <div>
                                         <p class="text-xs text-slate-400">
-                                            Experience
+                                            Creative Solutions
                                         </p>
 
                                         <p class="text-sm font-bold text-slate-900">
@@ -380,86 +378,89 @@
 
 
         {{-- =====================================================
-            ABOUT
+            ABOUT R27
         ====================================================== --}}
 
-        <section id="about" class="bg-white py-28">
+<section id="about" class="bg-white py-28">
 
-            <div class="mx-auto max-w-7xl px-6">
+    <div class="mx-auto max-w-7xl px-6">
 
-                <div class="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
+        {{-- MAIN ABOUT --}}
+        <div class="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
 
-                    <div>
+            {{-- LEFT --}}
+            <div>
 
-                        <span class="text-xs font-bold uppercase tracking-[0.25em]
-                                     text-[#00a1ee]">
-                            About R27
-                        </span>
+                <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                    About R27
+                </span>
 
-                        <h2 class="mt-4 text-4xl font-bold leading-tight
-                                   tracking-tight text-slate-950 sm:text-5xl">
+                <h2 class="mt-4 text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-5xl">
+                    Creating ideas that
+                    <span class="text-[#00a1ee]">
+                        move people.
+                    </span>
+                </h2>
 
-                            Creating ideas that
-                            <span class="text-[#00a1ee]">
-                                move people.
-                            </span>
+            </div>
 
-                        </h2>
+
+            {{-- RIGHT --}}
+            <div>
+
+                <p class="text-lg leading-8 text-slate-600">
+                    R27 Creative Agency merupakan bagian dari ekosistem
+                    kreatif yang mengembangkan berbagai program melalui
+                    event, activation, branding, dan kolaborasi kreatif.
+                </p>
+
+                <p class="mt-5 leading-7 text-slate-500">
+                    R27 mengembangkan konsep dan program yang dapat
+                    menghubungkan brand, institusi, komunitas, serta
+                    berbagai stakeholder melalui pengalaman kreatif
+                    yang relevan dengan kebutuhan audiens.
+                </p>
+
+
+                {{-- HIGHLIGHT CARDS --}}
+                <div class="mt-8 grid gap-4 sm:grid-cols-2">
+
+                    {{-- CARD 01 --}}
+                    <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
+
+                        <p class="text-2xl font-bold text-[#00a1ee]">
+                            01
+                        </p>
+
+                        <h3 class="mt-3 font-bold text-slate-900">
+                            Creative & Strategic
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Mengembangkan ide, konsep, dan strategi kreatif
+                            berdasarkan kebutuhan program, brand, dan
+                            audiens.
+                        </p>
 
                     </div>
 
 
-                    <div>
+                    {{-- CARD 02 --}}
+                    <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
 
-                        <p class="text-lg leading-8 text-slate-600">
-                            R27 Creative Agency hadir dengan pendekatan kreatif
-                            yang menggabungkan strategi, ide, komunikasi, dan
-                            eksekusi untuk menghasilkan pengalaman yang relevan
-                            bagi audiens.
+                        <p class="text-2xl font-bold text-[#00a1ee]">
+                            02
                         </p>
 
-                        <p class="mt-5 leading-7 text-slate-500">
-                            Berangkat dari semangat Smart Activation & Branding,
-                            kami mengembangkan berbagai kebutuhan kreatif mulai
-                            dari event planning, event organizing, venue activation,
-                            city branding hingga design dan digital experience.
+                        <h3 class="mt-3 font-bold text-slate-900">
+                            Collaboration
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-slate-500">
+                            Menghubungkan berbagai pihak melalui kolaborasi
+                            antara brand, pemerintah, institusi pendidikan,
+                            komunitas, dan ekosistem kreatif.
                         </p>
-
-
-                        <div class="mt-8 grid gap-4 sm:grid-cols-2">
-
-                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                                <p class="text-2xl font-bold text-[#00a1ee]">
-                                    01
-                                </p>
-
-                                <h3 class="mt-3 font-bold text-slate-900">
-                                    Creative Thinking
-                                </h3>
-
-                                <p class="mt-2 text-sm leading-6 text-slate-500">
-                                    Mengubah ide menjadi konsep yang memiliki
-                                    karakter dan tujuan.
-                                </p>
-                            </div>
-
-
-                            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                                <p class="text-2xl font-bold text-[#00a1ee]">
-                                    02
-                                </p>
-
-                                <h3 class="mt-3 font-bold text-slate-900">
-                                    Meaningful Experience
-                                </h3>
-
-                                <p class="mt-2 text-sm leading-6 text-slate-500">
-                                    Membuat event dan activation yang meninggalkan
-                                    kesan bagi audiens.
-                                </p>
-                            </div>
-
-                        </div>
 
                     </div>
 
@@ -467,7 +468,11 @@
 
             </div>
 
-        </section>
+        </div>
+
+    </div>
+
+</section>
 
 
         {{-- =====================================================
@@ -481,16 +486,18 @@
                 <div class="max-w-2xl">
 
                     <span class="text-xs font-bold uppercase tracking-[0.25em]
-                                 text-[#00a1ee]">
-                        What We Do
+                                text-[#00a1ee]">
+                        Our Services
                     </span>
 
                     <h2 class="mt-4 text-4xl font-bold tracking-tight
-                               text-slate-950 sm:text-5xl">
+                            text-slate-950 sm:text-5xl">
+
                         Creative solutions for
                         <span class="text-[#00a1ee]">
-                            real impact.
+                            meaningful experiences.
                         </span>
+
                     </h2>
 
                 </div>
@@ -518,8 +525,9 @@
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Pengembangan konsep kreatif dan strategi komunikasi
-                            untuk kebutuhan brand dan campaign.
+                            Mengembangkan ide dan konsep kreatif untuk menghasilkan
+                            program yang relevan dengan kebutuhan brand, audiens,
+                            dan tujuan komunikasi.
                         </p>
 
                     </div>
@@ -540,12 +548,13 @@
                         </div>
 
                         <h3 class="mt-7 text-xl font-bold text-slate-900">
-                            Event Planner & Consultant
+                            Venue Activation
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Merancang event dari konsep, strategi hingga
-                            pengalaman yang ingin dibangun.
+                            Mengembangkan konsep dan aktivitas kreatif untuk
+                            menghidupkan ruang komersial maupun ruang publik
+                            melalui pengalaman yang menarik bagi audiens.
                         </p>
 
                     </div>
@@ -566,12 +575,13 @@
                         </div>
 
                         <h3 class="mt-7 text-xl font-bold text-slate-900">
-                            Event Organizer
+                            City Branding
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Eksekusi event secara terstruktur dengan perhatian
-                            terhadap detail dan pengalaman pengunjung.
+                            Mengembangkan konsep kreatif yang mengangkat identitas,
+                            potensi lokal, budaya, serta karakter sebuah kota
+                            melalui program dan aktivitas yang strategis.
                         </p>
 
                     </div>
@@ -592,12 +602,13 @@
                         </div>
 
                         <h3 class="mt-7 text-xl font-bold text-slate-900">
-                            Venue Activation
+                            Event Planner & Consultant
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Menghidupkan ruang melalui konsep activation yang
-                            interaktif dan relevan.
+                            Membantu merancang konsep, strategi, dan arah sebuah
+                            event agar memiliki tujuan serta pengalaman yang jelas
+                            bagi audiens.
                         </p>
 
                     </div>
@@ -618,12 +629,13 @@
                         </div>
 
                         <h3 class="mt-7 text-xl font-bold text-slate-900">
-                            City Branding
+                            Event Organizer
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Membangun identitas dan pengalaman kota melalui
-                            kreativitas, budaya dan potensi lokal.
+                            Mendukung pelaksanaan dan pengelolaan event mulai dari
+                            persiapan hingga eksekusi agar program dapat berjalan
+                            secara terstruktur dan sesuai konsep.
                         </p>
 
                     </div>
@@ -644,12 +656,13 @@
                         </div>
 
                         <h3 class="mt-7 text-xl font-bold text-slate-900">
-                            Design & Digital
+                            Design & Digital Agency
                         </h3>
 
                         <p class="mt-3 text-sm leading-7 text-slate-500">
-                            Mengembangkan kebutuhan visual dan digital untuk
-                            memperkuat komunikasi sebuah brand.
+                            Mengembangkan kebutuhan desain dan digital sebagai
+                            bagian dari komunikasi kreatif untuk mendukung
+                            identitas serta program yang dijalankan.
                         </p>
 
                     </div>
@@ -660,216 +673,622 @@
 
         </section>
 
+        @php
+            $galleryTableExists = \Illuminate\Support\Facades\Schema::hasTable('galleries');
+            $sponsorTableExists = \Illuminate\Support\Facades\Schema::hasTable('sponsors');
+            $galleryHasStatusColumn = $galleryTableExists && \Illuminate\Support\Facades\Schema::hasColumn('galleries', 'status');
+            $sponsorHasStatusColumn = $sponsorTableExists && \Illuminate\Support\Facades\Schema::hasColumn('sponsors', 'status');
+            $sponsorHasTierColumn = $sponsorTableExists && \Illuminate\Support\Facades\Schema::hasColumn('sponsors', 'tier');
+
+            $publishedGalleries = $galleryHasStatusColumn
+                ? \App\Models\Gallery::query()->where('status', 'published')->latest()->take(6)->get()
+                : collect();
+
+            $activeSponsors = $sponsorTableExists && $sponsorHasStatusColumn
+                ? \App\Models\Sponsor::query()
+                    ->when($sponsorHasStatusColumn, fn ($query) => $query->whereIn('status', ['active', 'published']))
+                    ->when($sponsorHasTierColumn, fn ($query) => $query->orderBy('tier'))
+                    ->latest()
+                    ->get()
+                : collect();
+        @endphp
+
+        @if ($activeSponsors->isNotEmpty())
+            <section class="bg-white py-24">
+                <div class="mx-auto max-w-7xl px-6">
+                    <div class="mb-10 text-center">
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">Our Partners</span>
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                            Trusted by
+                            <span class="text-[#00a1ee]">brands and communities</span>
+                        </h2>
+                    </div>
+
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        @foreach ($activeSponsors as $sponsor)
+                            <div class="flex h-28 items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 p-5 shadow-sm">
+                                @if ($sponsor->logo)
+                                    <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->name }}" class="max-h-16 max-w-full object-contain">
+                                @else
+                                    <span class="text-lg font-bold text-slate-700">{{ $sponsor->name }}</span>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        @if ($publishedGalleries->isNotEmpty())
+            <section id="gallery" class="bg-[#f7fbfe] py-28">
+                <div class="mx-auto max-w-7xl px-6">
+                    <div class="mb-10 max-w-2xl">
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                            Gallery
+                        </span>
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                            Moments from our
+                            <span class="text-[#00a1ee]">
+                                latest work.
+                            </span>
+                        </h2>
+                    </div>
+
+                    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                        @foreach ($publishedGalleries as $gallery)
+                            <article class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+                                <div class="h-72 overflow-hidden bg-slate-100">
+                                    <img src="{{ asset('storage/' . $gallery->file_path) }}" alt="{{ $gallery->title ?? 'Gallery image' }}" class="h-full w-full object-cover transition duration-500 hover:scale-105">
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-slate-900">{{ $gallery->title }}</h3>
+                                    @if ($gallery->description)
+                                        <p class="mt-3 text-sm leading-6 text-slate-500">{{ $gallery->description }}</p>
+                                    @endif
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+    {{-- =====================================================
+        EVENTS
+    ====================================================== --}}
+
+    <section id="events" class="bg-white py-28">
+
+        <div class="mx-auto max-w-7xl px-6">
+
+            {{-- HEADER --}}
+            <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+
+                <div>
+
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                        Our Experiences
+                    </span>
+
+                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                        Events we've
+                        <span class="text-[#00a1ee]">
+                            brought to life.
+                        </span>
+                    </h2>
+
+                </div>
+
+                <p class="max-w-md text-sm leading-7 text-slate-500">
+                    Berbagai program dan pengalaman kreatif yang hadir melalui
+                    kolaborasi, komunitas, event, dan pengembangan ekosistem kreatif.
+                </p>
+
+            </div>
+
+
+            {{-- EVENT GRID --}}
+            <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+
+                {{-- EVENT 1 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="digigame-slider relative h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/digigame.jpg') }}"
+                            alt="Digigame 1"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-700 group-hover:scale-105"
+                        >
+
+                        <img
+                            src="{{ asset('images/events/akademi-kampung-kb.jpg') }}"
+                            alt="Digigame 2"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:scale-105"
+                        >
+
+                        <img
+                            src="{{ asset('images/events/pasti-preneur.jpg') }}"
+                            alt="Digigame 3"
+                            class="digigame-slide absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:scale-105"
+                        >
+
+                        <button type="button" class="digigame-prev absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/20 text-lg font-bold text-white shadow-md backdrop-blur-sm transition hover:bg-white/30">
+                            ‹
+                        </button>
+
+                        <button type="button" class="digigame-next absolute right-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/60 bg-white/20 text-lg font-bold text-white shadow-md backdrop-blur-sm transition hover:bg-white/30">
+                            ›
+                        </button>
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Creative Program
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Digigame
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang berkaitan dengan pengembangan kreativitas,
+                            teknologi, game, dan ekosistem digital.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 2 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/akademi-kampung-kb.jpg') }}"
+                            alt="Akademi Kampung KB"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Community Program
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Akademi Kampung KB
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang melibatkan kolaborasi dan pengembangan
+                            masyarakat melalui pendekatan kreatif.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 3 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/pasti-preneur.jpg') }}"
+                            alt="Pasti Preneur"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Entrepreneurship
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Pasti Preneur
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang berhubungan dengan pengembangan
+                            kewirausahaan dan potensi pelaku kreatif.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 4 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/cimahi-campernik.jpg') }}"
+                            alt="Cimahi Campernik"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            City Program
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Cimahi Campernik
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang mengangkat kreativitas dan potensi
+                            daerah melalui kegiatan dan pengalaman kreatif.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 5 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/west-java-belt.jpg') }}"
+                            alt="West Java Belt"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            City Branding
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            West Java Belt
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Inisiatif yang berkaitan dengan pengembangan identitas,
+                            potensi, dan kreativitas Jawa Barat.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 6 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/mercedez-carnaval.jpg') }}"
+                            alt="Mercedez Carnaval"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Festival
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Mercedez Carnaval
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program festival dan aktivitas kreatif yang menghadirkan
+                            pengalaman bagi audiens dan komunitas.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 7 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/sangkuriang-festival.jpg') }}"
+                            alt="Sangkuriang Festival"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Festival
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Sangkuriang Festival
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Festival yang menghadirkan unsur kreativitas,
+                            budaya, komunitas, dan pengalaman publik.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 8 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/batikday.jpg') }}"
+                            alt="Batikday"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Culture & Creative
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Batikday
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang mengangkat budaya dan kreativitas
+                            melalui partisipasi masyarakat dan komunitas.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 9 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/curious-people.jpg') }}"
+                            alt="Curious People"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Creative Community
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            Curious People
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang mempertemukan kreativitas, komunitas,
+                            dan berbagai gagasan dalam ekosistem kreatif.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                {{-- EVENT 10 --}}
+                <article class="group overflow-hidden rounded-3xl border border-slate-100
+                                bg-white shadow-sm transition duration-300
+                                hover:-translate-y-2 hover:shadow-xl">
+
+                    <div class="h-64 overflow-hidden bg-[#eaf8ff]">
+
+                        <img
+                            src="{{ asset('images/events/ge krafts-jabar-gebrakan.jpg') }}"
+                            alt="GEKRAFS Jabar Gebrakan"
+                            class="h-full w-full object-cover transition duration-500
+                                group-hover:scale-105"
+                        >
+
+                    </div>
+
+                    <div class="p-7">
+
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-[#00a1ee]">
+                            Creative Economy
+                        </span>
+
+                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                            GEKRAFS Jabar Gebrakan
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-7 text-slate-500">
+                            Program yang berkaitan dengan pengembangan dan
+                            penguatan ekosistem ekonomi kreatif.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
 
         {{-- =====================================================
             TEAM
         ====================================================== --}}
 
         <section id="team" class="bg-[#f7fbfe] py-28">
-            <div class="mx-auto max-w-7xl px-6">
-                <div class="max-w-2xl"><span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">The People Behind</span><h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">Our <span class="text-[#00a1ee]">Team.</span></h2></div>
-                <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    @foreach ($teams as $team)
-                        <article class="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm"><div class="mx-auto flex h-40 w-40 items-center justify-center overflow-hidden rounded-3xl bg-[#eaf8ff] text-5xl text-[#00a1ee]">@if ($team->photo)<img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}" class="h-full w-full object-cover">@else<i class="bi bi-person-fill"></i>@endif</div><h3 class="mt-6 text-xl font-bold text-slate-900">{{ $team->name }}</h3><p class="mt-1 text-sm font-medium text-[#00a1ee]">{{ $team->position }}</p>@if ($team->bio)<p class="mt-3 text-sm leading-6 text-slate-500">{{ $team->bio }}</p>@endif</article>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-
-
-        {{-- =====================================================
-            EVENTS
-        ====================================================== --}}
-
-        <section id="events" class="bg-white py-28">
 
             <div class="mx-auto max-w-7xl px-6">
 
-                <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+                {{-- HEADER --}}
+                <div class="max-w-2xl">
 
-                    <div>
+                    <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                        The People Behind
+                    </span>
 
-                        <span class="text-xs font-bold uppercase tracking-[0.25em]
-                                     text-[#00a1ee]">
-                            Our Experiences
+                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                        Our
+                        <span class="text-[#00a1ee]">
+                            Team.
                         </span>
+                    </h2>
 
-                        <h2 class="mt-4 text-4xl font-bold tracking-tight
-                                   text-slate-950 sm:text-5xl">
-                            Events we've
-                            <span class="text-[#00a1ee]">
-                                brought to life.
-                            </span>
-                        </h2>
-
-                    </div>
-
-                    <p class="max-w-md text-sm leading-7 text-slate-500">
-                        Setiap event memiliki cerita, audiens dan tujuan yang
-                        berbeda. Kami menghadirkan pengalaman yang dirancang
-                        berdasarkan kebutuhan tersebut.
+                    <p class="mt-5 max-w-xl leading-7 text-slate-500">
+                        The people behind R27 Creative Agency and the creative
+                        work we develop together.
                     </p>
 
                 </div>
 
 
-                <div class="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {{-- TEAM PHOTO --}}
+                <div class="mt-14">
+
+                    <div class="overflow-hidden rounded-3xl bg-white shadow-sm">
+
+                        <img
+                            src="{{ ('images/team.jpeg') }}"
+                            alt="R27 Creative Agency Team"
+                            class="h-auto w-full object-contain"
+                        >
+
+                    </div>
+
+                </div>
 
 
-                    {{-- EVENT 1 --}}
-                    <article class="group overflow-hidden rounded-3xl border border-slate-100
-                                    bg-white shadow-sm transition duration-300
-                                    hover:-translate-y-2 hover:shadow-xl">
+                {{-- BOD --}}
+                <div class="mt-20">
 
-                        <div class="relative h-64 overflow-hidden bg-gradient-to-br
-                                    from-[#00a1ee] to-[#5b6ee1]">
+                    <div class="max-w-2xl">
 
-                            <div class="absolute -right-16 -top-16 h-48 w-48
-                                        rounded-full bg-white/10"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
+                            BOD & Creative Leadership
+                        </span>
 
-                            <div class="absolute -bottom-20 -left-10 h-48 w-48
-                                        rounded-full bg-white/10"></div>
+                        <h3 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                            The People Behind
+                            <span class="text-[#00a1ee]">
+                                R27.
+                            </span>
+                        </h3>
 
-                            <div class="relative flex h-full flex-col justify-end p-7">
+                    </div>
 
-                                <span class="text-xs font-semibold uppercase
-                                             tracking-[0.2em] text-white/70">
-                                    Creative Program
-                                </span>
 
-                                <h3 class="mt-2 text-3xl font-bold text-white">
-                                    Digigame
-                                </h3>
+                    {{-- ONE BOD PHOTO --}}
+                    <div class="mt-10">
 
+                        <div class="overflow-hidden rounded-3xl bg-white shadow-sm">
+
+                            <img
+                                src="{{ ('images/bod.jpeg') }}"
+                                alt="R27 Creative Agency Board and Creative Leadership"
+                                class="h-auto w-full object-contain"
+                            >
+
+                        </div>
+
+
+                        {{-- BOD INFORMATION --}}
+                        <div class="relative mx-auto max-w-5xl">
+
+                            {{-- Nama Rindy --}}
+                            <div class="absolute left-[18%] top-0 text-left">
+                                <h4 class="text-xl font-bold text-slate-900">
+                                    Rindy
+                                </h4>
+
+                                <p class="mt-1 text-sm font-medium text-[#00a1ee]">
+                                    Commissioner
+                                </p>
+                            </div>
+
+
+                            {{-- Nama Indra --}}
+                            <div class="absolute right-[18%] top-0 text-left">
+                                <h4 class="text-xl font-bold text-slate-900">
+                                    Indra Setiyadi
+                                </h4>
+
+                                <p class="mt-1 text-sm font-medium text-[#00a1ee]">
+                                    Creative Director
+                                </p>
                             </div>
 
                         </div>
 
-                        <div class="p-7">
-
-                            <p class="text-sm leading-7 text-slate-500">
-                                Program kreatif yang menggabungkan teknologi,
-                                komunitas dan pengalaman digital untuk
-                                menghadirkan aktivitas yang menarik bagi audiens.
-                            </p>
-
-                            <div class="mt-6 flex items-center justify-between">
-
-                                <span class="text-xs font-semibold text-[#00a1ee]">
-                                    Creative Activation
-                                </span>
-
-                                <span class="text-slate-300">
-                                    →
-                                </span>
-
-                            </div>
+                        <div class="h-20"></div>
 
                         </div>
 
-                    </article>
-
-
-                    {{-- EVENT 2 --}}
-                    <article class="group overflow-hidden rounded-3xl border border-slate-100
-                                    bg-white shadow-sm transition duration-300
-                                    hover:-translate-y-2 hover:shadow-xl">
-
-                        <div class="relative h-64 overflow-hidden bg-gradient-to-br
-                                    from-[#159de1] to-[#09b9d4]">
-
-                            <div class="absolute -right-20 -top-10 h-56 w-56
-                                        rounded-full border-[40px] border-white/10"></div>
-
-                            <div class="relative flex h-full flex-col justify-end p-7">
-
-                                <span class="text-xs font-semibold uppercase
-                                             tracking-[0.2em] text-white/70">
-                                    Creativepreneur
-                                </span>
-
-                                <h3 class="mt-2 text-3xl font-bold text-white">
-                                    Creativepreneur
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div class="p-7">
-
-                            <p class="text-sm leading-7 text-slate-500">
-                                Program yang mendorong kreativitas, kewirausahaan
-                                dan pengembangan potensi generasi muda melalui
-                                industri kreatif.
-                            </p>
-
-                            <div class="mt-6 flex items-center justify-between">
-
-                                <span class="text-xs font-semibold text-[#00a1ee]">
-                                    Creative Economy
-                                </span>
-
-                                <span class="text-slate-300">
-                                    →
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    {{-- EVENT 3 --}}
-                    <article class="group overflow-hidden rounded-3xl border border-slate-100
-                                    bg-white shadow-sm transition duration-300
-                                    hover:-translate-y-2 hover:shadow-xl">
-
-                        <div class="relative h-64 overflow-hidden bg-gradient-to-br
-                                    from-[#5b6ee1] to-[#00a1ee]">
-
-                            <div class="absolute -bottom-20 -right-10 h-60 w-60
-                                        rounded-full bg-white/10"></div>
-
-                            <div class="relative flex h-full flex-col justify-end p-7">
-
-                                <span class="text-xs font-semibold uppercase
-                                             tracking-[0.2em] text-white/70">
-                                    Community
-                                </span>
-
-                                <h3 class="mt-2 text-3xl font-bold text-white">
-                                    Community Activation
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div class="p-7">
-
-                            <p class="text-sm leading-7 text-slate-500">
-                                Menghadirkan ruang kolaborasi bersama komunitas,
-                                kampus, sekolah, UMKM dan berbagai stakeholder
-                                untuk menciptakan dampak yang lebih luas.
-                            </p>
-
-                            <div class="mt-6 flex items-center justify-between">
-
-                                <span class="text-xs font-semibold text-[#00a1ee]">
-                                    Collaboration
-                                </span>
-
-                                <span class="text-slate-300">
-                                    →
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </article>
+                    </div>
 
                 </div>
 
@@ -878,12 +1297,14 @@
         </section>
 
 
+
         {{-- =====================================================
-            CTA
+            CTA / CONTACT
         ====================================================== --}}
 
         <section id="contact" class="relative overflow-hidden bg-[#0d2940] py-28">
 
+            {{-- DECORATION --}}
             <div class="absolute -right-32 -top-32 h-96 w-96 rounded-full
                         bg-[#00a1ee]/20 blur-3xl"></div>
 
@@ -893,22 +1314,23 @@
 
             <div class="relative mx-auto max-w-7xl px-6">
 
-                <div class="grid items-center gap-10 lg:grid-cols-2">
+                <div class="grid items-center gap-12 lg:grid-cols-2">
 
+
+                    {{-- LEFT --}}
                     <div>
 
                         <span class="text-xs font-bold uppercase tracking-[0.25em]
-                                     text-[#45c7ff]">
-                            Let's Create Something
+                                    text-[#45c7ff]">
+                            Let's Collaborate
                         </span>
 
                         <h2 class="mt-5 text-4xl font-bold leading-tight
-                                   tracking-tight text-white sm:text-5xl">
+                                tracking-tight text-white sm:text-5xl">
 
-                            Have an idea?
-
+                            Let's build
                             <span class="text-[#45c7ff]">
-                                Let's make it happen.
+                                meaningful experiences.
                             </span>
 
                         </h2>
@@ -916,27 +1338,41 @@
                     </div>
 
 
+                    {{-- RIGHT --}}
                     <div>
 
-                        <p class="leading-7 text-slate-300">
-                            Dari sebuah ide sederhana hingga sebuah event besar,
-                            R27 siap membantu merancang pengalaman yang kreatif,
-                            relevan dan memiliki dampak.
+                        <p class="leading-8 text-slate-300">
+                            R27 Creative Agency terbuka untuk kolaborasi dalam
+                            pengembangan event, creative program, activation,
+                            branding, dan berbagai inisiatif kreatif.
                         </p>
 
-                        <a href="{{ route('login') }}"
-                           class="mt-7 inline-flex items-center gap-3 rounded-xl
-                                  bg-white px-6 py-3.5 text-sm font-bold
-                                  text-[#008fd4] transition hover:-translate-y-1
-                                  hover:bg-[#eaf8ff]">
+                        <p class="mt-5 leading-8 text-slate-300">
+                            Ceritakan kebutuhan dan ide yang ingin kamu kembangkan
+                            bersama R27.
+                        </p>
 
-                            Enter Event Management
 
-                            <span>
-                                →
-                            </span>
+                        {{-- CONTACT BUTTON --}}
+                        <div class="mt-8">
 
-                        </a>
+                            <a
+                                href="#"
+                                class="inline-flex items-center gap-3 rounded-full
+                                    bg-[#00a1ee] px-6 py-3 text-sm font-bold
+                                    text-white transition duration-300
+                                    hover:bg-[#008fd4]"
+                            >
+
+                                Get in Touch
+
+                                <span class="text-lg">
+                                    →
+                                </span>
+
+                            </a>
+
+                        </div>
 
                     </div>
 
@@ -946,38 +1382,129 @@
 
         </section>
 
-    </main>
+
+        </main>
 
 
-    {{-- =====================================================
-        FOOTER
-    ====================================================== --}}
+        {{-- =====================================================
+            FOOTER
+        ====================================================== --}}
 
-    <footer class="bg-[#081d2d] py-10">
+        <footer class="bg-[#081d2d] py-12">
 
-        <div class="mx-auto flex max-w-7xl flex-col gap-6 px-6 md:flex-row
-                    md:items-center md:justify-between">
+            <div class="mx-auto max-w-7xl px-6">
 
-            <div>
+                <div class="flex flex-col gap-8 md:flex-row md:items-center
+                            md:justify-between">
 
-                <p class="font-bold text-white">
-                    R27 Creative Agency
-                </p>
 
-                <p class="mt-1 text-xs text-slate-500">
-                    Smart Activation & Branding
-                </p>
+                    {{-- BRAND --}}
+                    <div>
+
+                        <p class="text-lg font-bold text-white">
+                            R27 Creative Agency
+                        </p>
+
+                        <p class="mt-2 text-sm text-slate-500">
+                            Creative Agency & Event Partner
+                        </p>
+
+                    </div>
+
+
+                    {{-- NAVIGATION --}}
+                    <div class="flex flex-wrap gap-6 text-sm text-slate-400">
+
+                        <a href="#about"
+                        class="transition hover:text-white">
+                            About
+                        </a>
+
+                        <a href="#services"
+                        class="transition hover:text-white">
+                            Services
+                        </a>
+
+                        <a href="#events"
+                        class="transition hover:text-white">
+                            Events
+                        </a>
+
+                        <a href="#team"
+                        class="transition hover:text-white">
+                            Team
+                        </a>
+
+                        <a href="#contact"
+                        class="transition hover:text-white">
+                            Contact
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                {{-- DIVIDER --}}
+                <div class="my-8 h-px bg-white/10"></div>
+
+
+                {{-- BOTTOM --}}
+                <div class="flex flex-col gap-3 text-xs text-slate-500
+                            md:flex-row md:items-center md:justify-between">
+
+                    <p>
+                        © {{ date('Y') }} R27 Creative Agency.
+                        All rights reserved.
+                    </p>
+
+                    <p>
+                        Creative. Collaborative. Meaningful.
+                    </p>
+
+                </div>
 
             </div>
 
+        </footer>
 
-            <p class="text-xs text-slate-500">
-                © {{ date('Y') }} R27 Creative Agency. All rights reserved.
-            </p>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.digigame-slider').forEach(function (slider) {
+                    const slides = slider.querySelectorAll('.digigame-slide');
+                    const prevBtn = slider.querySelector('.digigame-prev');
+                    const nextBtn = slider.querySelector('.digigame-next');
 
-        </div>
+                    if (slides.length < 2 || !prevBtn || !nextBtn) {
+                        return;
+                    }
 
-    </footer>
+                    let currentIndex = 0;
+
+                    function showSlide(index) {
+                        slides.forEach(function (slide, slideIndex) {
+                            const isActive = slideIndex === index;
+
+                            slide.classList.toggle('opacity-100', isActive);
+                            slide.classList.toggle('opacity-0', !isActive);
+                            slide.style.zIndex = isActive ? '1' : '0';
+                        });
+                    }
+
+                    prevBtn.addEventListener('click', function () {
+                        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                        showSlide(currentIndex);
+                    });
+
+                    nextBtn.addEventListener('click', function () {
+                        currentIndex = (currentIndex + 1) % slides.length;
+                        showSlide(currentIndex);
+                    });
+
+                    showSlide(currentIndex);
+                });
+            });
+        </script>
 
 </body>
 

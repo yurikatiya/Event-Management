@@ -216,7 +216,7 @@
                         >
 
                             <img
-                                src="{{ asset('image/logo-r27.png') }}"
+                                src="{{ asset('images/logo-r27.png') }}"
                                 alt="R2/7 Creative Agency"
                                 class="
                                     h-12
@@ -289,7 +289,7 @@
                                 text-white/70
                             "
                         >
-                            Creative Event Management
+                           R27 CREATIVE AGENCY
                         </p>
 
 
@@ -304,19 +304,19 @@
                             "
                         >
 
-                            We create
+                            Create.
 
                             <br>
 
                             <span
                                 class="text-[#102a43]"
                             >
-                                moments
+                                Manage.
                             </span>
 
                             <br>
 
-                            that matter.
+                            Make an Impact.
 
                         </h1>
 
@@ -406,7 +406,7 @@
                                         font-bold
                                     "
                                 >
-                                    Event Workspace
+                                    R27 Admin Workspace
                                 </p>
 
                                 <p
@@ -416,7 +416,7 @@
                                         text-white/60
                                     "
                                 >
-                                    Plan · Create · Manage
+                                    Manage · Update · Publish
                                 </p>
 
                             </div>
@@ -453,7 +453,7 @@
                                     text-white/50
                                 "
                             >
-                                © {{ date('Y') }} R2/7 Creative Agency
+                                © {{ date('Y') }} R27 Creative Agency
                             </p>
 
 
@@ -515,39 +515,6 @@
 
                     <div class="mb-8">
 
-                        <div
-                            class="
-                                mb-5
-                                flex
-                                items-center
-                                gap-2
-                            "
-                        >
-
-                            <span
-                                class="
-                                    h-2
-                                    w-2
-                                    rounded-full
-                                    bg-[#00a1ee]
-                                "
-                            ></span>
-
-
-                            <span
-                                class="
-                                    text-[10px]
-                                    font-bold
-                                    uppercase
-                                    tracking-[0.25em]
-                                    text-[#00a1ee]
-                                "
-                            >
-                                Member Access
-                            </span>
-
-                        </div>
-
 
                         <h2
                             class="
@@ -597,6 +564,7 @@
                     <form
                         method="POST"
                         action="{{ route('login') }}"
+                         autocomplete="off"
                     >
 
                         @csrf
@@ -664,14 +632,14 @@
 
 
                                 <input
-                                    id="email"
+                                    id="identifier"
                                     id="identifier"
                                     name="identifier"
                                     type="text"
                                     value="{{ old('identifier') }}"
                                     required
                                     autofocus
-                                    autocomplete="username"
+                                    autocomplete="off"
                                     placeholder="you@company.com atau username"
                                     class="
                                         login-input
@@ -801,7 +769,7 @@
                                     name="password"
                                     type="password"
                                     required
-                                    autocomplete="current-password"
+                                    autocomplete="off"
                                     placeholder="Enter your password"
                                     class="
                                         login-input
@@ -956,47 +924,27 @@
                         <button
                             type="submit"
                             class="
-                                login-button
                                 flex
                                 h-13
                                 w-full
                                 items-center
                                 justify-center
-                                gap-3
-                                rounded-xl
+                                gap-2
+                                rounded-full
+                                bg-[#00a1ee]
                                 text-sm
-                                font-bold
+                                font-semibold
                                 text-white
+                                transition
+                                duration-200
+                                hover:bg-[#008fd4]
+                                active:scale-[0.99]
                             "
                         >
 
                             <span>
                                 Login
                             </span>
-
-
-                            <svg
-                                class="h-4 w-4"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-
-                                <path
-                                    d="M5 12H19"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    stroke-linecap="round"
-                                />
-
-                                <path
-                                    d="M13 6L19 12L13 18"
-                                    stroke="currentColor"
-                                    stroke-width="1.8"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                            </svg>
 
                         </button>
 

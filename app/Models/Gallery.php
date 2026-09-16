@@ -12,7 +12,10 @@ class Gallery extends Model
     protected $fillable = [
         'event_id',
         'file_path',
+        'title',
         'caption',
+        'description',
+        'status',
     ];
 
     public function event()

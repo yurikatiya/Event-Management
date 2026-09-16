@@ -14,7 +14,7 @@
     ];
 @endphp
 
-<div class="min-h-[calc(100vh-4rem)] bg-slate-50 px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="relative w-full sm:w-[318px]">
@@ -23,18 +23,10 @@
                     <input name="search" value="{{ request('search') }}" placeholder="Search categories..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
                 </form>
             </div>
-            <a href="{{ route('admin.categories.create') }}" class="inline-flex shrink-0 items-center justify-center gap-2 self-end rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-600 sm:self-auto">
-                <i class="bi bi-plus-lg"></i>
-                <span>Add Category</span>
+            <a href="{{ route('admin.categories.create') }}" class="inline-flex h-11 w-11 shrink-0 items-center justify-center self-end rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)] sm:self-auto" style="line-height: 1;" title="Add Category" aria-label="Add Category">
+                +
             </a>
         </header>
-
-        @if (session('success'))
-            <div class="mb-5"><x-admin.alert>{{ session('success') }}</x-admin.alert></div>
-        @endif
-        @if (session('error'))
-            <div class="mb-5"><x-admin.alert type="error">{{ session('error') }}</x-admin.alert></div>
-        @endif
 
         <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
             @forelse ($categories as $category)
@@ -49,9 +41,8 @@
                     </div>
                     <p class="mt-7 min-h-6 text-base leading-6 text-slate-500">{{ $category->description ?: 'No description available.' }}</p>
                     <div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-5">
-                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-sky-600">
-                            <i class="bi bi-pencil-square text-base"></i>
-                            <span>Edit Inline</span>
+                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-lg font-light leading-none text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_8px_14px_rgba(15,23,42,0.08)]" style="line-height: 1;" title="Edit Category" aria-label="Edit Category">
+                            +
                         </a>
                         <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" onsubmit="return confirm('Hapus kategori ini?')">
                             @csrf

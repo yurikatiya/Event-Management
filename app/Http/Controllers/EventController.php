@@ -43,7 +43,7 @@ class EventController extends Controller
         $event = Event::create($data + ['created_by' => $request->user()->id]);
         $event->sponsors()->sync($request->input('sponsor_ids', []));
 
-        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil dibuat.");
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil ditambahkan.');
     }
 
     public function edit(Event $event): View
@@ -67,7 +67,7 @@ class EventController extends Controller
         $event->update($data);
         $event->sponsors()->sync($request->input('sponsor_ids', []));
 
-        return redirect()->route('admin.events.index')->with('success', "Event {$event->name} berhasil diperbarui.");
+        return redirect()->route('admin.events.index')->with('success', 'Event berhasil diperbarui.');
     }
 
     public function destroy(Event $event): RedirectResponse
@@ -88,11 +88,16 @@ class EventController extends Controller
             'name' => ['required', 'string', 'max:150'],
             'description' => ['required', 'string'],
             'start_date' => ['nullable', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+            'start_time' => ['nullable', 'date_format:H:i'],
+            'end_time' => ['nullable', 'date_format:H:i'],
             'location' => ['required', 'string', 'max:255'],
-            'poster' => [$request->isMethod('post') ? 'required' : 'nullable', 'image', 'max:2048'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'organizer' => ['nullable', 'string', 'max:255'],
+            'poster' => ['nullable', 'image', 'max:2048'],
             'sponsor_ids' => ['nullable', 'array'],
             'sponsor_ids.*' => ['integer', 'exists:sponsors,id'],
-            'status' => ['required', 'in:draft,published,archived'],
+            'status' => ['required', 'in:draft,published,archived,upcoming,completed,pending,approved,rejected'],
         ]);
     }
 }
