@@ -143,7 +143,7 @@
                     'Accept': 'application/json',
                 },
                 body: new URLSearchParams({
-                    section: 'notification',
+                    section: 'appearance',
                     dark_mode: isDark ? '1' : '0',
                 }).toString(),
             }).catch(() => {});

@@ -319,8 +319,8 @@ body {
     border-radius: 50%;
     background: linear-gradient(135deg, #dbeafe, #bfdbfe);
     color: #0d63d6;
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .profile-name {
@@ -355,7 +355,7 @@ body {
     top: calc(100% + 0.65rem);
     z-index: 30;
     width: 16rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #f3f4f6;
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.98);
     box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
@@ -370,8 +370,8 @@ body {
     width: 100%;
     border: none;
     background: transparent;
-    border-radius: 0.75rem;
-    padding: 0.7rem 0.8rem;
+    border-radius: 0.5rem;
+    padding: 0.625rem 1rem;
     text-align: left;
     font-size: 0.82rem;
     color: #475569;
@@ -382,6 +382,21 @@ body {
 .user-menu button:hover {
     background: #f8fafc;
     color: #0f172a;
+}
+
+.user-menu form {
+    border-top: 1px solid #f3f4f6;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+.user-menu form button,
+.user-menu form button:hover {
+    color: #dc2626;
+}
+
+.user-menu form button:hover {
+    background: #fef2f2;
 }
 
 .menu-header {
@@ -777,8 +792,26 @@ body.theme-dark {
     color: #e2e8f0;
 }
 
+.theme-dark .admin-body {
+    background: #020817 !important;
+}
+
+.theme-dark .admin-app-shell,
+.theme-dark .admin-main {
+    background: #0f172a !important;
+}
+
+.theme-dark .admin-navbar {
+    background: #0284c7 !important;
+    border-bottom-color: rgba(125, 211, 252, 0.35) !important;
+}
+
+.theme-dark .sidebar-branding {
+    background: #d8f3ff !important;
+}
+
 .theme-dark .admin-sidebar {
-    background-color: #0f172a !important;
+    background-color: #0284c7 !important;
     border-color: rgba(148, 163, 184, 0.18) !important;
 }
 
@@ -795,6 +828,64 @@ body.theme-dark {
 .theme-dark .bg-violet-100,
 .theme-dark .bg-emerald-100 {
     background-color: #0f172a !important;
+}
+
+.theme-dark main,
+.theme-dark [data-team-grid] {
+    background-color: #0f172a !important;
+}
+
+.theme-dark input,
+.theme-dark select,
+.theme-dark textarea,
+.theme-dark .topnav-search input,
+.theme-dark .notification-menu,
+.theme-dark .user-menu {
+    background-color: #111c2e !important;
+    border-color: rgba(148, 163, 184, 0.25) !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark input::placeholder,
+.theme-dark textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+.theme-dark .admin-navbar .icon-button,
+.theme-dark .admin-navbar .mobile-menu-button,
+.theme-dark .admin-navbar .profile-button {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.theme-dark .admin-navbar .profile-name,
+.theme-dark .admin-navbar .profile-button i {
+    color: #0f172a !important;
+}
+
+.theme-dark .user-menu a,
+.theme-dark .user-menu button {
+    color: #cbd5e1;
+}
+
+.theme-dark .user-menu a:hover,
+.theme-dark .user-menu button:hover {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+.theme-dark .user-menu form {
+    border-top-color: rgba(148, 163, 184, 0.2);
+}
+
+.theme-dark .user-menu form button,
+.theme-dark .user-menu form button:hover {
+    color: #f87171;
+}
+
+.theme-dark .user-menu form button:hover {
+    background: rgba(127, 29, 29, 0.28);
 }
 
 .theme-dark .border-slate-200,

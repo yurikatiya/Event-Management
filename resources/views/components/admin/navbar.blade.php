@@ -30,14 +30,14 @@
 
         <div class="relative">
             <button type="button" data-user-menu-button class="profile-button" aria-expanded="false">
-                <div class="profile-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 2)) }}</div>
+                <div class="profile-avatar" aria-hidden="true"><i class="bi bi-person-fill"></i></div>
                 <span class="profile-name">{{ auth()->user()->name }}</span>
                 <i class="bi bi-chevron-down"></i>
             </button>
-            <div data-user-menu class="user-menu hidden">
-                <a href="{{ route('admin.settings') }}"><i class="bi bi-person-circle"></i>Profile</a>
-                <a href="{{ route('admin.settings') }}"><i class="bi bi-gear"></i>Settings</a>
-                <form method="POST" action="{{ route('logout') }}">@csrf<button type="submit"><i class="bi bi-box-arrow-right"></i>Logout</button></form>
+            <div data-user-menu class="user-menu hidden rounded-2xl border border-gray-100 bg-white p-2 shadow-lg">
+                <a href="{{ route('admin.settings') }}" class="rounded-lg px-4 py-2.5 text-slate-600 transition hover:bg-gray-50"><i class="bi bi-person-circle"></i><span>Profile</span></a>
+                <a href="{{ route('admin.settings') }}" class="rounded-lg px-4 py-2.5 text-slate-600 transition hover:bg-gray-50"><i class="bi bi-gear"></i><span>Settings</span></a>
+                <form method="POST" action="{{ route('logout') }}" class="mt-2 border-t border-gray-100 pt-2">@csrf<button type="submit" class="rounded-lg px-4 py-2.5 text-red-600 transition hover:bg-red-50"><i class="bi bi-box-arrow-right"></i><span>Logout</span></button></form>
             </div>
         </div>
     </div>
