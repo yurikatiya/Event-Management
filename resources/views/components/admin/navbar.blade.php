@@ -3,10 +3,12 @@
         <button type="button" data-admin-menu class="mobile-menu-button" title="Open navigation" aria-label="Toggle sidebar">
             <i class="bi bi-list"></i>
         </button>
-        <div class="topnav-search">
-            <i class="bi bi-search"></i>
-            <input type="search" placeholder="Search" />
-        </div>
+        @if (request()->routeIs('admin.dashboard', 'admin.dashboard.legacy'))
+            <div class="topnav-search">
+                <i class="bi bi-search"></i>
+                <input type="search" placeholder="Search" />
+            </div>
+        @endif
     </div>
 
     <div class="admin-navbar-actions">
