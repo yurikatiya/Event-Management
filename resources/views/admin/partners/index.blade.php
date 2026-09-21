@@ -5,11 +5,16 @@
 @section('content')
 <div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-8 lg:px-10">
     <div class="mx-auto max-w-[1400px]">
-        <header class="mb-8 flex items-center justify-between gap-4">
-            <div><h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Partners</h1><p class="mt-1 text-base text-slate-400">{{ $partners->total() }} mitra strategis</p></div>
-            <a href="{{ route('admin.partners.create') }}" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Partner" aria-label="Tambah Partner">+</a>
+        <header class="mb-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+            <div class="shrink-0">
+                <h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Partners</h1>
+                <p class="mt-1 whitespace-nowrap text-base text-slate-400">{{ $partners->total() }} mitra strategis</p>
+            </div>
+            <div class="flex w-full items-center gap-3 sm:ml-auto sm:w-auto">
+                <div class="relative w-full sm:w-[260px]"><i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i><form method="GET"><input name="search" value="{{ request('search') }}" placeholder="Search partners..." class="h-[46px] w-full rounded-full border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-600 outline-none transition placeholder:text-slate-400 focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></form></div>
+                <a href="{{ route('admin.partners.create') }}" class="inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" title="Tambah Partner" aria-label="Tambah Partner"><i class="bi bi-plus leading-none"></i></a>
+            </div>
         </header>
-        <form method="GET" class="mb-6 max-w-sm"><div class="relative"><i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search partners..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm outline-none focus:border-sky-400"></div></form>
         @php($partnerIcons = ['GEKRAFS Jabar' => 'bi-people', 'Chlorine' => 'bi-droplet', 'Telkom University' => 'bi-building', 'UPI' => 'bi-book', 'R27 Creative Agency' => 'bi-palette', 'Digital Breeze' => 'bi-wind', 'Metalabs' => 'bi-cpu'])
         <section class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
             @forelse ($partners as $partner)
@@ -20,8 +25,8 @@
                     <h2 class="mt-5 truncate text-base font-bold text-[#16324f]" title="{{ $partner->name }}">{{ $partner->name }}</h2>
                     <p class="mt-1 truncate text-sm text-slate-400">{{ $partner->category }}</p>
                     <div class="mt-5 flex items-center justify-center gap-3">
-                        <a href="{{ route('admin.partners.edit', $partner) }}" title="Edit partner" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-lg font-light leading-none text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_8px_14px_rgba(15,23,42,0.08)]" style="line-height: 1;">+</a>
-                        <form method="POST" action="{{ route('admin.partners.destroy', $partner) }}" onsubmit="return confirm('Hapus partner ini?')">@csrf @method('DELETE')<button title="Delete partner" class="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100"><i class="bi bi-trash3"></i></button></form>
+                        <a href="{{ route('admin.partners.edit', $partner) }}" title="Edit partner" aria-label="Edit partner" class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-sky-50 text-sky-600 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-sky-100"><i class="bi bi-pencil-square text-base leading-none"></i></a>
+                        <form method="POST" action="{{ route('admin.partners.destroy', $partner) }}" onsubmit="return confirm('Hapus partner ini?')">@csrf @method('DELETE')<button title="Delete partner" aria-label="Delete partner" class="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500 hover:bg-rose-100"><i class="bi bi-trash-fill"></i></button></form>
                     </div>
                     <form method="POST" action="{{ route('admin.partners.toggle-status', $partner) }}" class="mt-3">@csrf @method('PATCH')<button class="text-xs font-semibold {{ $partner->status === 'published' ? 'text-emerald-500' : 'text-sky-600' }}">{{ $partner->status === 'published' ? 'Published' : 'Publish' }}</button></form>
                 </article>

@@ -12,7 +12,28 @@ class TeamController extends Controller
 {
     public function index(): View
     {
-        return view('admin.teams.index', ['teams' => Team::orderBy('order')->latest('id')->paginate(12)]);
+        $teams = Team::query()
+            ->when(request('search'), fn ($query, $search) => $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('position', 'like', "%{$search}%")
+                    ->orWhere('division', 'like', "%{$search}%");
+            }))
+            ->when(request('division'), fn ($query, $division) => $query->where('division', $division))
+            ->when(request('status'), fn ($query, $status) => $query->where('status', $status))
+            ->orderBy('order')
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('admin.teams.index', [
+            'teams' => $teams,
+            'divisionStats' => Team::query()
+                ->selectRaw("COALESCE(NULLIF(division, ''), 'Belum diisi') as division, COUNT(*) as total, SUM(CASE WHEN status = 'published' THEN 1 ELSE 0 END) as active")
+                ->groupBy('division')
+                ->orderBy('division')
+                ->get(),
+            'divisions' => Team::query()->whereNotNull('division')->where('division', '!=', '')->distinct()->orderBy('division')->pluck('division'),
+        ]);
     }
 
     public function create(): View
@@ -66,6 +87,7 @@ class TeamController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'position' => ['required', 'string', 'max:150'],
+            'division' => ['nullable', 'string', 'max:100'],
             'photo' => ['nullable', 'image', 'max:2048'],
             'bio' => ['nullable', 'string'],
             'order' => ['required', 'integer', 'min:1'],

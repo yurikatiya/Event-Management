@@ -10,9 +10,10 @@
                 <h1 class="text-3xl font-bold tracking-tight text-slate-900">Gallery</h1>
                 <p class="mt-1 text-base text-slate-400">Kelola foto yang akan ditampilkan di landing page.</p>
             </div>
-            <a href="{{ route('admin.gallery.create') }}" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" style="line-height: 1;" title="Tambah Foto" aria-label="Tambah Foto">
-                +
-            </a>
+            <div class="flex w-full items-center gap-3 sm:w-auto">
+                <div class="relative w-full sm:w-[260px]"><i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i><form method="GET"><input name="search" value="{{ request('search') }}" placeholder="Search gallery..." class="h-[46px] w-full rounded-full border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></form></div>
+                <a href="{{ route('admin.gallery.create') }}" class="inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" title="Tambah Foto" aria-label="Tambah Foto"><i class="bi bi-plus leading-none"></i></a>
+            </div>
         </header>
 
         <section class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -30,15 +31,14 @@
                         </div>
                         <p class="line-clamp-3 text-sm leading-6 text-slate-500">{{ $gallery->description ?: 'Tidak ada keterangan.' }}</p>
                         <div class="flex items-center justify-between border-t border-slate-200 pt-4">
-                            <a href="{{ route('admin.gallery.edit', $gallery) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-lg font-light leading-none text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_8px_14px_rgba(15,23,42,0.08)]" style="line-height: 1;" title="Edit Foto" aria-label="Edit Foto">
-                                +
+                            <a href="{{ route('admin.gallery.edit', $gallery) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-sky-50 text-sky-600 shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-100" title="Edit Foto" aria-label="Edit Foto">
+                                <i class="bi bi-pencil-square text-base leading-none"></i>
                             </a>
                             <form method="POST" action="{{ route('admin.gallery.destroy', $gallery) }}" onsubmit="return confirm('Hapus foto ini?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="inline-flex items-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-600">
-                                    <i class="bi bi-trash3-fill"></i>
-                                    Hapus
+                                <button type="submit" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500 transition hover:bg-rose-100" title="Delete Foto" aria-label="Delete Foto">
+                                    <i class="bi bi-trash-fill text-base leading-none"></i>
                                 </button>
                             </form>
                         </div>

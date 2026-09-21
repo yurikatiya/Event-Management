@@ -17,15 +17,21 @@
 <div class="min-h-[calc(100vh-4rem)] bg-white px-5 py-8 sm:px-8 lg:px-10" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="mx-auto max-w-[1400px]">
         <header class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="relative w-full sm:w-[318px]">
-                <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i>
-                <form method="GET">
-                    <input name="search" value="{{ request('search') }}" placeholder="Search categories..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-400">
-                </form>
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-slate-900">Categories</h1>
+                <p class="mt-1 text-base text-slate-400">{{ $categories->total() }} kategori terdaftar</p>
             </div>
-            <a href="{{ route('admin.categories.create') }}" class="inline-flex h-11 w-11 shrink-0 items-center justify-center self-end rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)] sm:self-auto" style="line-height: 1;" title="Add Category" aria-label="Add Category">
-                +
-            </a>
+            <div class="flex w-full items-center gap-3 sm:w-auto">
+                <div class="relative w-full sm:w-[260px]">
+                    <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i>
+                    <form method="GET">
+                        <input name="search" value="{{ request('search') }}" placeholder="Search categories..." class="h-[46px] w-full rounded-full border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                    </form>
+                </div>
+                <a href="{{ route('admin.categories.create') }}" class="inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-lg text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)]" title="Add Category" aria-label="Add Category">
+                    <i class="bi bi-plus leading-none"></i>
+                </a>
+            </div>
         </header>
 
         <section class="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -41,15 +47,14 @@
                     </div>
                     <p class="mt-7 min-h-6 text-base leading-6 text-slate-500">{{ $category->description ?: 'No description available.' }}</p>
                     <div class="mt-6 flex items-center justify-between border-t border-slate-200 pt-5">
-                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-lg font-light leading-none text-slate-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_8px_14px_rgba(15,23,42,0.08)]" style="line-height: 1;" title="Edit Category" aria-label="Edit Category">
-                            +
+                        <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-sky-50 text-sky-600 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-sky-100" title="Edit Category" aria-label="Edit Category">
+                            <i class="bi bi-pencil-square text-base leading-none"></i>
                         </a>
                         <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" onsubmit="return confirm('Hapus kategori ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="inline-flex items-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-600">
-                                <i class="bi bi-trash3-fill text-base"></i>
-                                <span>Delete</span>
+                            <button type="submit" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-rose-50 text-rose-500 transition hover:bg-rose-100" title="Delete Category" aria-label="Delete Category">
+                                <i class="bi bi-trash-fill text-base leading-none"></i>
                             </button>
                         </form>
                     </div>

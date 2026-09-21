@@ -79,7 +79,6 @@
                 overlay?.classList.remove('is-visible');
             }
         });
-
         const closeUserMenu = () => {
             userMenu?.classList.add('hidden');
             userMenuButton?.setAttribute('aria-expanded', 'false');
@@ -144,7 +143,7 @@
                     'Accept': 'application/json',
                 },
                 body: new URLSearchParams({
-                    section: 'notification',
+                    section: 'appearance',
                     dark_mode: isDark ? '1' : '0',
                 }).toString(),
             }).catch(() => {});
@@ -178,6 +177,7 @@
             applyTheme(nextDarkMode);
             syncThemePreference(nextDarkMode);
         });
+
     </script>
     @stack('scripts')
 </body>
