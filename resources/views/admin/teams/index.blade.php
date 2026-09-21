@@ -7,7 +7,7 @@
     $divisionStyles = [
         'Creative' => ['badge' => 'bg-pink-50 text-pink-600', 'stat' => 'bg-pink-50 text-pink-600'],
         'Design' => ['badge' => 'bg-violet-50 text-violet-600', 'stat' => 'bg-violet-50 text-violet-600'],
-        'Operations' => ['badge' => 'bg-blue-50 text-blue-600', 'stat' => 'bg-blue-50 text-blue-600'],
+        'Operations' => ['badge' => 'bg-sky-50 text-[#0ea5e9]', 'stat' => 'bg-sky-50 text-[#0ea5e9]'],
         'Marketing' => ['badge' => 'bg-amber-50 text-amber-600', 'stat' => 'bg-amber-50 text-amber-600'],
         'Technology' => ['badge' => 'bg-emerald-50 text-emerald-600', 'stat' => 'bg-emerald-50 text-emerald-600'],
     ];
@@ -27,7 +27,7 @@
         </header>
 
         <section class="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <article class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <article class="rounded-2xl border border-sky-100 bg-white p-4 shadow-sm">
                 <span class="inline-flex rounded-md bg-sky-50 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-sky-600">Total Teams</span>
                 <strong class="mt-1 block text-2xl text-slate-900">{{ $teams->total() }}</strong>
                 <span class="text-[10px] text-slate-400">seluruh anggota team</span>
@@ -45,7 +45,7 @@
         </section>
 
         <section class="rounded-2xl border border-slate-200 bg-white shadow-sm">
-            <div class="flex flex-col gap-3 border-b border-slate-100 p-3 sm:flex-row sm:items-center">
+            <div class="flex flex-col gap-3 border-b border-sky-100 bg-sky-50/30 p-3 sm:flex-row sm:items-center">
                 <form method="GET" class="relative flex-1">
                     @if (request('division')) <input type="hidden" name="division" value="{{ request('division') }}"> @endif
                     @if (request('status')) <input type="hidden" name="status" value="{{ request('status') }}"> @endif
@@ -66,7 +66,7 @@
                 </form>
                 <div class="flex items-center justify-between gap-3 sm:ml-auto">
                     <span class="text-[10px] text-slate-400">{{ $activeTotal }} anggota</span>
-                    <div class="flex rounded-lg border border-slate-200 p-0.5 text-[11px] font-semibold">
+                    <div class="flex rounded-lg border border-sky-100 bg-white p-0.5 text-[11px] font-semibold">
                         <button type="button" data-team-view="table" class="team-view-button rounded-md px-2.5 py-1.5 text-slate-500" aria-label="Tampilan tabel"><i class="bi bi-list-ul me-1"></i>Tabel</button>
                         <button type="button" data-team-view="grid" class="team-view-button rounded-md px-2.5 py-1.5 text-slate-500" aria-label="Tampilan grid"><i class="bi bi-grid-3x3-gap me-1"></i>Grid</button>
                     </div>
@@ -75,13 +75,13 @@
 
             <div data-team-table class="overflow-x-auto">
                 <table class="w-full min-w-[850px] text-left">
-                    <thead class="border-b border-slate-100 bg-slate-50 text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                    <thead class="border-b border-sky-100 bg-sky-50/60 text-[10px] font-bold uppercase tracking-wide text-sky-700">
                         <tr><th class="px-4 py-3">Anggota</th><th class="px-4 py-3">Jabatan</th><th class="px-4 py-3">Divisi</th><th class="px-4 py-3">Email</th><th class="px-4 py-3">Status</th><th class="px-4 py-3 text-right">Aksi</th></tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                         @forelse ($teams as $team)
                             @php($style = $divisionStyles[$team->division] ?? ['badge' => 'bg-slate-50 text-slate-600'])
-                            <tr class="text-xs text-slate-600 transition hover:bg-sky-50/30">
+                            <tr class="text-xs text-slate-600 transition hover:bg-sky-50/70">
                                 <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-sky-50 text-sky-500">@if ($team->photo)<img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}" class="h-full w-full object-cover">@else<i class="bi bi-person-fill"></i>@endif</div><strong class="text-slate-800">{{ $team->name }}</strong></div></td>
                                 <td class="px-4 py-3">{{ $team->position }}</td><td class="px-4 py-3"><span class="rounded-md px-2 py-1 text-[10px] font-medium {{ $style['badge'] }}">{{ $team->division ?: 'Belum diisi' }}</span></td><td class="px-4 py-3">{{ strtolower(str_replace(' ', '', $team->name)) }}@r27.id</td>
                                 <td class="px-4 py-3"><span class="rounded-full px-2 py-1 text-[10px] font-semibold {{ $team->status === 'published' ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-500' }}"><i class="bi bi-circle-fill me-1 text-[6px]"></i>{{ $team->status === 'published' ? 'Aktif' : 'Nonaktif' }}</span></td>
@@ -120,7 +120,7 @@
         teamGrid?.classList.toggle('grid', isGrid);
         teamViewButtons.forEach((button) => {
             const active = button.dataset.teamView === view;
-            button.classList.toggle('bg-blue-600', active);
+            button.classList.toggle('bg-[#12a6ea]', active);
             button.classList.toggle('text-white', active);
             button.classList.toggle('text-slate-500', !active);
         });

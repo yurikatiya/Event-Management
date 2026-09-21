@@ -32,36 +32,37 @@ body {
 }
 
 .admin-body {
-    background: #ffffff;
+    background: #f3f7fb;
     min-height: 100vh;
     display: flex;
     align-items: stretch;
     justify-content: stretch;
-    padding: 0;
+    padding: 1rem;
 }
 
 .admin-app-shell {
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 2rem);
     display: flex;
-    background: #ffffff;
+    background: transparent;
     border: none;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: hidden;
+    border-radius: 1.5rem;
+    overflow: visible;
 }
 
 .admin-sidebar {
     position: relative;
     z-index: 30;
     display: flex;
-    width: 16rem;
+    width: 15.5rem;
     flex-direction: column;
-    background: transparent;
+    background: #0ea5e9;
     border-right: none;
     overflow: hidden;
     transition: width 220ms ease, transform 220ms ease;
-    padding: 0 0 0 0.65rem;
+    padding: 0;
+    border-radius: 0 4rem 4rem 0;
+    box-shadow: 0 12px 28px rgba(14, 165, 233, 0.14);
     color: #ffffff;
 }
 
@@ -74,10 +75,11 @@ body {
 }
 
 .sidebar-branding {
-    background: #ffffff;
-    padding: 1.05rem 0.55rem 1rem 0.2rem;
+    background: #eaf8ff;
+    padding: 0.85rem 0.75rem 0.8rem;
     width: 100%;
     margin-left: 0;
+    border-radius: 0 4rem 0 0;
     position: relative;
     z-index: 2;
 }
@@ -91,22 +93,22 @@ body {
 
 .brand-r27-logo {
     display: block;
-    width: 43px;
-    height: auto;
+    width: 3.1rem;
+    height: 2rem;
     object-fit: contain;
-    filter: none;
+    object-position: center;
+    mix-blend-mode: multiply;
     background: transparent;
 }
 
 .sidebar-menu-shell {
     position: relative;
     background: #0ea5e9;
-    padding: 1rem 0.55rem 1rem 0.45rem;
-    margin-top: 0.35rem;
+    padding: 0.9rem 0.55rem 1rem;
+    margin-top: 0;
     overflow: hidden;
     flex: 1;
-    border-top-right-radius: 4rem;
-    border-bottom-right-radius: 4rem;
+    border-radius: 0 0 4rem 0;
     width: 100%;
     margin-left: 0;
 }
@@ -197,6 +199,11 @@ body {
     flex: 1;
     min-width: 0;
     background: #ffffff;
+    min-height: calc(100vh - 2rem);
+    margin: 0 0 0 1rem;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
 }
 
 .admin-navbar {
@@ -206,10 +213,11 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    min-height: 5rem;
-    padding: 1rem 1.6rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-bottom: 1px solid #edf2f7;
+    min-height: 4.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #0ea5e9;
+    border-bottom: 1px solid #0b8fca;
+    border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .topnav-left {
@@ -823,6 +831,24 @@ body.theme-dark {
 }
 
 @media (max-width: 767px) {
+    .admin-body {
+        padding: 0;
+    }
+
+    .admin-app-shell {
+        min-height: 100vh;
+    }
+
+    .admin-sidebar {
+        border-radius: 0 1.5rem 1.5rem 0;
+    }
+
+    .admin-main {
+        min-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+
     .admin-navbar-actions {
         gap: 0.5rem;
     }
