@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="hidden sm:block">
-                        <p class="text-sm font-bold tracking-wide text-slate-900">
+                        <p class="text-sm font-bold tracking-wide text-[#102a43]">
                             R27
                         </p>
 
@@ -132,10 +132,10 @@
                         bg-[#00a1ee]/10 blur-3xl"></div>
 
             <div class="absolute -right-40 top-20 h-[500px] w-[500px] rounded-full
-                        bg-blue-400/10 blur-3xl"></div>
+                        bg-[#00a1ee]/10 blur-3xl"></div>
 
             <div class="absolute bottom-0 left-1/3 h-40 w-40 rounded-full
-                        bg-cyan-300/10 blur-3xl"></div>
+                        bg-[#00a1ee]/10 blur-3xl"></div>
 
 
             <div class="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pb-20 pt-36">
@@ -146,37 +146,27 @@
                     {{-- HERO TEXT --}}
                     <div>
 
-                        <div class="mb-7 inline-flex items-center gap-2 rounded-full
-                                    border border-[#00a1ee]/20 bg-white/80 px-4 py-2
-                                    shadow-sm backdrop-blur">
+                        <h1 class="max-w-3xl text-4xl font-black leading-[0.96]
+                                   tracking-[-0.06em] text-[#102a43] sm:text-5xl lg:text-6xl">
 
-                            <span class="h-2 w-2 rounded-full bg-[#00a1ee]"></span>
+                            <span class="block">IDEAS</span>
 
-                            <span class="text-xs font-semibold uppercase tracking-[0.18em]
-                                         text-[#008fd4]">
-                                Smart Activation & Branding
+                            <span class="mt-1 block text-[#00a1ee]">
+                                PEOPLE
                             </span>
 
-                        </div>
-
-
-                        <h1 class="max-w-3xl text-5xl font-bold leading-[1.05]
-                                   tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
-
-                            We Create
-
-                            <span class="text-[#00a1ee]">
-                                Creative Experiences
+                            <span class="mt-1 block text-[#00a1ee]">
+                                CULTURE
                             </span>
 
-                            That Matter Impact.
+                            <span class="mt-1 block">BUSINESS</span>
 
                         </h1>
 
 
                         <p class="mt-7 max-w-xl text-lg leading-8 text-slate-600">
-                           R27 Creative Agency mengembangkan konsep kreatif, event, 
-                           activation, branding, serta berbagai program kolaboratif yang 
+                           R27 Creative Agency mengembangkan konsep kreatif, event,
+                           activation, branding, serta berbagai program kolaboratif yang
                            menghubungkan brand, komunitas, dan ekosistem kreatif.
                         </p>
 
@@ -187,7 +177,7 @@
                                class="group inline-flex items-center gap-3 rounded-xl
                                       bg-[#00a1ee] px-6 py-3.5 text-sm font-semibold
                                       text-white shadow-xl shadow-[#00a1ee]/20
-                                      transition hover:-translate-y-1 hover:bg-[#008fd4]">
+                                      transition duration-200 hover:-translate-y-1 hover:bg-[#008fd4]">
 
                                 Explore Our Work
 
@@ -197,61 +187,20 @@
 
                             </a>
 
-
-                            <a href="#about"
-                               class="inline-flex items-center rounded-xl border border-slate-200
-                                      bg-white px-6 py-3.5 text-sm font-semibold text-slate-700
-                                      shadow-sm transition hover:-translate-y-1 hover:border-[#00a1ee]/30
-                                      hover:text-[#00a1ee]">
-
-                                Discover R27
-
-                            </a>
-
                         </div>
 
-
-                        {{-- MINI STATS --}}
-                        <div class="mt-12 flex flex-wrap gap-10">
-
-                            <div>
-                                <p class="text-2xl font-bold text-slate-900">
-                                    2020
-                                </p>
-
-                                <p class="mt-1 text-xs text-slate-500">
-                                    Established
-                                </p>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <div class="inline-flex items-center rounded-full border border-[#00a1ee]/15 bg-white/85 px-3 py-2 shadow-sm backdrop-blur-md">
+                                <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#102a43]">IDEAS</span>
                             </div>
 
-
-                            <div class="h-10 w-px bg-slate-200"></div>
-
-
-                            <div>
-                                <p class="text-2xl font-bold text-slate-900">
-                                    Creative
-                                </p>
-
-                                <p class="mt-1 text-xs text-slate-500">
-                                    Solutions
-                                </p>
+                            <div class="inline-flex items-center rounded-full border border-[#00a1ee]/15 bg-white/85 px-3 py-2 shadow-sm backdrop-blur-md">
+                                <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#102a43]">COLLABORATION</span>
                             </div>
 
-
-                            <div class="h-10 w-px bg-slate-200"></div>
-
-
-                            <div>
-                                <p class="text-2xl font-bold text-slate-900">
-                                    Collaborative
-                                </p>
-
-                                <p class="mt-1 text-xs text-slate-500">
-                                    Approach
-                                </p>
+                            <div class="inline-flex items-center rounded-full border border-[#00a1ee]/15 bg-white/85 px-3 py-2 shadow-sm backdrop-blur-md">
+                                <span class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#102a43]">OPPORTUNITIES</span>
                             </div>
-
                         </div>
 
                     </div>
@@ -264,8 +213,8 @@
 
                             {{-- Main card --}}
                             <div class="absolute inset-8 overflow-hidden rounded-[2.5rem]
-                                        bg-gradient-to-br from-[#00a1ee] via-[#159de1]
-                                        to-[#5b6ee1] shadow-2xl shadow-[#00a1ee]/20">
+                                        bg-gradient-to-br from-[#00a1ee] via-[#00a1ee]
+                                        to-[#008fd4] shadow-2xl shadow-[#00a1ee]/20">
 
                                 <div class="absolute -right-20 -top-20 h-64 w-64
                                             rounded-full border-[50px] border-white/10">
@@ -275,32 +224,21 @@
                                             rounded-full bg-white/10">
                                 </div>
 
+                                <div class="absolute right-6 top-6 inline-flex items-center rounded-full
+                                            border border-white/25 bg-white/10 px-3 py-1.5 backdrop-blur-sm">
+                                    <span class="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/80">
+                                        Idea to Impact
+                                    </span>
+                                </div>
 
-                                <div class="relative flex h-full flex-col justify-between p-10">
+                                <div class="relative flex h-full flex-col justify-center p-10">
 
-                                    <div>
-                                        <p class="text-xs font-semibold uppercase
-                                                  tracking-[0.25em] text-white/70">
-                                            R27 Creative Agency
-                                        </p>
-
-                                        <h2 class="mt-5 text-5xl font-bold leading-tight text-white">
-                                            Ideas.
-                                            <br>
-                                            Creative.
-                                            <br>
-                                            Impact.
+                                    <div class="text-left">
+                                        <h2 class="mt-0 text-5xl font-black leading-[0.9] tracking-[-0.05em] text-white">
+                                            <span class="block text-white/95">Creative</span>
+                                            <span class="mt-1 block text-white/80">People,</span>
+                                            <span class="mt-1 block text-[#dff7ff]">Real Impact</span>
                                         </h2>
-                                    </div>
-
-
-                                    <div>
-                                        <div class="mb-4 h-px w-full bg-white/20"></div>
-
-                                        <p class="text-sm leading-6 text-white/75">
-                                            Turning creative ideas into meaningful experiences 
-                                            through events, activation, branding, and collaboration.
-                                        </p>
                                     </div>
 
                                 </div>
@@ -341,8 +279,8 @@
                                             Creative Solutions
                                         </p>
 
-                                        <p class="text-sm font-bold text-slate-900">
-                                            Event & Activation
+                                        <p class="text-sm font-bold text-[#102a43]">
+                                            Event & Creative Agency
                                         </p>
                                     </div>
 
@@ -360,7 +298,7 @@
                                     Our Philosophy
                                 </p>
 
-                                <p class="mt-1 text-sm font-bold text-slate-900">
+                                <p class="mt-1 text-sm font-bold text-[#102a43]">
                                     Creative. Collaborative. Impactful.
                                 </p>
 
@@ -395,7 +333,7 @@
                     About R27
                 </span>
 
-                <h2 class="mt-4 text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-5xl">
+                <h2 class="mt-4 text-4xl font-bold leading-tight tracking-tight text-[#102a43] sm:text-5xl">
                     Creating ideas that
                     <span class="text-[#00a1ee]">
                         move people.
@@ -432,7 +370,7 @@
                             01
                         </p>
 
-                        <h3 class="mt-3 font-bold text-slate-900">
+                        <h3 class="mt-3 font-bold text-[#102a43]">
                             Creative & Strategic
                         </h3>
 
@@ -452,7 +390,7 @@
                             02
                         </p>
 
-                        <h3 class="mt-3 font-bold text-slate-900">
+                        <h3 class="mt-3 font-bold text-[#102a43]">
                             Collaboration
                         </h3>
 
@@ -491,7 +429,7 @@
                     </span>
 
                     <h2 class="mt-4 text-4xl font-bold tracking-tight
-                            text-slate-950 sm:text-5xl">
+                            text-[#102a43] sm:text-5xl">
 
                         Creative solutions for
                         <span class="text-[#00a1ee]">
@@ -520,7 +458,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             Creative Agency
                         </h3>
 
@@ -547,7 +485,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             Venue Activation
                         </h3>
 
@@ -574,7 +512,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             City Branding
                         </h3>
 
@@ -601,7 +539,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             Event Planner & Consultant
                         </h3>
 
@@ -628,7 +566,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             Event Organizer
                         </h3>
 
@@ -655,7 +593,7 @@
 
                         </div>
 
-                        <h3 class="mt-7 text-xl font-bold text-slate-900">
+                        <h3 class="mt-7 text-xl font-bold text-[#102a43]">
                             Design & Digital Agency
                         </h3>
 
@@ -698,7 +636,7 @@
                 <div class="mx-auto max-w-7xl px-6">
                     <div class="mb-10 text-center">
                         <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">Our Partners</span>
-                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-[#102a43] sm:text-5xl">
                             Trusted by
                             <span class="text-[#00a1ee]">brands and communities</span>
                         </h2>
@@ -726,7 +664,7 @@
                         <span class="text-xs font-bold uppercase tracking-[0.25em] text-[#00a1ee]">
                             Gallery
                         </span>
-                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                        <h2 class="mt-4 text-4xl font-bold tracking-tight text-[#102a43] sm:text-5xl">
                             Moments from our
                             <span class="text-[#00a1ee]">
                                 latest work.
@@ -741,7 +679,7 @@
                                     <img src="{{ asset('storage/' . $gallery->file_path) }}" alt="{{ $gallery->title ?? 'Gallery image' }}" class="h-full w-full object-cover transition duration-500 hover:scale-105">
                                 </div>
                                 <div class="p-6">
-                                    <h3 class="text-xl font-bold text-slate-900">{{ $gallery->title }}</h3>
+                                    <h3 class="text-xl font-bold text-[#102a43]">{{ $gallery->title }}</h3>
                                     @if ($gallery->description)
                                         <p class="mt-3 text-sm leading-6 text-slate-500">{{ $gallery->description }}</p>
                                     @endif
@@ -770,7 +708,7 @@
                         Our Experiences
                     </span>
 
-                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-[#102a43] sm:text-5xl">
                         Events we've
                         <span class="text-[#00a1ee]">
                             brought to life.
@@ -832,7 +770,7 @@
                             Creative Program
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Digigame
                         </h3>
 
@@ -868,7 +806,7 @@
                             Community Program
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Akademi Kampung KB
                         </h3>
 
@@ -904,7 +842,7 @@
                             Entrepreneurship
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Pasti Preneur
                         </h3>
 
@@ -940,7 +878,7 @@
                             City Program
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Cimahi Campernik
                         </h3>
 
@@ -976,7 +914,7 @@
                             City Branding
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             West Java Belt
                         </h3>
 
@@ -1012,7 +950,7 @@
                             Festival
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Mercedez Carnaval
                         </h3>
 
@@ -1048,7 +986,7 @@
                             Festival
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Sangkuriang Festival
                         </h3>
 
@@ -1084,7 +1022,7 @@
                             Culture & Creative
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Batikday
                         </h3>
 
@@ -1120,7 +1058,7 @@
                             Creative Community
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             Curious People
                         </h3>
 
@@ -1156,7 +1094,7 @@
                             Creative Economy
                         </span>
 
-                        <h3 class="mt-3 text-2xl font-bold text-slate-900">
+                        <h3 class="mt-3 text-2xl font-bold text-[#102a43]">
                             GEKRAFS Jabar Gebrakan
                         </h3>
 
@@ -1192,17 +1130,12 @@
                         The People Behind
                     </span>
 
-                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-950 sm:text-5xl">
+                    <h2 class="mt-4 text-4xl font-bold tracking-tight text-[#102a43] sm:text-5xl">
                         Our
                         <span class="text-[#00a1ee]">
                             Team.
                         </span>
                     </h2>
-
-                    <p class="mt-5 max-w-xl leading-7 text-slate-500">
-                        The people behind R27 Creative Agency and the creative
-                        work we develop together.
-                    </p>
 
                 </div>
 
@@ -1232,7 +1165,7 @@
                             BOD & Creative Leadership
                         </span>
 
-                        <h3 class="mt-4 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl">
+                        <h3 class="mt-4 text-3xl font-bold tracking-tight text-[#102a43] sm:text-4xl">
                             The People Behind
                             <span class="text-[#00a1ee]">
                                 R27.
@@ -1261,7 +1194,7 @@
 
                             {{-- Nama Rindy --}}
                             <div class="absolute left-[18%] top-0 text-left">
-                                <h4 class="text-xl font-bold text-slate-900">
+                                <h4 class="text-xl font-bold text-[#102a43]">
                                     Rindy
                                 </h4>
 
@@ -1273,7 +1206,7 @@
 
                             {{-- Nama Indra --}}
                             <div class="absolute right-[18%] top-0 text-left">
-                                <h4 class="text-xl font-bold text-slate-900">
+                                <h4 class="text-xl font-bold text-[#102a43]">
                                     Indra Setiyadi
                                 </h4>
 
@@ -1302,7 +1235,7 @@
             CTA / CONTACT
         ====================================================== --}}
 
-        <section id="contact" class="relative overflow-hidden bg-[#0d2940] py-28">
+        <section id="contact" class="relative overflow-hidden bg-[#102a43] py-28">
 
             {{-- DECORATION --}}
             <div class="absolute -right-32 -top-32 h-96 w-96 rounded-full
@@ -1321,7 +1254,7 @@
                     <div>
 
                         <span class="text-xs font-bold uppercase tracking-[0.25em]
-                                    text-[#45c7ff]">
+                                    text-[#00a1ee]">
                             Let's Collaborate
                         </span>
 
@@ -1329,7 +1262,7 @@
                                 tracking-tight text-white sm:text-5xl">
 
                             Let's build
-                            <span class="text-[#45c7ff]">
+                            <span class="text-[#00a1ee]">
                                 meaningful experiences.
                             </span>
 
