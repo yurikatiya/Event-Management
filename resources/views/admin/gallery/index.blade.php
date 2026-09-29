@@ -8,7 +8,7 @@
         <header class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-slate-900">Gallery</h1>
-                <p class="mt-1 text-base text-slate-400">Kelola foto yang akan ditampilkan di landing page.</p>
+                <p class="mt-1 text-base text-slate-400">Kelola foto galeri admin.</p>
             </div>
             <div class="flex w-full items-center gap-3 sm:w-auto">
                 <div class="relative w-full sm:w-[260px]"><i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400"></i><form method="GET"><input name="search" value="{{ request('search') }}" placeholder="Search gallery..." class="h-[46px] w-full rounded-full border border-slate-200 bg-slate-50 pl-11 pr-4 text-sm outline-none transition focus:border-sky-400 focus:bg-white focus:ring-4 focus:ring-sky-100"></form></div>
@@ -46,7 +46,7 @@
                 </article>
             @empty
                 <div class="rounded-2xl border border-slate-200 bg-white p-10 shadow-sm md:col-span-2 xl:col-span-3">
-                    <x-admin.empty-state icon="bi-images" title="Belum ada foto" description="Tambah foto pertama Anda untuk ditampilkan di landing page." />
+                    <x-admin.empty-state icon="bi-images" title="Belum ada foto" description="Tambah foto pertama Anda ke galeri admin." />
                 </div>
             @endforelse
         </section>

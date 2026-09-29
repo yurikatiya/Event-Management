@@ -13,14 +13,12 @@ use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('landing');
+    return redirect()->route('login');
 });
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -65,10 +63,4 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::redirect('/admin/categories', '/categories', 301);
     Route::redirect('/admin/events', '/events', 301);
-});
-
-Route::middleware(['auth', 'role:participant'])->prefix('participant')->name('participant.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('participant.dashboard');
-    })->name('dashboard');
 });

@@ -43,13 +43,19 @@
 
         <section class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($stats as $stat)
-                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dashboard-stat-card">
+                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dashboard-stat-card dashboard-stat-card-{{ $loop->iteration }}">
                     <div class="flex items-start justify-between gap-4">
-                        <p class="pt-2 text-sm font-medium uppercase tracking-wide text-slate-400">{{ $stat['label'] }}</p>
-                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style="{{ $stat['iconStyle'] }}"><i class="bi {{ $stat['icon'] }} text-lg"></i></span>
+                        <div>
+                            <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">Overview</p>
+                            <p class="mt-2 text-sm font-semibold text-slate-600">{{ $stat['label'] }}</p>
+                        </div>
+                        <span class="stat-card-icon flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl" style="{{ $stat['iconStyle'] }}"><i class="bi {{ $stat['icon'] }} text-lg"></i></span>
                     </div>
-                    <p class="mt-4 text-4xl font-bold tracking-tight text-slate-900">{{ $stat['value'] }}</p>
-                    <p class="mt-3 text-sm font-medium text-emerald-500" style="color: #00a870;">{{ $stat['trend'] }}</p>
+                    <div class="mt-6 flex items-end justify-between gap-3">
+                        <p class="text-4xl font-extrabold tracking-tight text-slate-900">{{ $stat['value'] }}</p>
+                        <span class="stat-card-arrow" aria-hidden="true"><i class="bi bi-arrow-up-right"></i></span>
+                    </div>
+                    <p class="mt-3 text-xs font-semibold text-emerald-500" style="color: #00a870;">{{ $stat['trend'] }}</p>
                 </article>
             @endforeach
         </section>

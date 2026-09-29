@@ -51,7 +51,7 @@ class GalleryManagementTest extends TestCase
 
         Gallery::create([
             'title' => 'Featured Photo',
-            'description' => 'Visible on landing page',
+            'description' => 'Visible in admin gallery',
             'status' => 'published',
             'file_path' => 'gallery/featured.jpg',
         ]);

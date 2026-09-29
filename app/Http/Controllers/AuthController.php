@@ -13,11 +13,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
-
     public function login(Request $request)
     {
         $legacyUsernameInput = $request->has('username') && ! $request->has('identifier');
@@ -42,37 +37,16 @@ class AuthController extends Controller
             ])->withInput(['identifier' => $identifier]);
         }
 
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        if ($legacyUsernameInput) {
-            return redirect()->intended($user->role === 'admin' ? '/admin/dashboard' : '/participant/dashboard');
+        if ($user->role !== 'admin') {
+            return back()->withErrors([
+                'identifier' => 'Akun ini tidak memiliki akses admin.',
+            ])->withInput(['identifier' => $identifier]);
         }
 
-        return redirect()->intended($user->role === 'admin' ? '/dashboard' : '/participant/dashboard');
-    }
-
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
-            'email' => ['required', 'email', 'max:100', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $user = \App\Models\User::create([
-            'name' => $validated['name'],
-            'username' => $validated['username'],
-            'email' => $validated['email'],
-            'password' => $validated['password'],
-            'role' => 'user',
-        ]);
-
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended('/login');
+        return redirect()->intended($legacyUsernameInput ? '/admin/dashboard' : '/dashboard');
     }
 
     public function logout(Request $request)

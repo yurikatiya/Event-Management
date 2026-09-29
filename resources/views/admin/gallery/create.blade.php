@@ -8,7 +8,7 @@
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-slate-900">Tambah Foto</h1>
-                <p class="mt-1 text-sm text-slate-400">Upload gambar baru untuk gallery landing page.</p>
+                <p class="mt-1 text-sm text-slate-400">Upload gambar baru untuk galeri admin.</p>
             </div>
 
             <form method="POST" action="{{ route('admin.gallery.store') }}" enctype="multipart/form-data" class="space-y-5">

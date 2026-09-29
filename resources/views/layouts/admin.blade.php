@@ -20,11 +20,20 @@
     if (session('error')) {
         $toastMessages->push(['type' => 'error', 'message' => session('error')]);
     }
+
+    $searchRoutes = [
+        'dashboard' => route('admin.dashboard'),
+        'event' => route('admin.events.index'),
+        'category' => route('admin.categories.index'),
+        'sponsor' => route('admin.sponsors.index'),
+        'partner' => route('admin.partners.index'),
+        'team' => route('admin.teams.index'),
+        'gallery' => route('admin.gallery.index'),
+        'setting' => route('admin.settings'),
+    ];
 @endphp
 <body class="{{ $isDarkMode ? 'theme-dark' : 'theme-light' }} admin-body font-sans text-slate-700 antialiased">
     <div class="admin-app-shell">
-        <x-admin.sidebar />
-        <div class="admin-overlay" data-admin-overlay></div>
         <div class="admin-main">
             <x-admin.navbar />
             <main class="min-w-0">
@@ -42,43 +51,18 @@
     @endif
 
     <script>
-        const sidebar = document.querySelector('.admin-sidebar');
-        const overlay = document.querySelector('[data-admin-overlay]');
-        const menuButton = document.querySelector('[data-admin-menu]');
         const themeToggle = document.querySelector('[data-theme-toggle]');
+        const searchToggle = document.querySelector('[data-search-toggle]');
+        const searchPanel = document.querySelector('[data-navbar-search]');
+        const searchInput = document.querySelector('[data-navbar-search-input]');
+        const searchForm = document.querySelector('[data-navbar-search-form]');
+        const searchRoutes = {{ Illuminate\Support\Js::from($searchRoutes) }};
         const userMenuButton = document.querySelector('[data-user-menu-button]');
         const userMenu = document.querySelector('[data-user-menu]');
         const notificationButton = document.querySelector('[data-notification-menu-button]');
         const notificationMenu = document.querySelector('[data-notification-menu]');
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        const closeSidebar = () => {
-            sidebar?.classList.remove('is-open');
-            sidebar?.classList.add('is-collapsed');
-            overlay?.classList.remove('is-visible');
-        };
-
-        const toggleSidebar = () => {
-            if (window.innerWidth < 768) {
-                sidebar?.classList.toggle('is-open');
-                overlay?.classList.toggle('is-visible');
-                return;
-            }
-
-            sidebar?.classList.toggle('is-collapsed');
-        };
-
-        menuButton?.addEventListener('click', toggleSidebar);
-        overlay?.addEventListener('click', () => {
-            sidebar?.classList.remove('is-open');
-            overlay?.classList.remove('is-visible');
-        });
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                sidebar?.classList.remove('is-open');
-                overlay?.classList.remove('is-visible');
-            }
-        });
         const closeUserMenu = () => {
             userMenu?.classList.add('hidden');
             userMenuButton?.setAttribute('aria-expanded', 'false');
@@ -88,6 +72,38 @@
             notificationMenu?.classList.add('hidden');
             notificationButton?.setAttribute('aria-expanded', 'false');
         };
+
+        const closeSearch = () => {
+            searchPanel?.classList.add('hidden');
+            searchToggle?.setAttribute('aria-expanded', 'false');
+        };
+
+        searchToggle?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isHidden = searchPanel?.classList.contains('hidden');
+            closeUserMenu();
+            closeNotificationMenu();
+            if (isHidden) {
+                searchPanel?.classList.remove('hidden');
+                searchToggle?.setAttribute('aria-expanded', 'true');
+                window.requestAnimationFrame(() => searchInput?.focus());
+            } else {
+                closeSearch();
+            }
+        });
+
+        searchForm?.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const query = searchInput?.value.trim().toLowerCase() ?? '';
+            const matchedRoute = Object.entries(searchRoutes).find(([keyword]) => query.includes(keyword));
+
+            if (matchedRoute) {
+                window.location.href = matchedRoute[1];
+                return;
+            }
+
+            searchInput?.focus();
+        });
 
         userMenuButton?.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -114,6 +130,10 @@
         });
 
         document.addEventListener('click', (event) => {
+            if (!searchToggle?.contains(event.target) && !searchPanel?.contains(event.target)) {
+                closeSearch();
+            }
+
             if (!userMenuButton?.contains(event.target) && !userMenu?.contains(event.target)) {
                 closeUserMenu();
             }
@@ -121,6 +141,10 @@
             if (!notificationButton?.contains(event.target) && !notificationMenu?.contains(event.target)) {
                 closeNotificationMenu();
             }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeSearch();
         });
 
         const applyTheme = (isDark) => {
