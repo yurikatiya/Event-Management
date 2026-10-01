@@ -57,6 +57,7 @@
         const searchInput = document.querySelector('[data-navbar-search-input]');
         const searchForm = document.querySelector('[data-navbar-search-form]');
         const searchRoutes = {{ Illuminate\Support\Js::from($searchRoutes) }};
+        const adminTopNav = document.querySelector('[data-admin-topnav]');
         const userMenuButton = document.querySelector('[data-user-menu-button]');
         const userMenu = document.querySelector('[data-user-menu]');
         const notificationButton = document.querySelector('[data-notification-menu-button]');
@@ -77,6 +78,41 @@
             searchPanel?.classList.add('hidden');
             searchToggle?.setAttribute('aria-expanded', 'false');
         };
+
+        const setActiveTopNavItem = (activeItem) => {
+            adminTopNav?.querySelectorAll('[data-topnav-item]').forEach((item) => {
+                const isActive = item === activeItem;
+                item.classList.toggle('active', isActive);
+                if (isActive) {
+                    item.setAttribute('aria-current', 'page');
+                } else {
+                    item.removeAttribute('aria-current');
+                }
+            });
+        };
+
+        const currentTopNavItem = adminTopNav?.querySelector('[data-topnav-item].active');
+        if (currentTopNavItem) {
+            currentTopNavItem.setAttribute('aria-current', 'page');
+            requestAnimationFrame(() => {
+                adminTopNav.scrollLeft = Math.max(0, currentTopNavItem.offsetLeft - (adminTopNav.clientWidth - currentTopNavItem.offsetWidth) / 2);
+            });
+        }
+
+        adminTopNav?.addEventListener('click', (event) => {
+            const item = event.target.closest('[data-topnav-item]');
+            if (!item || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || item.target === '_blank') {
+                return;
+            }
+
+            setActiveTopNavItem(item);
+            requestAnimationFrame(() => {
+                adminTopNav.scrollTo({
+                    left: Math.max(0, item.offsetLeft - (adminTopNav.clientWidth - item.offsetWidth) / 2),
+                    behavior: 'smooth',
+                });
+            });
+        });
 
         searchToggle?.addEventListener('click', (event) => {
             event.stopPropagation();

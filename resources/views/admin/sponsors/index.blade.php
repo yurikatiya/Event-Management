@@ -3,8 +3,8 @@
 @section('title', 'Sponsors')
 
 @section('content')
-<div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-8 lg:px-10">
-    <div class="mx-auto max-w-[1400px]">
+<div class="min-h-[calc(100vh-4rem)] bg-white px-4 py-8 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
         <header class="mb-8 flex items-center justify-between gap-4">
             <div class="shrink-0">
                 <h1 class="text-3xl font-bold tracking-tight text-[#16324f]">Sponsors</h1>

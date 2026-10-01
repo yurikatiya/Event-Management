@@ -6,77 +6,122 @@ use App\Models\Event;
 use App\Models\Category;
 use App\Models\Gallery;
 use App\Models\Partner;
+use App\Models\Service;
 use App\Models\Sponsor;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Schema;
+use App\Models\Team;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $monthExpression = Schema::getConnection()->getDriverName() === 'sqlite'
-            ? "CAST(strftime('%m', start_date) AS INTEGER)"
-            : 'MONTH(start_date)';
+        $upcomingEventCount = Event::query()
+            ->whereIn('status', ['published', 'upcoming', 'approved'])
+            ->whereDate('start_date', '>=', today())
+            ->count();
+        $publishedTeamCount = Team::where('status', 'published')->count();
+        $activeSponsorCount = Sponsor::whereIn('status', ['active', 'published'])->count();
+        $galleryCount = Gallery::count();
 
-        $eventPerformance = Event::query()
-            ->selectRaw("{$monthExpression} as month, COUNT(*) as total")
-            ->whereYear('start_date', now()->year)
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('total', 'month');
+        $stats = [
+            [
+                'label' => 'Total Events',
+                'value' => Event::count(),
+                'detail' => "{$upcomingEventCount} event mendatang",
+                'icon' => 'bi-calendar-event',
+                'iconStyle' => 'background-color: #e0f2fe; color: #0284c7;',
+            ],
+            [
+                'label' => 'Total Tim',
+                'value' => Team::count(),
+                'detail' => "{$publishedTeamCount} dipublikasikan",
+                'icon' => 'bi-people',
+                'iconStyle' => 'background-color: #ede9fe; color: #7c3aed;',
+            ],
+            [
+                'label' => 'Sponsor Aktif',
+                'value' => $activeSponsorCount,
+                'detail' => Sponsor::count() . ' total sponsor',
+                'icon' => 'bi-star',
+                'iconStyle' => 'background-color: #fef3c7; color: #d97706;',
+            ],
+            [
+                'label' => 'Total Gallery',
+                'value' => $galleryCount,
+                'detail' => "{$galleryCount} item tersimpan",
+                'icon' => 'bi-image',
+                'iconStyle' => 'background-color: #d1fae5; color: #059669;',
+            ],
+        ];
 
-        $monthlyLabels = collect(range(1, 12))->map(fn (int $month) => Carbon::create()->month($month)->format('M'));
-        $monthlyTotals = collect(range(1, 12))->map(fn (int $month) => (int) ($eventPerformance[$month] ?? 0));
-        $articles = Schema::hasTable('articles')
-            ? Schema::getConnection()->table('articles')->latest()->limit(5)->get()
-            : collect();
-        $contacts = Schema::hasTable('contacts')
-            ? Schema::getConnection()->table('contacts')->latest()->limit(5)->get()
-            : collect();
-        $categoryEventCounts = Category::withCount('events')->orderByDesc('events_count')->limit(6)->get();
-        $eventActivities = Event::query()
-            ->latest('created_at')
-            ->limit(5)
-            ->get(['id', 'name', 'status', 'created_at'])
-            ->map(fn (Event $event) => [
-                'icon' => 'bi-calendar-plus',
-                'title' => 'New event added',
-                'description' => "{$event->name} was added",
+        $contentSummary = [
+            ['label' => 'Categories', 'value' => Category::count()],
+            ['label' => 'Services', 'value' => Service::count()],
+            ['label' => 'Partners', 'value' => Partner::count()],
+            ['label' => 'Teams', 'value' => Team::count()],
+        ];
+
+        $activityRecords = collect()
+            ->concat(Event::latest('created_at')->limit(5)->get()->map(fn (Event $event) => [
+                'label' => $event->name,
+                'type' => 'Event ditambahkan',
                 'created_at' => $event->created_at,
-                'tone' => 'blue',
-            ]);
-        $partnerActivities = Partner::query()
-            ->latest('updated_at')
-            ->limit(5)
-            ->get(['id', 'name', 'updated_at'])
-            ->map(fn (Partner $partner) => [
+                'icon' => 'bi-calendar-event',
+                'tone' => 'sky',
+            ]))
+            ->concat(Gallery::with('event')
+                ->latest('created_at')
+                ->limit(5)
+                ->get(['id', 'event_id', 'file_path', 'caption', 'created_at'])
+                ->map(fn (Gallery $gallery) => [
+                'label' => $gallery->caption ?: $gallery->event?->name ?: basename($gallery->file_path),
+                'type' => 'Gallery ditambahkan',
+                'created_at' => $gallery->created_at,
+                'icon' => 'bi-images',
+                'tone' => 'emerald',
+            ]))
+            ->concat(Sponsor::latest('created_at')->limit(5)->get()->map(fn (Sponsor $sponsor) => [
+                'label' => $sponsor->name,
+                'type' => 'Sponsor ditambahkan',
+                'created_at' => $sponsor->created_at,
+                'icon' => 'bi-star',
+                'tone' => 'amber',
+            ]))
+            ->concat(Partner::latest('created_at')->limit(5)->get()->map(fn (Partner $partner) => [
+                'label' => $partner->name,
+                'type' => 'Partner ditambahkan',
+                'created_at' => $partner->created_at,
                 'icon' => 'bi-buildings',
-                'title' => 'Partner updated',
-                'description' => "{$partner->name} information updated",
-                'created_at' => $partner->updated_at,
-                'tone' => 'green',
-            ]);
-        $recentActivities = $eventActivities->concat($partnerActivities)->sortByDesc('created_at')->take(5)->values();
+                'tone' => 'blue',
+            ]))
+            ->concat(Team::latest('created_at')->limit(5)->get()->map(fn (Team $team) => [
+                'label' => $team->name,
+                'type' => 'Anggota tim ditambahkan',
+                'created_at' => $team->created_at,
+                'icon' => 'bi-person',
+                'tone' => 'violet',
+            ]))
+            ->concat(Service::latest('created_at')->limit(5)->get()->map(fn (Service $service) => [
+                'label' => $service->name,
+                'type' => 'Layanan ditambahkan',
+                'created_at' => $service->created_at,
+                'icon' => 'bi-grid',
+                'tone' => 'cyan',
+            ]))
+            ->sortByDesc('created_at')
+            ->take(5)
+            ->values();
 
         return view('admin.dashboard', [
-            'metrics' => [
-                'events' => Event::count(),
-                'upcomingEvents' => Event::whereIn('status', ['upcoming', 'approved'])->whereDate('start_date', '>=', today())->count(),
-                'partners' => Partner::count(),
-                'sponsors' => Sponsor::count(),
-            ],
-            'recentEvents' => Event::with('category')->latest()->limit(5)->get(),
-            'upcomingEvents' => Event::with('category')->whereIn('status', ['upcoming', 'approved'])->whereDate('start_date', '>=', today())->orderBy('start_date')->limit(4)->get(),
-            'statusCounts' => Event::query()->selectRaw('status, COUNT(*) as total')->groupBy('status')->pluck('total', 'status'),
-            'recentArticles' => $articles,
-            'categoryEventCounts' => $categoryEventCounts,
-            'recentGalleries' => Gallery::with('event')->latest()->limit(5)->get(),
-            'recentPartners' => Sponsor::latest()->limit(5)->get(),
-            'recentContacts' => $contacts,
-            'recentActivities' => $recentActivities,
-            'monthlyLabels' => $monthlyLabels,
-            'monthlyTotals' => $monthlyTotals,
-            'contactCount' => Schema::hasTable('contacts') ? Schema::getConnection()->table('contacts')->count() : 0,
+            'stats' => $stats,
+            'recentEvents' => Event::with('category')->latest('created_at')->limit(5)->get(),
+            'contentSummary' => $contentSummary,
+            'totalContent' => collect($contentSummary)->sum('value'),
+            'topSponsors' => Sponsor::withCount('events')
+                ->orderByDesc('events_count')
+                ->orderBy('name')
+                ->limit(4)
+                ->get(),
+            'recentActivities' => $activityRecords,
         ]);
     }
 }

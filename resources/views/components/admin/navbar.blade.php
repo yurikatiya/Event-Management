@@ -5,14 +5,14 @@
         </a>
     </div>
 
-    <nav class="admin-topnav" aria-label="Admin navigation">
-        <a href="{{ route('admin.dashboard') }}" class="topnav-item {{ request()->routeIs('admin.dashboard', 'admin.dashboard.legacy') ? 'active' : '' }}">Dashboard</a>
-        <a href="{{ route('admin.events.index') }}" class="topnav-item {{ request()->routeIs('admin.events.*') ? 'active' : '' }}">Events</a>
-        <a href="{{ route('admin.categories.index') }}" class="topnav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">Categories</a>
-        <a href="{{ route('admin.sponsors.index') }}" class="topnav-item {{ request()->routeIs('admin.sponsors.*') ? 'active' : '' }}">Sponsors</a>
-        <a href="{{ route('admin.partners.index') }}" class="topnav-item {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}">Partners</a>
-        <a href="{{ route('admin.teams.index') }}" class="topnav-item {{ request()->routeIs('admin.teams.*') ? 'active' : '' }}">Teams</a>
-        <a href="{{ route('admin.gallery.index') }}" class="topnav-item {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">Gallery</a>
+    <nav class="admin-topnav" data-admin-topnav aria-label="Admin navigation">
+        <a href="{{ route('admin.dashboard') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.dashboard', 'admin.dashboard.legacy') ? 'active' : '' }}"><span>Dashboard</span></a>
+        <a href="{{ route('admin.events.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.events.*') ? 'active' : '' }}"><span>Events</span></a>
+        <a href="{{ route('admin.categories.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}"><span>Categories</span></a>
+        <a href="{{ route('admin.sponsors.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.sponsors.*') ? 'active' : '' }}"><span>Sponsors</span></a>
+        <a href="{{ route('admin.partners.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.partners.*') ? 'active' : '' }}"><span>Partners</span></a>
+        <a href="{{ route('admin.teams.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.teams.*') ? 'active' : '' }}"><span>Teams</span></a>
+        <a href="{{ route('admin.gallery.index') }}" data-topnav-item class="topnav-item {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}"><span>Gallery</span></a>
     </nav>
 
     <div class="admin-navbar-actions">

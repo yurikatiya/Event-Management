@@ -17,7 +17,7 @@
 @endphp
 
 <div class="min-h-screen bg-[#f5f7fb] px-4 py-6 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-[1500px]">
+    <div class="mx-auto max-w-7xl">
         <header class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-3xl font-bold tracking-tight text-slate-900">Teams</h1>
