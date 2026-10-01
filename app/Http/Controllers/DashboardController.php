@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Category;
+use App\Models\DashboardCalendarNote;
 use App\Models\Gallery;
 use App\Models\Partner;
 use App\Models\Service;
 use App\Models\Sponsor;
 use App\Models\Team;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class DashboardController extends Controller
 {
@@ -25,6 +28,7 @@ class DashboardController extends Controller
         $stats = [
             [
                 'label' => 'Total Events',
+                'url' => route('admin.events.index'),
                 'value' => Event::count(),
                 'detail' => "{$upcomingEventCount} event mendatang",
                 'icon' => 'bi-calendar-event',
@@ -32,6 +36,7 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Total Tim',
+                'url' => route('admin.teams.index'),
                 'value' => Team::count(),
                 'detail' => "{$publishedTeamCount} dipublikasikan",
                 'icon' => 'bi-people',
@@ -39,6 +44,7 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Sponsor Aktif',
+                'url' => route('admin.sponsors.index'),
                 'value' => $activeSponsorCount,
                 'detail' => Sponsor::count() . ' total sponsor',
                 'icon' => 'bi-star',
@@ -46,6 +52,7 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Total Gallery',
+                'url' => route('admin.gallery.index'),
                 'value' => $galleryCount,
                 'detail' => "{$galleryCount} item tersimpan",
                 'icon' => 'bi-image',
@@ -53,12 +60,69 @@ class DashboardController extends Controller
             ],
         ];
 
-        $contentSummary = [
-            ['label' => 'Categories', 'value' => Category::count()],
-            ['label' => 'Services', 'value' => Service::count()],
-            ['label' => 'Partners', 'value' => Partner::count()],
-            ['label' => 'Teams', 'value' => Team::count()],
-        ];
+        $currentYear = now()->year;
+        $availableEventYears = Event::query()
+            ->whereNotNull('start_date')
+            ->get(['start_date'])
+            ->map(fn (Event $event) => $event->start_date->year)
+            ->unique()
+            ->sort()
+            ->toBase()
+            ->values();
+
+        if ($availableEventYears->isEmpty()) {
+            $availableEventYears->push($currentYear);
+        }
+
+        $defaultChartYear = $availableEventYears->last();
+        $requestedChartYear = request()->integer('chart_year', $defaultChartYear);
+        $chartYear = $availableEventYears->contains($requestedChartYear)
+            ? $requestedChartYear
+            : $defaultChartYear;
+        $chartYearIndex = $availableEventYears->search($chartYear);
+        $previousChartYear = $chartYearIndex > 0 ? $availableEventYears->get($chartYearIndex - 1) : null;
+        $nextChartYear = $chartYearIndex < $availableEventYears->count() - 1
+            ? $availableEventYears->get($chartYearIndex + 1)
+            : null;
+        $eventCountsByMonth = Event::query()
+            ->whereYear('start_date', $chartYear)
+            ->get(['start_date'])
+            ->countBy(fn (Event $event) => $event->start_date->month);
+        $monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        $monthlyEventSummary = collect(range(1, 12))
+            ->map(fn (int $month) => [
+                'month' => $month,
+                'label' => $monthLabels[$month - 1],
+                'value' => $eventCountsByMonth->get($month, 0),
+            ])
+            ->all();
+        $yearStart = now()->startOfYear()->toDateString();
+        $yearEnd = now()->endOfYear()->toDateString();
+        $calendarEvents = Event::query()
+            ->whereNotNull('start_date')
+            ->where(function ($query) use ($yearStart, $yearEnd) {
+                $query->whereBetween('start_date', [$yearStart, $yearEnd])
+                    ->orWhere(function ($query) use ($yearStart) {
+                        $query->whereDate('start_date', '<', $yearStart)
+                            ->whereDate('end_date', '>=', $yearStart);
+                    });
+            })
+            ->orderBy('start_date')
+            ->get(['name', 'start_date', 'end_date'])
+            ->map(fn (Event $event) => [
+                'name' => $event->name,
+                'startDate' => $event->start_date->format('Y-m-d'),
+                'endDate' => ($event->end_date ?? $event->start_date)->format('Y-m-d'),
+            ])
+            ->values();
+        $calendarNotes = DashboardCalendarNote::query()
+            ->where('user_id', auth()->id())
+            ->whereYear('note_date', $currentYear)
+            ->get(['note_date', 'note'])
+            ->mapWithKeys(fn (DashboardCalendarNote $calendarNote) => [
+                $calendarNote->note_date->format('Y-m-d') => $calendarNote->note,
+            ])
+            ->all();
 
         $activityRecords = collect()
             ->concat(Event::latest('created_at')->limit(5)->get()->map(fn (Event $event) => [
@@ -114,8 +178,14 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'stats' => $stats,
             'recentEvents' => Event::with('category')->latest('created_at')->limit(5)->get(),
-            'contentSummary' => $contentSummary,
-            'totalContent' => collect($contentSummary)->sum('value'),
+            'monthlyEventSummary' => $monthlyEventSummary,
+            'currentYear' => $currentYear,
+            'chartYear' => $chartYear,
+            'previousChartYear' => $previousChartYear,
+            'nextChartYear' => $nextChartYear,
+            'yearEventCount' => $eventCountsByMonth->sum(),
+            'calendarEvents' => $calendarEvents,
+            'calendarNotes' => $calendarNotes,
             'topSponsors' => Sponsor::withCount('events')
                 ->orderByDesc('events_count')
                 ->orderBy('name')
@@ -123,5 +193,60 @@ class DashboardController extends Controller
                 ->get(),
             'recentActivities' => $activityRecords,
         ]);
+    }
+
+    public function storeCalendarNote(Request $request): JsonResponse
+    {
+        $date = $this->validatedCalendarNoteDate($request);
+        $validated = $request->validate([
+            'note' => ['required', 'string', 'max:1000'],
+        ]);
+
+        $calendarNote = DashboardCalendarNote::query()
+            ->where('user_id', $request->user()->id)
+            ->whereDate('note_date', $date)
+            ->first();
+
+        if ($calendarNote) {
+            $calendarNote->update(['note' => trim($validated['note'])]);
+        } else {
+            $calendarNote = DashboardCalendarNote::create([
+                'user_id' => $request->user()->id,
+                'note_date' => $date,
+                'note' => trim($validated['note']),
+            ]);
+        }
+
+        return response()->json([
+            'date' => $calendarNote->note_date->format('Y-m-d'),
+            'note' => $calendarNote->note,
+        ]);
+    }
+
+    public function destroyCalendarNote(Request $request): JsonResponse
+    {
+        $date = $this->validatedCalendarNoteDate($request);
+
+        DashboardCalendarNote::query()
+            ->where('user_id', $request->user()->id)
+            ->whereDate('note_date', $date)
+            ->delete();
+
+        return response()->json(['date' => $date, 'deleted' => true]);
+    }
+
+    private function validatedCalendarNoteDate(Request $request): string
+    {
+        $validated = $request->validate([
+            'date' => ['required', 'date_format:Y-m-d'],
+        ]);
+
+        if ((int) substr($validated['date'], 0, 4) !== now()->year) {
+            throw ValidationException::withMessages([
+                'date' => 'Catatan hanya dapat dibuat untuk tahun berjalan.',
+            ]);
+        }
+
+        return $validated['date'];
     }
 }

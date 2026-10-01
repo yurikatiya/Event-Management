@@ -26,6 +26,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard.legacy');
+    Route::post('/dashboard/calendar-notes', [DashboardController::class, 'storeCalendarNote'])->name('admin.dashboard.calendar-notes.store');
+    Route::delete('/dashboard/calendar-notes', [DashboardController::class, 'destroyCalendarNote'])->name('admin.dashboard.calendar-notes.destroy');
     Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
     Route::post('/settings', [SettingsController::class, 'update'])->name('admin.settings.store');
 

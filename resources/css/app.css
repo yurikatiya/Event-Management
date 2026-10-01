@@ -481,7 +481,7 @@ body {
 .quick-card {
     display: flex;
     align-items: flex-end;
-    min-height: 9rem;
+    min-height: 6.25rem;
     padding: 1rem;
     border: 1px solid #e2e8f0;
     border-radius: 1.3rem;
@@ -2209,6 +2209,81 @@ body.admin-body:has(.dashboard-shell-content) .dashboard-highlight-card .bg-whit
 
 body.admin-body:has(.dashboard-shell-content) .dashboard-highlight-card .border-sky-400\/50 {
     border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card {
+    --overview-accent: #5146c8;
+    position: relative;
+    min-height: 7.5rem;
+    overflow: hidden;
+    border: 1px solid #e8e7f5 !important;
+    border-radius: 1.5rem !important;
+    background: linear-gradient(145deg, #ffffff 0%, #f7f6ff 100%) !important;
+    padding: 0.5rem 0.75rem !important;
+    box-shadow: 0 14px 28px rgba(67, 63, 139, 0.13) !important;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card-2 {
+    --overview-accent: #56a9c4;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card-3 {
+    --overview-accent: #7654c7;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card-4 {
+    --overview-accent: #26a887;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card::before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0.45rem;
+    border-radius: 0 1.5rem 1.5rem 0;
+    background: var(--overview-accent);
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .dashboard-stat-card:hover {
+    border-color: #d8d5f0 !important;
+    box-shadow: 0 18px 34px rgba(67, 63, 139, 0.18) !important;
+    transform: translateY(-2px);
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .stat-card-arrow {
+    width: 1.75rem;
+    height: 1.75rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .stat-card-arrow:hover {
+    background: color-mix(in srgb, var(--overview-accent) 14%, white);
+    transform: translateY(-1px);
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .stat-card-arrow:focus-visible {
+    outline: 2px solid var(--overview-accent);
+    outline-offset: 3px;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .stat-card-icon {
+    border-radius: 0.75rem !important;
+    background: transparent !important;
+    color: #1f2937 !important;
+    box-shadow: none !important;
+}
+
+body.admin-body:has(.dashboard-shell-content) .dashboard-stats-grid .stat-card-arrow {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--overview-accent) 28%, white);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--overview-accent) 7%, white);
+    color: var(--overview-accent);
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--overview-accent) 5%, white);
 }
 
 body.admin-body:has(.dashboard-shell-content) .admin-main > main:has(.dashboard-shell-content) {

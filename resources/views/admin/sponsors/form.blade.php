@@ -1,14 +1,18 @@
-<div class="mx-auto max-w-[900px] p-5 sm:p-8">
-    <div class="mb-6">
-        <a href="{{ route('admin.sponsors.index') }}" class="text-sm font-semibold text-sky-600"><i class="bi bi-arrow-left me-2"></i>Back to Sponsors</a>
-        <h1 class="mt-4 text-3xl font-bold text-slate-900">{{ $title }}</h1>
+<div class="min-h-[calc(100vh-4rem)] bg-blue-50/50 px-5 py-8 sm:px-8 lg:px-10">
+    <div class="mx-auto max-w-[900px]">
+        <div class="mb-6 rounded-[2.5rem] border border-blue-100 bg-white/90 p-6 shadow-[0_12px_40px_rgba(59,130,246,0.06)] sm:p-8">
+            <a href="{{ route('admin.sponsors.index') }}" class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"><i class="bi bi-arrow-left"></i><span>Back to Sponsors</span></a>
+            <p class="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-sky-600">Event Management</p>
+            <h1 class="mt-2 text-3xl font-bold tracking-tight text-slate-900">{{ $title }}</h1>
+            <p class="mt-2 text-sm text-slate-500">{{ $sponsor ? 'Perbarui informasi sponsor.' : 'Tambahkan sponsor baru.' }}</p>
+        </div>
     </div>
 
     @if ($errors->any())
-        <div class="mb-5 rounded-xl bg-rose-50 p-4 text-sm text-rose-600">{{ $errors->first() }}</div>
+        <div class="mx-auto mb-6 max-w-[900px] rounded-[1.75rem] border border-rose-100 bg-rose-50 p-5 text-sm text-rose-600">{{ $errors->first() }}</div>
     @endif
 
-    <form method="POST" action="{{ $formAction }}" enctype="multipart/form-data" class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+    <form method="POST" action="{{ $formAction }}" enctype="multipart/form-data" class="mx-auto max-w-[900px] rounded-[2.5rem] border border-blue-100 bg-white p-6 shadow-[0_12px_40px_rgba(59,130,246,0.06)] sm:p-8">
         @csrf
         @if ($method !== 'POST')
             @method($method)
@@ -16,66 +20,66 @@
 
         <div class="space-y-5">
             <div>
-                <label for="name" class="form-label">Sponsor Name</label>
-                <input id="name" name="name" value="{{ old('name', $sponsor?->name) }}" required class="form-input">
-                @error('name')<p class="form-error">{{ $message }}</p>@enderror
+                <label for="name" class="mb-2 block text-sm font-semibold text-slate-700">Sponsor Name</label>
+                <input id="name" name="name" value="{{ old('name', $sponsor?->name) }}" required class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                @error('name')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
             </div>
 
             <div class="grid gap-5 sm:grid-cols-2">
                 <div>
-                    <label for="tier" class="form-label">Tier</label>
-                    <select id="tier" name="tier" required class="form-input">
+                    <label for="tier" class="mb-2 block text-sm font-semibold text-slate-700">Tier</label>
+                    <select id="tier" name="tier" required class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                         @foreach (['Platinum', 'Gold', 'Silver', 'Bronze'] as $tier)
                             <option value="{{ $tier }}" @selected(old('tier', $sponsor?->tier) === $tier)>{{ $tier }}</option>
                         @endforeach
                     </select>
-                    @error('tier')<p class="form-error">{{ $message }}</p>@enderror
+                    @error('tier')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
                 </div>
 
                 <div>
-                    <label for="status" class="form-label">Status</label>
-                    <select id="status" name="status" required class="form-input">
+                    <label for="status" class="mb-2 block text-sm font-semibold text-slate-700">Status</label>
+                    <select id="status" name="status" required class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                         @foreach (['draft' => 'Draft', 'active' => 'Active', 'archived' => 'Archived'] as $value => $label)
                             <option value="{{ $value }}" @selected(old('status', $sponsor?->status ?? 'draft') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
-                    @error('status')<p class="form-error">{{ $message }}</p>@enderror
+                    @error('status')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
                 </div>
             </div>
 
             <div class="grid gap-5 sm:grid-cols-2">
                 <div>
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email', $sponsor?->email) }}" class="form-input">
-                    @error('email')<p class="form-error">{{ $message }}</p>@enderror
+                    <label for="email" class="mb-2 block text-sm font-semibold text-slate-700">Email</label>
+                    <input id="email" type="email" name="email" value="{{ old('email', $sponsor?->email) }}" class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                    @error('email')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
                 </div>
 
                 <div>
-                    <label for="phone" class="form-label">Phone</label>
-                    <input id="phone" type="tel" name="phone" value="{{ old('phone', $sponsor?->phone) }}" class="form-input">
-                    @error('phone')<p class="form-error">{{ $message }}</p>@enderror
+                    <label for="phone" class="mb-2 block text-sm font-semibold text-slate-700">Phone</label>
+                    <input id="phone" type="tel" name="phone" value="{{ old('phone', $sponsor?->phone) }}" class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                    @error('phone')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
                 </div>
             </div>
 
             <div>
-                <label for="logo" class="form-label">Logo</label>
+                <label for="logo" class="mb-2 block text-sm font-semibold text-slate-700">Logo</label>
                 @if ($sponsor?->logo)
-                    <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->name }} logo" class="mb-3 h-20 w-20 rounded-xl object-contain">
+                    <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->name }} logo" class="mb-3 h-20 w-20 rounded-2xl border border-blue-100 bg-blue-50 p-2 object-contain">
                 @endif
-                <input id="logo" type="file" name="logo" accept="image/*" class="form-input">
-                @error('logo')<p class="form-error">{{ $message }}</p>@enderror
+                <input id="logo" type="file" name="logo" accept="image/*" class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
+                @error('logo')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
             </div>
 
             <div>
-                <label for="description" class="form-label">Description</label>
-                <textarea id="description" name="description" rows="5" class="form-input">{{ old('description', $sponsor?->description) }}</textarea>
-                @error('description')<p class="form-error">{{ $message }}</p>@enderror
+                <label for="description" class="mb-2 block text-sm font-semibold text-slate-700">Description</label>
+                <textarea id="description" name="description" rows="5" class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 py-3 text-sm leading-6 text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">{{ old('description', $sponsor?->description) }}</textarea>
+                @error('description')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
             </div>
         </div>
 
-        <div class="mt-8 flex justify-end gap-3 border-t border-slate-100 pt-5">
-            <a href="{{ route('admin.sponsors.index') }}" class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600">Cancel</a>
-            <button type="submit" class="rounded-xl bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-sky-600"><i class="bi bi-check-lg me-2"></i>Save Sponsor</button>
+        <div class="mt-8 flex flex-col-reverse gap-3 border-t border-blue-100 pt-5 sm:flex-row sm:justify-end">
+            <a href="{{ route('admin.sponsors.index') }}" class="inline-flex h-11 items-center justify-center rounded-full border border-blue-100 bg-white px-5 text-sm font-semibold text-slate-600 transition hover:bg-blue-50">Cancel</a>
+            <button type="submit" class="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-sky-600 px-5 text-sm font-semibold text-white transition hover:bg-sky-700"><i class="bi bi-check-lg"></i>Save Sponsor</button>
         </div>
     </form>
 </div>
