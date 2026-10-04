@@ -74,6 +74,23 @@
                                 <p><i class="bi bi-calendar3 me-2 text-sky-500"></i>@if (! $event->start_date)Date not set @elseif ($event->end_date && $event->start_date->year !== $event->end_date->year){{ $event->start_date->year }}-{{ $event->end_date->year }}@else{{ $event->start_date->year }}@endif</p>
                                 <p class="truncate"><i class="bi bi-geo-alt me-2 text-sky-500"></i>{{ $event->location }}</p>
                             </div>
+                            @if ($event->published_galleries_count > 0)
+                                <div class="mt-4 rounded-xl border border-blue-100 bg-white p-3">
+                                    <div class="flex items-center justify-between gap-3">
+                                        <span class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600"><i class="bi bi-images text-sky-600" aria-hidden="true"></i>Dokumentasi</span>
+                                        <span class="shrink-0 text-xs font-semibold text-sky-700">{{ $event->published_galleries_count }} foto</span>
+                                    </div>
+                                    <div class="mt-2 flex items-center gap-2">
+                                        @foreach ($event->gallery_previews as $photo)
+                                            <img src="{{ asset('storage/' . $photo->file_path) }}" alt="{{ $photo->caption ?: 'Dokumentasi ' . $event->name }}" class="h-14 w-16 shrink-0 rounded-lg border border-blue-50 object-cover" loading="lazy">
+                                        @endforeach
+                                        @if ($event->published_galleries_count > $event->gallery_previews->count())
+                                            <span class="inline-flex h-14 min-w-14 items-center justify-center rounded-lg bg-blue-50 px-2 text-xs font-semibold text-blue-700">+{{ $event->published_galleries_count - $event->gallery_previews->count() }}</span>
+                                        @endif
+                                    </div>
+                                    <a href="{{ route('admin.gallery.index', ['search' => $event->name]) }}" class="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-sky-700 hover:text-sky-900">Lihat album <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+                                </div>
+                            @endif
                             <div class="mt-5 flex items-center justify-between border-t border-blue-100 pt-4">
                                 <span class="text-xs font-medium text-slate-400">Event details</span>
                                 <div class="flex items-center gap-2">

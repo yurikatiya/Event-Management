@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Gallery;
 use App\Models\Sponsor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,12 +16,24 @@ class EventController extends Controller
     public function index(Request $request): View
     {
         $events = Event::with('category')
+            ->withCount(['galleries as published_galleries_count' => fn ($query) => $query->where('status', 'published')])
             ->when($request->filled('search'), fn ($query) => $query->where('name', 'like', '%' . $request->string('search') . '%'))
             ->when($request->filled('category_id'), fn ($query) => $query->where('category_id', $request->integer('category_id')))
             ->when($request->filled('status'), fn ($query) => $query->where('status', $request->string('status')))
             ->latest('start_date')
             ->paginate(10)
             ->withQueryString();
+        $galleryPreviews = Gallery::query()
+            ->whereIn('event_id', $events->getCollection()->modelKeys())
+            ->where('status', 'published')
+            ->latest()
+            ->get(['event_id', 'file_path', 'caption'])
+            ->groupBy('event_id')
+            ->map(fn ($photos) => $photos->take(3)->values());
+        $events->getCollection()->each(fn (Event $event) => $event->setAttribute(
+            'gallery_previews',
+            $galleryPreviews->get($event->id, collect()),
+        ));
 
         return view('admin.events.index', [
             'events' => $events,
