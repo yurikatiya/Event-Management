@@ -70,6 +70,8 @@ class LiveSearchTest extends TestCase
             ->assertSee('Foto sebelumnya')
             ->assertSee('Foto berikutnya')
             ->assertSee('Edit foto')
-            ->assertSee('Hapus foto');
+            ->assertSee('Hapus foto')
+            ->assertSee('aria-label="Tambah foto"', false)
+            ->assertSee('M12 5v14M5 12h14', false);
     }
 }

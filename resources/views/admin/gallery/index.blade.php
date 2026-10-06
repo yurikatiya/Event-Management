@@ -40,13 +40,17 @@
                                 <p class="gallery-album-kicker"><i class="bi bi-folder2-open" aria-hidden="true"></i> ALBUM EVENT</p>
                                 <h2>{{ $selectedAlbum['name'] }}</h2>
                             </div>
-                            <span class="gallery-album-count">{{ $selectedAlbum['photos']->count() }} foto</span>
+                            <div class="gallery-album-heading-meta">
+                                <span class="gallery-album-count">{{ $selectedAlbum['photos']->count() }} foto</span>
+                                <a href="{{ route('admin.gallery.create') }}" class="gallery-add-photo-button" aria-label="Tambah foto" title="Tambah foto">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg>
+                                </a>
+                            </div>
                         </div>
                         @if ($selectedAlbum['event']?->start_date)
                             <p class="gallery-album-date"><i class="bi bi-calendar3" aria-hidden="true"></i> {{ $selectedAlbum['event']->start_date->translatedFormat('d M Y') }}</p>
                         @endif
                     </div>
-                    <a href="{{ route('admin.gallery.create') }}" class="gallery-secondary-button"><i class="bi bi-plus-lg" aria-hidden="true"></i> Tambah foto</a>
                 </div>
 
                 <section class="gallery-photo-grid" data-gallery-photo-grid aria-label="Foto dalam album {{ $selectedAlbum['name'] }}">
