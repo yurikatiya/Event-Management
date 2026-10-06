@@ -81,10 +81,15 @@ class GalleryController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
+        $preselectedEvent = $request->filled('event_id')
+            ? Event::findOrFail($request->query('event_id'))
+            : null;
+
         return view('admin.gallery.create', [
             'events' => Event::orderByDesc('start_date')->orderBy('name')->get(),
+            'preselectedEvent' => $preselectedEvent,
         ]);
     }
 
@@ -133,7 +138,9 @@ class GalleryController extends Controller
             throw $exception;
         }
 
-        return redirect()->route('admin.gallery.index')->with('success', count($request->file('images')) . ' foto berhasil ditambahkan ke album ' . $event->name . '.');
+        return redirect()
+            ->route('admin.gallery.index', ['album' => 'event-' . $event->id])
+            ->with('success', count($request->file('images')) . ' foto berhasil ditambahkan ke album ' . $event->name . '.');
     }
 
     public function edit(Gallery $gallery): View

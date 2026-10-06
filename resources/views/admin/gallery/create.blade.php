@@ -1,18 +1,24 @@
 @extends('layouts.admin')
 
-@section('title', 'Buat Album Galeri')
+@section('title', $preselectedEvent ? 'Tambah Foto Galeri' : 'Buat Album Galeri')
 
 @section('content')
+@php
+    $selectedEvent = $events->firstWhere('id', old('event_id', $preselectedEvent?->id));
+    $isAddingToAlbum = $preselectedEvent !== null;
+@endphp
 <div class="crud-page gallery-album-page px-4 py-8 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-5xl">
         <header class="gallery-library-header mb-7 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-                <a href="{{ route('admin.gallery.index') }}" class="crud-back-link mb-5 inline-flex items-center gap-2"><i class="bi bi-arrow-left" aria-hidden="true"></i><span>Kembali ke galeri</span></a>
+                <a href="{{ $isAddingToAlbum ? route('admin.gallery.index', ['album' => 'event-' . $preselectedEvent->id]) : route('admin.gallery.index') }}" class="crud-back-link mb-5 inline-flex items-center gap-2"><i class="bi bi-arrow-left" aria-hidden="true"></i><span>{{ $isAddingToAlbum ? 'Kembali ke album' : 'Kembali ke galeri' }}</span></a>
                 <p class="gallery-eyebrow">DOKUMENTASI EVENT</p>
-                <h1 class="gallery-page-title">Buat album</h1>
-                <p class="gallery-page-subtitle">Pilih event, lalu tambahkan semua foto dokumentasinya.</p>
+                <h1 class="gallery-page-title">{{ $isAddingToAlbum ? 'Tambah foto' : 'Buat album' }}</h1>
+                <p class="gallery-page-subtitle">
+                    {{ $isAddingToAlbum ? 'Foto baru akan langsung ditambahkan ke album ' . $preselectedEvent->name . '.' : 'Pilih event, lalu tambahkan semua foto dokumentasinya.' }}
+                </p>
             </div>
-            <span class="gallery-upload-limit"><i class="bi bi-images" aria-hidden="true"></i> Maks. 15 foto per album</span>
+            <span class="gallery-upload-limit"><i class="bi bi-images" aria-hidden="true"></i> Maks. 15 foto sekali upload</span>
         </header>
 
         @php($imageErrors = $errors->get('images.*'))
@@ -30,7 +36,7 @@
 
         @if ($errors->any())
             <div class="crud-error-summary mb-5" role="alert">
-                <p class="font-semibold">Periksa kembali data album.</p>
+                <p class="font-semibold">Periksa kembali data foto.</p>
                 <ul class="mt-2 list-inside list-disc">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -46,38 +52,49 @@
                 <div class="gallery-section-heading">
                     <span class="gallery-section-number">01</span>
                     <div>
-                        <h2>Masukkan ke event</h2>
-                        <p>Foto akan dikumpulkan dalam folder dokumentasi event yang dipilih.</p>
+                        <h2>{{ $isAddingToAlbum ? 'Album tujuan' : 'Masukkan ke event' }}</h2>
+                        <p>{{ $isAddingToAlbum ? 'Foto tambahan akan masuk ke album event ini.' : 'Foto akan dikumpulkan dalam folder dokumentasi event yang dipilih.' }}</p>
                     </div>
                 </div>
                 <div class="gallery-form-field">
-                    <label for="event_id">Event</label>
-                    @php($selectedEvent = $events->firstWhere('id', old('event_id')))
-                    <div class="gallery-event-picker" data-event-picker>
-                        <input type="hidden" name="event_id" value="{{ old('event_id') }}" data-event-value>
-                        <button type="button" id="event_id" class="gallery-event-trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="gallery-event-options" aria-label="Pilih event" data-event-trigger>
-                            <span class="gallery-event-selected">
-                                <strong data-event-name>{{ $selectedEvent?->name ?? 'Pilih event' }}</strong>
-                                <small data-event-date @if (! $selectedEvent) hidden @endif>{{ $selectedEvent?->start_date?->format('d M Y') }}</small>
+                    @if ($isAddingToAlbum)
+                        <span class="gallery-fixed-event-label">Event</span>
+                        <div class="gallery-fixed-event">
+                            <span class="gallery-fixed-event-icon"><i class="bi bi-calendar-event" aria-hidden="true"></i></span>
+                            <span>
+                                <strong>{{ $preselectedEvent->name }}</strong>
+                                <small>{{ $preselectedEvent->start_date?->format('d M Y') ?? 'Tanggal belum ditentukan' }}</small>
                             </span>
-                            <i class="bi bi-chevron-down" aria-hidden="true"></i>
-                        </button>
-                        <div class="gallery-event-menu" data-event-menu hidden>
-                            <label class="gallery-event-search">
-                                <i class="bi bi-search" aria-hidden="true"></i>
-                                <input id="gallery-event-search-input" type="search" placeholder="Cari nama event..." autocomplete="off" aria-label="Cari event" data-event-search>
-                            </label>
-                            <div class="gallery-event-options" id="gallery-event-options" role="listbox" aria-label="Daftar event" data-event-options>
-                        @foreach ($events as $event)
-                                    <button type="button" class="gallery-event-option" role="option" data-event-option data-value="{{ $event->id }}" data-name="{{ $event->name }}" data-date="{{ $event->start_date?->format('d M Y') }}" data-search="{{ strtolower($event->name . ' ' . ($event->start_date?->format('d M Y') ?? '')) }}" aria-selected="{{ (string) old('event_id') === (string) $event->id ? 'true' : 'false' }}">
-                                        <span><strong>{{ $event->name }}</strong><small>{{ $event->start_date?->format('d M Y') ?? 'Tanggal belum ditentukan' }}</small></span>
-                                        <i class="bi bi-check2" aria-hidden="true"></i>
-                                    </button>
-                        @endforeach
-                                <p class="gallery-event-empty" data-event-empty role="status" hidden>Event tidak ditemukan.</p>
+                        </div>
+                        <input type="hidden" name="event_id" value="{{ $preselectedEvent->id }}" data-event-value>
+                    @else
+                        <label for="event_id">Event</label>
+                        <div class="gallery-event-picker" data-event-picker>
+                            <input type="hidden" name="event_id" value="{{ old('event_id') }}" data-event-value>
+                            <button type="button" id="event_id" class="gallery-event-trigger" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="gallery-event-options" aria-label="Pilih event" data-event-trigger>
+                                <span class="gallery-event-selected">
+                                    <strong data-event-name>{{ $selectedEvent?->name ?? 'Pilih event' }}</strong>
+                                    <small data-event-date @if (! $selectedEvent) hidden @endif>{{ $selectedEvent?->start_date?->format('d M Y') }}</small>
+                                </span>
+                                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                            </button>
+                            <div class="gallery-event-menu" data-event-menu hidden>
+                                <label class="gallery-event-search">
+                                    <i class="bi bi-search" aria-hidden="true"></i>
+                                    <input id="gallery-event-search-input" type="search" placeholder="Cari nama event..." autocomplete="off" aria-label="Cari event" data-event-search>
+                                </label>
+                                <div class="gallery-event-options" id="gallery-event-options" role="listbox" aria-label="Daftar event" data-event-options>
+                            @foreach ($events as $event)
+                                        <button type="button" class="gallery-event-option" role="option" data-event-option data-value="{{ $event->id }}" data-name="{{ $event->name }}" data-date="{{ $event->start_date?->format('d M Y') }}" data-search="{{ strtolower($event->name . ' ' . ($event->start_date?->format('d M Y') ?? '')) }}" aria-selected="{{ (string) old('event_id') === (string) $event->id ? 'true' : 'false' }}">
+                                            <span><strong>{{ $event->name }}</strong><small>{{ $event->start_date?->format('d M Y') ?? 'Tanggal belum ditentukan' }}</small></span>
+                                            <i class="bi bi-check2" aria-hidden="true"></i>
+                                        </button>
+                            @endforeach
+                                    <p class="gallery-event-empty" data-event-empty role="status" hidden>Event tidak ditemukan.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                     @if ($events->isEmpty())
                         <p class="gallery-form-note">Belum ada event. <a href="{{ route('admin.events.create') }}">Buat event terlebih dahulu.</a></p>
                     @endif
@@ -107,22 +124,22 @@
 
             <section class="gallery-form-section gallery-form-grid">
                 <div class="gallery-form-field">
-                    <label for="description">Keterangan album <span>(opsional)</span></label>
+                    <label for="description">{{ $isAddingToAlbum ? 'Keterangan foto' : 'Keterangan album' }} <span>(opsional)</span></label>
                     <textarea id="description" name="description" rows="4" maxlength="1000" placeholder="Tambahkan cerita singkat tentang dokumentasi event ini...">{{ old('description') }}</textarea>
                     @error('description')<p class="gallery-field-error">{{ $message }}</p>@enderror
                 </div>
                 <fieldset class="gallery-form-field">
-                    <legend>Status album</legend>
+                    <legend>{{ $isAddingToAlbum ? 'Status foto' : 'Status album' }}</legend>
                     <div class="gallery-status-options">
                         <label class="gallery-status-choice">
                             <input type="radio" name="status" value="published" @checked(old('status', 'published') === 'published') required>
                             <span class="gallery-status-dot"></span>
-                            <span><strong>Tampil</strong><small>Dapat dilihat di galeri</small></span>
+                            <span><strong>Tampil</strong><small>{{ $isAddingToAlbum ? 'Foto langsung terlihat di album' : 'Dapat dilihat di galeri' }}</small></span>
                         </label>
                         <label class="gallery-status-choice">
                             <input type="radio" name="status" value="draft" @checked(old('status') === 'draft') required>
                             <span class="gallery-status-dot"></span>
-                            <span><strong>Draft</strong><small>Simpan sebagai konsep</small></span>
+                            <span><strong>Draft</strong><small>{{ $isAddingToAlbum ? 'Simpan foto tanpa ditampilkan' : 'Simpan sebagai konsep' }}</small></span>
                         </label>
                     </div>
                     @error('status')<p class="gallery-field-error">{{ $message }}</p>@enderror
@@ -130,8 +147,8 @@
             </section>
 
             <footer class="gallery-form-footer">
-                <a href="{{ route('admin.gallery.index') }}" class="gallery-secondary-button">Batal</a>
-                <button type="submit" class="gallery-primary-button" @disabled($events->isEmpty())><i class="bi bi-folder-plus" aria-hidden="true"></i><span>Buat album</span></button>
+                <a href="{{ $isAddingToAlbum ? route('admin.gallery.index', ['album' => 'event-' . $preselectedEvent->id]) : route('admin.gallery.index') }}" class="gallery-secondary-button">Batal</a>
+                <button type="submit" class="gallery-primary-button" @disabled($events->isEmpty())><i class="bi {{ $isAddingToAlbum ? 'bi-plus-lg' : 'bi-folder-plus' }}" aria-hidden="true"></i><span>{{ $isAddingToAlbum ? 'Tambah foto' : 'Buat album' }}</span></button>
             </footer>
         </form>
     </div>

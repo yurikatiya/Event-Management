@@ -42,7 +42,7 @@
                             </div>
                             <div class="gallery-album-heading-meta">
                                 <span class="gallery-album-count">{{ $selectedAlbum['photos']->count() }} foto</span>
-                                <a href="{{ route('admin.gallery.create') }}" class="gallery-add-photo-button" aria-label="Tambah foto" title="Tambah foto">
+                                <a href="{{ route('admin.gallery.create', ['event_id' => $selectedAlbum['event']?->id]) }}" class="gallery-add-photo-button" aria-label="Tambah foto" title="Tambah foto">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg>
                                 </a>
                             </div>

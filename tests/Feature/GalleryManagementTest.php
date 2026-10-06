@@ -34,9 +34,50 @@ class GalleryManagementTest extends TestCase
             ->get(route('admin.gallery.create'))
             ->assertOk()
             ->assertSee($event->name)
+            ->assertSee('Buat album')
             ->assertSee('name="images[]"', false)
             ->assertSee('multiple', false)
             ->assertSee('Status album');
+    }
+
+    public function test_admin_can_add_photos_directly_to_an_existing_event_album(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        $event = $this->createEvent($admin, 'Seminar Sangkuriang');
+        Gallery::create([
+            'event_id' => $event->id,
+            'title' => $event->name,
+            'caption' => 'existing-photo.jpg',
+            'status' => 'published',
+            'file_path' => 'gallery/events/' . $event->id . '/existing-photo.jpg',
+        ]);
+
+        $this->actingAs($admin)
+            ->get(route('admin.gallery.create', ['event_id' => $event->id]))
+            ->assertOk()
+            ->assertSee('Tambah foto')
+            ->assertSee('Foto baru akan langsung ditambahkan ke album Seminar Sangkuriang.')
+            ->assertSee('name="event_id" value="' . $event->id . '"', false)
+            ->assertDontSee('role="combobox"', false)
+            ->assertSee('Keterangan foto')
+            ->assertSee('Status foto');
+
+        $this->post(route('admin.gallery.store'), [
+            'event_id' => $event->id,
+            'status' => 'published',
+            'images' => [UploadedFile::fake()->create('additional-photo.jpg', 100, 'image/jpeg')],
+        ])
+            ->assertRedirect(route('admin.gallery.index', ['album' => 'event-' . $event->id]))
+            ->assertSessionHas('success', '1 foto berhasil ditambahkan ke album Seminar Sangkuriang.');
+
+        $this->assertDatabaseCount('galleries', 2);
+        $this->assertDatabaseHas('galleries', [
+            'event_id' => $event->id,
+            'caption' => 'additional-photo.jpg',
+            'status' => 'published',
+        ]);
     }
 
     public function test_admin_can_create_an_event_album_with_multiple_photos(): void
@@ -56,7 +97,7 @@ class GalleryManagementTest extends TestCase
                     UploadedFile::fake()->create('sangkuriang-2.jpg', 100, 'image/jpeg'),
                 ],
             ])
-            ->assertRedirect(route('admin.gallery.index'))
+            ->assertRedirect(route('admin.gallery.index', ['album' => 'event-' . $event->id]))
             ->assertSessionHas('success', '2 foto berhasil ditambahkan ke album Seminar Sangkuriang.');
 
         $this->assertDatabaseCount('galleries', 2);
