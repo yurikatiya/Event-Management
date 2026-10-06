@@ -13,8 +13,8 @@
             <a href="{{ route('admin.services.create') }}" class="inline-flex h-11 w-11 items-center justify-center self-end rounded-full border border-slate-200 bg-white text-2xl font-light leading-none text-slate-700 shadow-[0_8px_18px_rgba(15,23,42,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-[0_12px_22px_rgba(15,23,42,0.12)] sm:self-auto" style="line-height: 1;" title="Add Service" aria-label="Add Service">+</a>
         </header>
 
-        <form method="GET" class="mb-6 max-w-[360px]">
-            <div class="relative"><i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search services..." class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm outline-none focus:border-sky-400"></div>
+        <form method="GET" data-live-search class="mb-6 max-w-[360px]">
+            <div class="relative"><i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input name="search" value="{{ request('search') }}" placeholder="Search services..." autocomplete="off" class="h-11 w-full rounded-xl border border-slate-200 bg-white pl-11 pr-4 text-sm outline-none focus:border-sky-400"></div>
         </form>
 
         @php
@@ -27,6 +27,8 @@
                 'Design & Digital Agency' => 'bi-brush',
             ];
         @endphp
+        <p data-live-search-summary class="mb-4 text-sm text-slate-500">{{ $services->total() }} layanan</p>
+        <div data-live-search-results>
         <section class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
             @forelse ($services as $service)
                 <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -46,6 +48,7 @@
             @endforelse
         </section>
         @if ($services->hasPages()) <div class="mt-6 rounded-2xl border border-slate-200 bg-white px-6 py-4">{{ $services->links() }}</div> @endif
+        </div>
     </div>
 </div>
 @endsection

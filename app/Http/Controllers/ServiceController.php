@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
 
 class ServiceController extends Controller
 {
@@ -43,18 +44,30 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service): RedirectResponse
     {
         $data = $this->validatedData($request);
+        $oldImage = $service->image;
         if ($request->hasFile('image')) {
-            Storage::disk('public')->delete($service->image);
-            $data['image'] = $request->file('image')->store('services', 'public');
+            $newImage = $request->file('image')->store('services', 'public');
+            if (! $newImage) {
+                throw new RuntimeException('Gambar layanan gagal disimpan ke penyimpanan.');
+            }
+
+            $data['image'] = $newImage;
         }
         $service->update($data);
+
+        if (isset($newImage) && $oldImage) {
+            Storage::disk('public')->delete($oldImage);
+        }
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil diperbarui.');
     }
 
     public function destroy(Service $service): RedirectResponse
     {
-        Storage::disk('public')->delete($service->image);
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
+        }
+
         $service->delete();
 
         return redirect()->route('admin.services.index')->with('success', 'Layanan berhasil dihapus.');

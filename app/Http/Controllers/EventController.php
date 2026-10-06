@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
 
 class EventController extends Controller
 {
@@ -71,14 +72,23 @@ class EventController extends Controller
     public function update(Request $request, Event $event): RedirectResponse
     {
         $data = $this->validatedData($request);
+        $oldPoster = $event->poster;
         if ($request->hasFile('poster')) {
-            Storage::disk('public')->delete($event->poster);
-            $data['poster'] = $request->file('poster')->store('events', 'public');
+            $newPoster = $request->file('poster')->store('events', 'public');
+            if (! $newPoster) {
+                throw new RuntimeException('Cover event gagal disimpan ke penyimpanan.');
+            }
+
+            $data['poster'] = $newPoster;
         } else {
             unset($data['poster']);
         }
         $event->update($data);
         $event->sponsors()->sync($request->input('sponsor_ids', []));
+
+        if (isset($newPoster) && $oldPoster) {
+            Storage::disk('public')->delete($oldPoster);
+        }
 
         return redirect()->route('admin.events.index')->with('success', 'Event berhasil diperbarui.');
     }

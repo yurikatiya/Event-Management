@@ -61,12 +61,10 @@
                 </div>
             </div>
 
-            <div>
+            <div data-image-upload>
                 <label for="logo" class="mb-2 block text-sm font-semibold text-slate-700">Logo</label>
-                @if ($sponsor?->logo)
-                    <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->name }} logo" class="mb-3 h-20 w-20 rounded-2xl border border-blue-100 bg-blue-50 p-2 object-contain">
-                @endif
-                <input id="logo" type="file" name="logo" accept="image/*" class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
+                <img @if ($sponsor?->logo) src="{{ asset('storage/' . $sponsor->logo) }}" @endif alt="{{ $sponsor?->name ?? 'Pratinjau logo sponsor' }}" data-image-preview-target @if (! $sponsor?->logo) hidden @endif class="mb-3 h-20 w-20 rounded-2xl border border-blue-100 bg-blue-50 p-2 object-contain">
+                <input id="logo" type="file" name="logo" accept="image/*" data-image-preview class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
                 @error('logo')<p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>@enderror
             </div>
 

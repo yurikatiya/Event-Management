@@ -230,6 +230,156 @@
             window.setTimeout(closeToast, 4000);
         });
 
+        const showImageUploadAlert = (message, title = 'Upload gagal') => {
+            let container = document.querySelector('[data-gallery-alerts]');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'gallery-upload-alerts';
+                container.dataset.galleryAlerts = '';
+                document.querySelector('main')?.prepend(container);
+            }
+
+            const alert = document.createElement('div');
+            alert.className = 'gallery-upload-alert';
+            alert.setAttribute('role', 'alert');
+            alert.innerHTML = '<i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><div><strong></strong><span></span></div><button type="button" aria-label="Tutup notifikasi"><i class="bi bi-x-lg" aria-hidden="true"></i></button>';
+            alert.querySelector('strong').textContent = title;
+            alert.querySelector('span').textContent = message;
+
+            const dismiss = () => {
+                alert.classList.add('is-closing');
+                window.setTimeout(() => alert.remove(), 180);
+            };
+
+            alert.querySelector('button').addEventListener('click', dismiss);
+            container.append(alert);
+            window.setTimeout(() => {
+                if (alert.isConnected) dismiss();
+            }, 6000);
+        };
+
+        document.querySelectorAll('input[type="file"][data-image-preview]').forEach((input) => {
+            input.addEventListener('change', () => {
+                const file = input.files?.[0];
+                if (!file) return;
+
+                if (file.size > 2 * 1024 * 1024) {
+                    input.value = '';
+                    showImageUploadAlert(`${file.name} melebihi batas 2 MB. Pilih gambar yang lebih kecil.`);
+                    return;
+                }
+
+                const preview = input.closest('[data-image-upload]')?.querySelector('[data-image-preview-target]')
+                    ?? document.querySelector(`[data-image-preview-target-for="${input.id}"]`);
+                if (!preview) return;
+
+                if (preview.dataset.objectUrl) URL.revokeObjectURL(preview.dataset.objectUrl);
+                preview.dataset.objectUrl = URL.createObjectURL(file);
+                preview.src = preview.dataset.objectUrl;
+                preview.hidden = false;
+            });
+        });
+
+        let liveSearchTimer;
+        let liveSearchController;
+        const requestLiveSearch = async (form, {url = null, historyMode = 'replace'} = {}) => {
+            const resultTarget = document.querySelector('[data-live-search-results]');
+            if (!resultTarget) return false;
+
+            const targetUrl = url ?? new URL(form.action || window.location.href, window.location.href);
+            if (!url) {
+                const formData = new FormData(form);
+                targetUrl.search = '';
+                for (const [key, value] of formData.entries()) {
+                    if (typeof value === 'string' && value !== '') targetUrl.searchParams.append(key, value);
+                }
+            } else if (form) {
+                Array.from(form.elements).forEach((field) => {
+                    if (field.name && targetUrl.searchParams.has(field.name)) {
+                        field.value = targetUrl.searchParams.get(field.name);
+                    } else if (field.name === 'search') {
+                        field.value = '';
+                    }
+                });
+            }
+            targetUrl.searchParams.delete('page');
+
+            liveSearchController?.abort();
+            const requestController = new AbortController();
+            liveSearchController = requestController;
+            resultTarget.classList.add('is-searching');
+
+            try {
+                const response = await fetch(targetUrl, {
+                    headers: {'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html'},
+                    signal: requestController.signal,
+                });
+                if (!response.ok) throw new Error(`Pencarian gagal (${response.status}).`);
+
+                const html = new DOMParser().parseFromString(await response.text(), 'text/html');
+                const nextResults = html.querySelector('[data-live-search-results]');
+                if (!nextResults) {
+                    window.location.assign(targetUrl);
+                    return true;
+                }
+
+                resultTarget.innerHTML = nextResults.innerHTML;
+                document.querySelectorAll('[data-live-search-summary]').forEach((summary, index) => {
+                    const nextSummary = html.querySelectorAll('[data-live-search-summary]')[index];
+                    if (nextSummary) summary.innerHTML = nextSummary.innerHTML;
+                });
+                document.title = html.title;
+
+                if (historyMode === 'push') window.history.pushState({}, '', targetUrl);
+                else window.history.replaceState({}, '', targetUrl);
+
+                return true;
+            } catch (error) {
+                if (error.name !== 'AbortError' && !requestController.signal.aborted) {
+                    console.error(error);
+                    resultTarget.classList.remove('is-searching');
+                    showImageUploadAlert(error.message, 'Pencarian gagal');
+                }
+                return false;
+            } finally {
+                if (liveSearchController === requestController) resultTarget.classList.remove('is-searching');
+            }
+        };
+
+        document.addEventListener('input', (event) => {
+            const input = event.target.closest('form[data-live-search] input[name="search"]');
+            if (!input) return;
+
+            window.clearTimeout(liveSearchTimer);
+            liveSearchTimer = window.setTimeout(() => {
+                requestLiveSearch(input.form);
+            }, 220);
+        });
+
+        document.addEventListener('submit', (event) => {
+            const form = event.target.closest('form[data-live-search]');
+            if (!form) return;
+
+            event.preventDefault();
+            window.clearTimeout(liveSearchTimer);
+            requestLiveSearch(form);
+        });
+
+        document.addEventListener('click', (event) => {
+            const link = event.target.closest('[data-live-search-results] nav a[href], [data-live-search-results] .pagination a[href]');
+            if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+
+            const targetUrl = new URL(link.href, window.location.href);
+            if (targetUrl.origin !== window.location.origin) return;
+            event.preventDefault();
+            requestLiveSearch(document.querySelector('form[data-live-search]'), {url: targetUrl, historyMode: 'push'});
+        });
+
+        window.addEventListener('popstate', () => {
+            const form = document.querySelector('form[data-live-search]');
+            if (form) requestLiveSearch(form, {url: new URL(window.location.href)});
+        });
+
         const isDarkModeEnabled = document.body.classList.contains('theme-dark');
         applyTheme(isDarkModeEnabled);
         themeToggle?.addEventListener('click', () => {

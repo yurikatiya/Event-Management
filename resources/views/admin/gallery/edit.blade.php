@@ -12,13 +12,23 @@
             <p class="crud-form-subtitle mt-2 text-sm text-slate-500">Perbarui judul, deskripsi, status, atau gambar foto.</p>
         </div>
 
+        @if ($errors->has('image'))
+            <div class="gallery-upload-alerts" data-gallery-alerts>
+                <div class="gallery-upload-alert" data-gallery-alert role="alert">
+                    <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+                    <div><strong>Upload gagal</strong><span>{{ $errors->first('image') }}</span></div>
+                    <button type="button" data-gallery-alert-close aria-label="Tutup notifikasi"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        @endif
+
         <form method="POST" action="{{ route('admin.gallery.update', $gallery) }}" enctype="multipart/form-data" class="crud-form-panel space-y-6 rounded-[2.5rem] border border-blue-100 bg-white p-6 shadow-[0_12px_40px_rgba(59,130,246,0.06)] sm:p-8">
                 @csrf
                 @method('PUT')
 
                 @if ($gallery->file_path)
                     <div class="overflow-hidden rounded-[2rem] border border-blue-100 bg-blue-50 p-3">
-                        <img src="{{ asset('storage/' . $gallery->file_path) }}" alt="{{ $gallery->title }}" class="h-48 w-full rounded-2xl object-cover">
+                        <img src="{{ asset('storage/' . $gallery->file_path) }}" alt="{{ $gallery->title }}" data-image-preview-target-for="image" class="h-48 w-full rounded-2xl object-cover">
                     </div>
                 @endif
 
@@ -51,7 +61,9 @@
 
                 <div>
                     <label for="image" class="mb-2 block text-sm font-semibold text-slate-700">Ganti gambar</label>
-                    <input id="image" type="file" name="image" accept="image/*" class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
+                    <div data-image-upload>
+                        <input id="image" type="file" name="image" accept="image/jpeg,image/png,image/webp" data-gallery-image data-image-preview class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
+                    </div>
                     @error('image')
                         <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>
                     @enderror
@@ -75,4 +87,26 @@
         </div>
     </div>
 </div>
+<script>
+    const galleryAlertContainer = document.querySelector('[data-gallery-alerts]') ?? (() => {
+        const container = document.createElement('div');
+        container.className = 'gallery-upload-alerts';
+        container.dataset.galleryAlerts = '';
+        document.querySelector('main')?.prepend(container);
+        return container;
+    })();
+
+    const dismissGalleryAlert = (alert) => {
+        alert.classList.add('is-closing');
+        window.setTimeout(() => alert.remove(), 180);
+    };
+
+    galleryAlertContainer.querySelectorAll('[data-gallery-alert]').forEach((alert) => {
+        alert.querySelector('[data-gallery-alert-close]')?.addEventListener('click', () => dismissGalleryAlert(alert));
+        window.setTimeout(() => {
+            if (alert.isConnected) dismissGalleryAlert(alert);
+        }, 6000);
+    });
+
+</script>
 @endsection

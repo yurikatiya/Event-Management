@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
 
 class SponsorController extends Controller
 {
@@ -43,11 +44,20 @@ class SponsorController extends Controller
     public function update(Request $request, Sponsor $sponsor): RedirectResponse
     {
         $data = $this->validatedData($request);
+        $oldLogo = $sponsor->logo;
         if ($request->hasFile('logo')) {
-            Storage::disk('public')->delete($sponsor->logo);
-            $data['logo'] = $request->file('logo')->store('sponsors', 'public');
+            $newLogo = $request->file('logo')->store('sponsors', 'public');
+            if (! $newLogo) {
+                throw new RuntimeException('Logo sponsor gagal disimpan ke penyimpanan.');
+            }
+
+            $data['logo'] = $newLogo;
         }
         $sponsor->update($data);
+
+        if (isset($newLogo) && $oldLogo) {
+            Storage::disk('public')->delete($oldLogo);
+        }
 
         return redirect()->route('admin.sponsors.index')->with('success', 'Sponsor berhasil diperbarui.');
     }

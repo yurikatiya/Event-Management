@@ -92,17 +92,18 @@
                 <aside class="space-y-6">
                     <div>
                         <label class="mb-2 block text-sm font-semibold text-slate-700">Cover Image</label>
-                        <label for="poster" class="group relative flex min-h-[240px] cursor-pointer items-center justify-center overflow-hidden rounded-[2rem] border-2 border-dashed border-blue-200 bg-blue-50/60 p-4 text-center transition hover:border-sky-300 hover:bg-blue-50">
+                        <label for="poster" data-image-upload class="group relative flex min-h-[240px] cursor-pointer items-center justify-center overflow-hidden rounded-[2rem] border-2 border-dashed border-blue-200 bg-blue-50/60 p-4 text-center transition hover:border-sky-300 hover:bg-blue-50">
                             @if ($event?->poster)
-                                <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->name }} banner" class="absolute inset-0 h-full w-full object-cover opacity-80">
+                                <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->name }} banner" data-image-preview-target class="absolute inset-0 h-full w-full object-cover opacity-80">
                             @else
                                 <div class="absolute inset-0 bg-blue-50/60"></div>
+                                <img alt="Pratinjau cover event" data-image-preview-target hidden class="absolute inset-0 h-full w-full object-cover opacity-80">
                             @endif
                             <span class="relative flex flex-col items-center gap-3 rounded-2xl border border-blue-100 bg-white px-5 py-4 text-sm font-semibold text-blue-700 shadow-sm">
                                 <i class="bi bi-upload text-2xl text-sky-600"></i>
                                 <span>{{ $event?->poster ? 'Change Cover' : 'Add Cover' }}</span>
                             </span>
-                            <input id="poster" type="file" name="poster" accept="image/*" class="sr-only">
+                            <input id="poster" type="file" name="poster" accept="image/*" data-image-preview class="sr-only">
                         </label>
                         <p class="mt-2 text-xs text-slate-400">PNG, JPG up to 2MB. Cover wajib untuk event baru.</p>
                         @error('poster') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror

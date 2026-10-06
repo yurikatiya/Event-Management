@@ -23,7 +23,7 @@
                 <div>
                     <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-sky-600">Event Management</p>
                     <h1 class="text-3xl font-bold tracking-tight text-slate-900">Teams</h1>
-                    <p class="mt-2 text-sm text-slate-500">{{ $teams->total() }} anggota terdaftar</p>
+                    <p data-live-search-summary class="mt-2 text-sm text-slate-500">{{ $teams->total() }} anggota terdaftar</p>
                 </div>
                 <a href="{{ route('admin.teams.create') }}" class="inline-flex h-12 items-center justify-center gap-2 self-start rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(2,132,199,0.2)] transition hover:-translate-y-0.5 hover:bg-sky-700 sm:self-auto" title="Tambah Team"><i class="bi bi-plus-lg text-base leading-none"></i><span>Add Team</span></a>
             </div>
@@ -49,11 +49,11 @@
 
         <section class="overflow-hidden rounded-[2rem] border border-blue-100 bg-white shadow-[0_10px_32px_rgba(59,130,246,0.055)]">
             <div class="flex flex-col gap-3 border-b border-blue-100 bg-blue-50/40 p-4 sm:flex-row sm:items-center">
-                <form method="GET" class="relative flex-1">
+                <form method="GET" data-live-search class="relative flex-1">
                     @if (request('division')) <input type="hidden" name="division" value="{{ request('division') }}"> @endif
                     @if (request('status')) <input type="hidden" name="status" value="{{ request('status') }}"> @endif
                     <i class="bi bi-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400"></i>
-                    <input name="search" value="{{ request('search') }}" placeholder="Cari anggota tim..." class="h-11 w-full rounded-full border border-blue-100 bg-white pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100">
+                    <input name="search" value="{{ request('search') }}" placeholder="Cari anggota tim..." autocomplete="off" class="h-11 w-full rounded-full border border-blue-100 bg-white pl-10 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-300 focus:ring-4 focus:ring-sky-100">
                 </form>
                 <form method="GET" class="flex items-center gap-2">
                     <select name="division" onchange="this.form.submit()" class="h-11 rounded-full border border-blue-100 bg-white px-4 text-sm text-slate-600 outline-none focus:border-sky-300 focus:ring-4 focus:ring-sky-100">
@@ -76,6 +76,7 @@
                 </div>
             </div>
 
+            <div data-live-search-results>
             <div data-team-table class="overflow-x-auto">
                 <table class="w-full min-w-[850px] text-left">
                     <thead class="border-b border-blue-100 bg-blue-50/60 text-[10px] font-bold uppercase tracking-wide text-blue-700">
@@ -107,17 +108,17 @@
             </div>
 
             @if ($teams->hasPages())<div class="border-t border-blue-100 px-6 py-4 text-xs">{{ $teams->links() }}</div>@endif
-        </section>
-    </div>
+        </div>
+    </section>
 </div>
 
 @push('scripts')
 <script>
-    const teamViewButtons = document.querySelectorAll('[data-team-view]');
-    const teamTable = document.querySelector('[data-team-table]');
-    const teamGrid = document.querySelector('[data-team-grid]');
     const setTeamView = (view) => {
         const isGrid = view === 'grid';
+        const teamTable = document.querySelector('[data-team-table]');
+        const teamGrid = document.querySelector('[data-team-grid]');
+        const teamViewButtons = document.querySelectorAll('[data-team-view]');
         teamTable?.classList.toggle('hidden', isGrid);
         teamGrid?.classList.toggle('hidden', !isGrid);
         teamGrid?.classList.toggle('grid', isGrid);
@@ -129,7 +130,10 @@
         });
         localStorage.setItem('teams-view', view);
     };
-    teamViewButtons.forEach((button) => button.addEventListener('click', () => setTeamView(button.dataset.teamView)));
+    document.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-team-view]');
+        if (button) setTeamView(button.dataset.teamView);
+    });
     setTeamView(localStorage.getItem('teams-view') || 'table');
 </script>
 @endpush

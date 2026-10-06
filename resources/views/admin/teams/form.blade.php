@@ -29,12 +29,10 @@
                 <label for="division" class="mb-2 block text-sm font-semibold text-slate-700">Division</label>
                 <input id="division" name="division" value="{{ old('division', $team?->division) }}" placeholder="Contoh: Creative, Design, Operations" class="h-12 w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
             </div>
-            <div>
+            <div data-image-upload>
                 <label for="photo" class="mb-2 block text-sm font-semibold text-slate-700">Photo</label>
-                @if ($team?->photo)
-                    <img src="{{ asset('storage/' . $team->photo) }}" alt="{{ $team->name }}" class="mb-3 h-24 w-24 rounded-full border-4 border-blue-50 object-cover">
-                @endif
-                <input id="photo" type="file" name="photo" accept="image/*" class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
+                <img @if ($team?->photo) src="{{ asset('storage/' . $team->photo) }}" @endif alt="{{ $team?->name ?? 'Pratinjau foto tim' }}" data-image-preview-target @if (! $team?->photo) hidden @endif class="mb-3 h-24 w-24 rounded-full border-4 border-blue-50 object-cover">
+                <input id="photo" type="file" name="photo" accept="image/*" data-image-preview class="w-full rounded-2xl border border-blue-100 bg-blue-50/50 px-3 py-2 text-sm text-slate-700 file:mr-4 file:rounded-full file:border-0 file:bg-sky-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-sky-700">
                 @error('photo') <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> @enderror
             </div>
             <div>

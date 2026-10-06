@@ -10,12 +10,12 @@
                 <div>
                     <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-sky-600">Event Management</p>
                     <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events</h1>
-                    <p class="mt-2 text-sm text-slate-500">{{ $events->total() }} event terdaftar</p>
+                    <p data-live-search-summary class="mt-2 text-sm text-slate-500">{{ $events->total() }} event terdaftar</p>
                 </div>
-                <form method="GET" class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
+                <form method="GET" data-live-search class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
                     <div class="relative w-full sm:w-[220px]">
                         <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-sky-500"></i>
-                        <input name="search" value="{{ request('search') }}" placeholder="Search events..." class="h-12 w-full rounded-full border border-blue-100 bg-blue-50/70 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                        <input name="search" value="{{ request('search') }}" placeholder="Search events..." autocomplete="off" class="h-12 w-full rounded-full border border-blue-100 bg-blue-50/70 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                     </div>
                     <div class="relative sm:w-[155px]">
                         <select name="category_id" class="h-12 w-full appearance-none rounded-full border border-blue-100 bg-blue-50/70 px-4 pr-9 text-sm text-slate-700 outline-none focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
@@ -44,6 +44,7 @@
             </div>
         </header>
 
+        <div data-live-search-results>
         <section class="grid grid-cols-1 gap-5 xl:grid-cols-2">
             @forelse ($events as $event)
                 @php
@@ -65,6 +66,9 @@
                             <span class="mt-2 h-8 w-px bg-blue-100"></span>
                         </div>
                         <div class="min-w-0 flex-1">
+                            @if ($event->poster)
+                                <img src="{{ asset('storage/' . $event->poster) }}" alt="{{ $event->name }} cover" class="mb-4 h-36 w-full rounded-2xl border border-blue-100 object-cover" loading="lazy">
+                            @endif
                             <div class="flex flex-wrap items-start justify-between gap-3">
                                 <h2 class="min-w-0 text-lg font-bold text-slate-800">{{ $event->name }}</h2>
                                 <span class="shrink-0 rounded-full border border-blue-100 px-3 py-1.5 text-xs font-semibold {{ $statusClass }}">{{ $statusLabel }}</span>
@@ -120,6 +124,7 @@
         @if ($events->hasPages())
             <div class="mt-6">{{ $events->links('admin.events.pagination') }}</div>
         @endif
+        </div>
     </div>
 </div>
 @endsection

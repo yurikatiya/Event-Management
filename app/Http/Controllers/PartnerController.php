@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
 
 class PartnerController extends Controller
 {
@@ -43,18 +44,30 @@ class PartnerController extends Controller
     public function update(Request $request, Partner $partner): RedirectResponse
     {
         $data = $this->validatedData($request);
+        $oldLogo = $partner->logo;
         if ($request->hasFile('logo')) {
-            Storage::disk('public')->delete($partner->logo);
-            $data['logo'] = $request->file('logo')->store('partners', 'public');
+            $newLogo = $request->file('logo')->store('partners', 'public');
+            if (! $newLogo) {
+                throw new RuntimeException('Logo partner gagal disimpan ke penyimpanan.');
+            }
+
+            $data['logo'] = $newLogo;
         }
         $partner->update($data);
+
+        if (isset($newLogo) && $oldLogo) {
+            Storage::disk('public')->delete($oldLogo);
+        }
 
         return redirect()->route('admin.partners.index')->with('success', 'Partner berhasil diperbarui.');
     }
 
     public function destroy(Partner $partner): RedirectResponse
     {
-        Storage::disk('public')->delete($partner->logo);
+        if ($partner->logo) {
+            Storage::disk('public')->delete($partner->logo);
+        }
+
         $partner->delete();
 
         return redirect()->route('admin.partners.index')->with('success', 'Partner berhasil dihapus.');

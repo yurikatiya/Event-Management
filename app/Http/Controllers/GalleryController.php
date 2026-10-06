@@ -8,8 +8,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
+use Throwable;
 
 class GalleryController extends Controller
 {
@@ -23,12 +26,30 @@ class GalleryController extends Controller
                 $event = $albumPhotos->first()->event;
 
                 return [
+                    'key' => $event ? 'event-' . $event->id : 'unassigned',
                     'event' => $event,
                     'name' => $event?->name ?? 'Dokumentasi tanpa event',
                     'photos' => $albumPhotos->values(),
                 ];
             })
-            ->filter(function (array $album) use ($search) {
+            ->values();
+        $selectedAlbumKey = $request->query('album');
+        $selectedAlbum = $selectedAlbumKey
+            ? $albums->firstWhere('key', $selectedAlbumKey)
+            : null;
+
+        if (! $selectedAlbum) {
+            $selectedAlbumKey = null;
+        }
+
+        if ($selectedAlbum) {
+            $selectedAlbum['photos'] = $selectedAlbum['photos']
+                ->filter(fn (Gallery $photo) => $search === ''
+                    || stripos($photo->caption ?? '', $search) !== false
+                    || stripos($photo->title ?? '', $search) !== false)
+                ->values();
+        } elseif (! $selectedAlbumKey) {
+            $albums = $albums->filter(function (array $album) use ($search) {
                 if ($search === '') {
                     return true;
                 }
@@ -38,20 +59,24 @@ class GalleryController extends Controller
                         stripos($photo->caption ?? '', $search) !== false
                         || stripos($photo->title ?? '', $search) !== false
                     );
-            })
-            ->values();
+            })->values();
+        }
+
         $perPage = 12;
         $page = LengthAwarePaginator::resolveCurrentPage();
-        $albums = new LengthAwarePaginator(
-            $albums->forPage($page, $perPage)->values(),
-            $albums->count(),
-            $perPage,
-            $page,
-            ['path' => LengthAwarePaginator::resolveCurrentPath(), 'query' => $request->query()],
-        );
+        if (! $selectedAlbum) {
+            $albums = new LengthAwarePaginator(
+                $albums->forPage($page, $perPage)->values(),
+                $albums->count(),
+                $perPage,
+                $page,
+                ['path' => LengthAwarePaginator::resolveCurrentPath(), 'query' => $request->query()],
+            );
+        }
 
         return view('admin.gallery.index', [
             'albums' => $albums,
+            'selectedAlbum' => $selectedAlbum,
             'photoCount' => $photos->count(),
         ]);
     }
@@ -81,16 +106,31 @@ class GalleryController extends Controller
         ]);
 
         $event = Event::findOrFail($validated['event_id']);
+        $storedPaths = [];
 
-        foreach ($request->file('images') as $image) {
-            Gallery::create([
-                'event_id' => $event->id,
-                'title' => $event->name,
-                'caption' => $image->getClientOriginalName(),
-                'description' => $validated['description'] ?? null,
-                'status' => $validated['status'],
-                'file_path' => $image->store('gallery/events/' . $event->id, 'public'),
-            ]);
+        try {
+            DB::transaction(function () use ($request, $validated, $event, &$storedPaths): void {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('gallery/events/' . $event->id, 'public');
+                    if (! $path) {
+                        throw new RuntimeException('Foto gagal disimpan ke penyimpanan galeri.');
+                    }
+
+                    $storedPaths[] = $path;
+
+                    Gallery::create([
+                        'event_id' => $event->id,
+                        'title' => $event->name,
+                        'caption' => $image->getClientOriginalName(),
+                        'description' => $validated['description'] ?? null,
+                        'status' => $validated['status'],
+                        'file_path' => $path,
+                    ]);
+                }
+            });
+        } catch (Throwable $exception) {
+            Storage::disk('public')->delete($storedPaths);
+            throw $exception;
         }
 
         return redirect()->route('admin.gallery.index')->with('success', count($request->file('images')) . ' foto berhasil ditambahkan ke album ' . $event->name . '.');
@@ -118,21 +158,37 @@ class GalleryController extends Controller
             'image.max' => 'Ukuran gambar maksimal 2 MB.',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($gallery->file_path) {
-                Storage::disk('public')->delete($gallery->file_path);
+        $oldFilePath = $gallery->file_path;
+        $newFilePath = null;
+
+        try {
+            DB::transaction(function () use ($request, $validated, $gallery, &$newFilePath): void {
+                if ($request->hasFile('image')) {
+                    $newFilePath = $request->file('image')->store('gallery', 'public');
+                    if (! $newFilePath) {
+                        throw new RuntimeException('Foto gagal disimpan ke penyimpanan galeri.');
+                    }
+                }
+
+                $gallery->update([
+                    'event_id' => $validated['event_id'] ?? null,
+                    'title' => $validated['title'],
+                    'description' => $validated['description'] ?? null,
+                    'status' => $validated['status'],
+                    'file_path' => $newFilePath ?? $oldFilePath,
+                ]);
+            });
+        } catch (Throwable $exception) {
+            if ($newFilePath) {
+                Storage::disk('public')->delete($newFilePath);
             }
 
-            $validated['file_path'] = $request->file('image')->store('gallery', 'public');
+            throw $exception;
         }
 
-        $gallery->update([
-            'event_id' => $validated['event_id'] ?? null,
-            'title' => $validated['title'],
-            'description' => $validated['description'] ?? null,
-            'status' => $validated['status'],
-            'file_path' => $validated['file_path'] ?? $gallery->file_path,
-        ]);
+        if ($newFilePath && $oldFilePath) {
+            Storage::disk('public')->delete($oldFilePath);
+        }
 
         return redirect()->route('admin.gallery.index')->with('success', 'Foto berhasil diperbarui.');
     }

@@ -21,12 +21,12 @@
             <div>
                     <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-sky-600">Event Management</p>
                     <h1 class="text-3xl font-bold tracking-tight text-slate-900">Categories</h1>
-                    <p class="mt-2 text-sm text-slate-500">{{ $categories->total() }} kategori terdaftar</p>
+                    <p data-live-search-summary class="mt-2 text-sm text-slate-500">{{ $categories->total() }} kategori terdaftar</p>
             </div>
                 <div class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
-                    <form method="GET" class="relative w-full sm:w-[280px]">
+                    <form method="GET" data-live-search class="relative w-full sm:w-[280px]">
                         <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-sky-500"></i>
-                        <input name="search" value="{{ request('search') }}" placeholder="Search categories..." class="h-12 w-full rounded-full border border-blue-100 bg-blue-50/70 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
+                        <input name="search" value="{{ request('search') }}" placeholder="Search categories..." autocomplete="off" class="h-12 w-full rounded-full border border-blue-100 bg-blue-50/70 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                     </form>
                     <a href="{{ route('admin.categories.create') }}" class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(2,132,199,0.2)] transition hover:-translate-y-0.5 hover:bg-sky-700">
                         <i class="bi bi-plus-lg text-base leading-none"></i>
@@ -36,6 +36,7 @@
             </div>
         </header>
 
+        <div data-live-search-results>
         <section class="grid grid-cols-1 gap-5 xl:grid-cols-2">
             @forelse ($categories as $category)
                 @php($color = $categoryColors[$loop->index % count($categoryColors)])
@@ -82,6 +83,7 @@
         @if ($categories->hasPages())
             <div class="mt-6 rounded-[1.75rem] border border-blue-100 bg-white px-6 py-4 shadow-sm">{{ $categories->links() }}</div>
         @endif
+        </div>
     </div>
 </div>
 @endsection

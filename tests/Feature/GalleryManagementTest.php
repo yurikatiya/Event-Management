@@ -68,11 +68,38 @@ class GalleryManagementTest extends TestCase
         ]);
 
         $firstPhoto = Gallery::query()->where('event_id', $event->id)->firstOrFail();
+        Storage::disk('public')->assertExists($firstPhoto->file_path);
         $this->get(route('admin.events.index'))
             ->assertOk()
             ->assertSee('2 foto')
             ->assertSee(asset('storage/' . $firstPhoto->file_path), false)
             ->assertSee(route('admin.gallery.index', ['search' => $event->name]), false);
+    }
+
+    public function test_gallery_upload_rejects_photos_over_two_megabytes_with_a_modern_alert(): void
+    {
+        Storage::fake('public');
+
+        $admin = User::factory()->create(['role' => 'admin']);
+        $event = $this->createEvent($admin, 'Seminar Sangkuriang');
+
+        $this->actingAs($admin)
+            ->from(route('admin.gallery.create'))
+            ->followingRedirects()
+            ->post(route('admin.gallery.store'), [
+                'event_id' => $event->id,
+                'status' => 'published',
+                'images' => [UploadedFile::fake()->createWithContent(
+                    'too-large.png',
+                    base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/ylcAAAAASUVORK5CYII=') . str_repeat('0', 2 * 1024 * 1024),
+                )],
+            ])
+            ->assertOk()
+            ->assertSee('Upload gagal')
+            ->assertSee('Ukuran setiap foto maksimal 2 MB.');
+
+        $this->assertDatabaseCount('galleries', 0);
+        $this->assertSame([], Storage::disk('public')->allFiles());
     }
 
     public function test_gallery_index_groups_photos_by_event_album(): void

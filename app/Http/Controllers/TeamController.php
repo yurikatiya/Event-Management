@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
 
 class TeamController extends Controller
 {
@@ -58,18 +59,30 @@ class TeamController extends Controller
     public function update(Request $request, Team $team): RedirectResponse
     {
         $data = $this->validatedData($request);
+        $oldPhoto = $team->photo;
         if ($request->hasFile('photo')) {
-            Storage::disk('public')->delete($team->photo);
-            $data['photo'] = $request->file('photo')->store('teams', 'public');
+            $newPhoto = $request->file('photo')->store('teams', 'public');
+            if (! $newPhoto) {
+                throw new RuntimeException('Foto anggota tim gagal disimpan ke penyimpanan.');
+            }
+
+            $data['photo'] = $newPhoto;
         }
         $team->update($data);
+
+        if (isset($newPhoto) && $oldPhoto) {
+            Storage::disk('public')->delete($oldPhoto);
+        }
 
         return redirect()->route('admin.teams.index')->with('success', 'Data anggota tim berhasil diperbarui.');
     }
 
     public function destroy(Team $team): RedirectResponse
     {
-        Storage::disk('public')->delete($team->photo);
+        if ($team->photo) {
+            Storage::disk('public')->delete($team->photo);
+        }
+
         $team->delete();
 
         return redirect()->route('admin.teams.index')->with('success', 'Anggota tim berhasil dihapus.');

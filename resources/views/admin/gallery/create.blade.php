@@ -15,6 +15,19 @@
             <span class="gallery-upload-limit"><i class="bi bi-images" aria-hidden="true"></i> Maks. 15 foto per album</span>
         </header>
 
+        @php($imageErrors = $errors->get('images.*'))
+        @if ($errors->has('images') || $imageErrors !== [])
+            <div class="gallery-upload-alerts" data-gallery-alerts>
+                <div class="gallery-upload-alert" data-gallery-alert role="alert">
+                    <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+                    <div><strong>Upload gagal</strong><span>{{ $errors->first('images') ?: $errors->first('images.*') }}</span></div>
+                    <button type="button" data-gallery-alert-close aria-label="Tutup notifikasi"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        @else
+            <div class="gallery-upload-alerts" data-gallery-alerts></div>
+        @endif
+
         @if ($errors->any())
             <div class="crud-error-summary mb-5" role="alert">
                 <p class="font-semibold">Periksa kembali data album.</p>
@@ -236,17 +249,50 @@
         openEventPicker();
     });
 
-    const renderGalleryFiles = () => {
-        let files = Array.from(galleryFiles?.files ?? []);
-        const exceededLimit = files.length > 15;
+    const galleryAlertContainer = document.querySelector('[data-gallery-alerts]');
+    const maxImageSize = 2 * 1024 * 1024;
 
-        if (exceededLimit) {
-            const transfer = new DataTransfer();
-            files.slice(0, 15).forEach((file) => transfer.items.add(file));
-            galleryFiles.files = transfer.files;
-            files = Array.from(transfer.files);
+    const dismissGalleryAlert = (alert) => {
+        alert.classList.add('is-closing');
+        window.setTimeout(() => alert.remove(), 180);
+    };
+
+    const showGalleryAlert = (message) => {
+        const alert = document.createElement('div');
+        alert.className = 'gallery-upload-alert';
+        alert.setAttribute('role', 'alert');
+        alert.innerHTML = '<i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i><div><strong>Upload gagal</strong><span></span></div><button type="button" aria-label="Tutup notifikasi"><i class="bi bi-x-lg" aria-hidden="true"></i></button>';
+        alert.querySelector('span').textContent = message;
+        alert.querySelector('button').addEventListener('click', () => dismissGalleryAlert(alert));
+        galleryAlertContainer.append(alert);
+        window.setTimeout(() => {
+            if (alert.isConnected) dismissGalleryAlert(alert);
+        }, 6000);
+    };
+
+    galleryAlertContainer?.querySelectorAll('[data-gallery-alert]').forEach((alert) => {
+        alert.querySelector('[data-gallery-alert-close]')?.addEventListener('click', () => dismissGalleryAlert(alert));
+        window.setTimeout(() => {
+            if (alert.isConnected) dismissGalleryAlert(alert);
+        }, 6000);
+    });
+
+    const renderGalleryFiles = (incomingFiles = Array.from(galleryFiles?.files ?? [])) => {
+        const tooLarge = incomingFiles.filter((file) => file.size > maxImageSize);
+        const exceededLimit = incomingFiles.length > 15;
+        const validFiles = incomingFiles.filter((file) => file.size <= maxImageSize).slice(0, 15);
+        const transfer = new DataTransfer();
+        validFiles.forEach((file) => transfer.items.add(file));
+        galleryFiles.files = transfer.files;
+        const files = Array.from(transfer.files);
+
+        if (tooLarge.length) {
+            const names = tooLarge.map((file) => file.name).join(', ');
+            showGalleryAlert(`${names} melebihi batas 2 MB per foto. File tersebut tidak disertakan.`);
         }
+        if (exceededLimit) showGalleryAlert('Maksimal 15 foto dapat diunggah dalam satu album.');
 
+        galleryPreview.querySelectorAll('[data-object-url]').forEach((item) => URL.revokeObjectURL(item.dataset.objectUrl));
         galleryPreview.replaceChildren();
         galleryPreview.hidden = files.length === 0;
 
@@ -254,23 +300,27 @@
 
         const heading = document.createElement('p');
         heading.className = 'gallery-selected-heading';
-        heading.textContent = `${files.length} foto dipilih${exceededLimit ? ' · maksimal 15 foto' : ''}`;
+        heading.textContent = `${files.length} foto dipilih`;
         galleryPreview.append(heading);
 
         const list = document.createElement('ul');
         list.className = 'gallery-selected-list';
         files.forEach((file) => {
             const item = document.createElement('li');
-            item.innerHTML = '<i class="bi bi-image" aria-hidden="true"></i>';
+            const preview = document.createElement('img');
+            preview.className = 'gallery-selected-thumbnail';
+            preview.alt = '';
+            item.dataset.objectUrl = URL.createObjectURL(file);
+            preview.src = item.dataset.objectUrl;
             const name = document.createElement('span');
             name.textContent = file.name;
-            item.append(name);
+            item.append(preview, name);
             list.append(item);
         });
         galleryPreview.append(list);
     };
 
-    galleryFiles?.addEventListener('change', renderGalleryFiles);
+    galleryFiles?.addEventListener('change', () => renderGalleryFiles());
     galleryDropzone?.addEventListener('dragover', (event) => {
         event.preventDefault();
         galleryDropzone.classList.add('is-dragging');
@@ -281,10 +331,7 @@
     galleryDropzone?.addEventListener('drop', (event) => {
         event.preventDefault();
         galleryDropzone.classList.remove('is-dragging');
-        const transfer = new DataTransfer();
-        [...(galleryFiles.files ?? []), ...event.dataTransfer.files].slice(0, 15).forEach((file) => transfer.items.add(file));
-        galleryFiles.files = transfer.files;
-        renderGalleryFiles();
+        renderGalleryFiles([...(galleryFiles.files ?? []), ...event.dataTransfer.files]);
     });
 </script>
 @endsection
