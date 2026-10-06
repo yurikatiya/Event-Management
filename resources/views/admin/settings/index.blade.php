@@ -22,10 +22,6 @@
                         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600"><i class="bi bi-shield-lock"></i></span>
                         <span class="flex-1">Change Password</span><i class="bi bi-chevron-right text-xs"></i>
                     </button>
-                    <button type="button" data-settings-tab="company" class="settings-tab flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold transition-all duration-200 hover:bg-gray-100">
-                        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600"><i class="bi bi-building"></i></span>
-                        <span class="flex-1">Company Profile</span><i class="bi bi-chevron-right text-xs"></i>
-                    </button>
                     <button type="button" data-settings-tab="notification" class="settings-tab flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-semibold transition-all duration-200 hover:bg-gray-100">
                         <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-600"><i class="bi bi-bell"></i></span>
                         <span class="flex-1">Notifikasi Admin</span><i class="bi bi-chevron-right text-xs"></i>
@@ -55,20 +51,6 @@
                         <div><label for="password_confirmation" class="form-label">Konfirmasi Password Baru</label><input id="password_confirmation" name="password_confirmation" type="password" class="form-input h-11 rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-amber-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" autocomplete="new-password"></div>
                     </div>
                     <div class="mt-8 flex justify-end gap-3 border-t border-slate-100 pt-5"><a href="{{ route('admin.settings') }}" class="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all duration-200 hover:-translate-y-0.5 hover:bg-gray-50 hover:shadow-sm">Batal</a><button type="submit" class="inline-flex items-center rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-sky-600 hover:shadow-md"><i class="bi bi-key me-2"></i>Ubah Password</button></div>
-                </form>
-
-                <form method="POST" action="{{ route('admin.settings.store') }}" data-settings-panel="company" class="settings-panel hidden">
-                    @csrf
-                    <input type="hidden" name="section" value="company">
-                    <div class="mb-7 border-b border-slate-100 pb-5"><h2 class="text-xl font-bold text-slate-900">Company Profile</h2><p class="mt-1 text-sm text-slate-400">Informasi bisnis yang tampil di website dan sistem.</p></div>
-                    <div class="space-y-5">
-                        <div><label for="company_name" class="form-label">Nama perusahaan</label><input id="company_name" name="company_name" type="text" value="{{ old('company_name', $user->company_name) }}" class="form-input h-11 rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-emerald-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"></div>
-                        <div><label for="company_email" class="form-label">Email perusahaan</label><input id="company_email" name="company_email" type="email" value="{{ old('company_email', $user->company_email) }}" class="form-input h-11 rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-emerald-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">@error('company_email')<p class="form-error">{{ $message }}</p>@enderror</div>
-                        <div><label for="company_phone" class="form-label">Nomor telepon</label><input id="company_phone" name="company_phone" type="text" value="{{ old('company_phone', $user->company_phone) }}" class="form-input h-11 rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-emerald-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"></div>
-                        <div><label for="company_address" class="form-label">Alamat</label><textarea id="company_address" name="company_address" rows="3" class="form-input rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-emerald-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">{{ old('company_address', $user->company_address) }}</textarea></div>
-                        <div><label for="company_description" class="form-label">Deskripsi singkat perusahaan</label><textarea id="company_description" name="company_description" rows="4" class="form-input rounded-xl border-slate-200 text-sm transition-all duration-200 hover:border-emerald-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">{{ old('company_description', $user->company_description) }}</textarea></div>
-                    </div>
-                    <div class="mt-8 flex justify-end gap-3 border-t border-slate-100 pt-5"><a href="{{ route('admin.settings') }}" class="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition-all duration-200 hover:-translate-y-0.5 hover:bg-gray-50 hover:shadow-sm">Batal</a><button type="submit" class="inline-flex items-center rounded-xl bg-sky-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-sky-600 hover:shadow-md"><i class="bi bi-check-circle me-2"></i>Simpan Perubahan</button></div>
                 </form>
 
                 <form method="POST" action="{{ route('admin.settings.store') }}" data-settings-panel="notification" class="settings-panel hidden">
@@ -103,7 +85,9 @@
         localStorage.setItem('settings-tab', tab);
     };
     settingsTabs.forEach((button) => button.addEventListener('click', () => activateSettingsTab(button.dataset.settingsTab)));
-    activateSettingsTab(localStorage.getItem('settings-tab') || 'profile');
+    const savedSettingsTab = localStorage.getItem('settings-tab');
+    const hasSavedSettingsTab = [...settingsTabs].some((button) => button.dataset.settingsTab === savedSettingsTab);
+    activateSettingsTab(hasSavedSettingsTab ? savedSettingsTab : 'profile');
 </script>
 @endpush
 @endsection

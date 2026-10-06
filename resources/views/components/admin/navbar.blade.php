@@ -29,13 +29,16 @@
         <div class="relative">
             <button type="button" data-notification-menu-button class="round-action has-indicator" title="Notifications" aria-label="Notifications" aria-expanded="false">
                 <i class="bi bi-bell"></i>
-                <span class="notification-dot"></span>
+                <span data-notification-count class="notification-count hidden" aria-live="polite"></span>
             </button>
-            <div data-notification-menu class="notification-menu hidden">
+            <div data-notification-menu data-notifications-url="{{ route('admin.notifications.index') }}" data-mark-all-url="{{ route('admin.notifications.read-all') }}" class="notification-menu hidden">
                 <div class="menu-header">
                     <p>Notifikasi</p>
+                    <button type="button" data-notifications-read-all class="notification-read-all hidden">Tandai semua dibaca</button>
                 </div>
-                <div class="menu-empty">Belum ada notifikasi</div>
+                <div data-notifications-list class="notification-list" aria-live="polite">
+                    <div class="menu-empty">Memuat notifikasi...</div>
+                </div>
             </div>
         </div>
 

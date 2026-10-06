@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminNotificationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
@@ -30,6 +31,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/dashboard/calendar-notes', [DashboardController::class, 'destroyCalendarNote'])->name('admin.dashboard.calendar-notes.destroy');
     Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
     Route::post('/settings', [SettingsController::class, 'update'])->name('admin.settings.store');
+    Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications.index');
+    Route::patch('/notifications/{adminNotification}/read', [AdminNotificationController::class, 'markRead'])->name('admin.notifications.read');
+    Route::post('/notifications/read-all', [AdminNotificationController::class, 'markAllRead'])->name('admin.notifications.read-all');
 
     Route::resource('/gallery', GalleryController::class)
         ->except('show')

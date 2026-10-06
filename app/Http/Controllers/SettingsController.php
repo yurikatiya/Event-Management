@@ -45,22 +45,6 @@ class SettingsController extends Controller
             return redirect()->route('admin.settings')->with('success', 'Pengaturan berhasil diperbarui.');
         }
 
-        if ($section === 'company') {
-            $validated = $request->validate([
-                'company_name' => ['nullable', 'string', 'max:255'],
-                'company_email' => ['nullable', 'email', 'max:255'],
-                'company_phone' => ['nullable', 'string', 'max:50'],
-                'company_address' => ['nullable', 'string', 'max:255'],
-                'company_description' => ['nullable', 'string', 'max:1000'],
-            ], [
-                'company_email.email' => 'Email perusahaan harus valid.',
-            ]);
-
-            $user->update($validated);
-
-            return redirect()->route('admin.settings')->with('success', 'Pengaturan berhasil diperbarui.');
-        }
-
         if ($section === 'notification') {
             $validated = $request->validate([
                 'admin_notifications_enabled' => ['nullable', 'boolean'],

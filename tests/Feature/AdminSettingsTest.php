@@ -24,8 +24,8 @@ class AdminSettingsTest extends TestCase
             ->assertOk()
             ->assertSee('Profile Admin')
             ->assertSee('Change Password')
-            ->assertSee('Website / Company Settings')
-            ->assertSee('Notification Settings');
+            ->assertSee('Notifikasi Admin')
+            ->assertDontSee('Company Profile');
     }
 
     public function test_non_admin_cannot_access_settings_page(): void
@@ -37,7 +37,7 @@ class AdminSettingsTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_admin_can_update_profile_and_company_settings(): void
+    public function test_admin_can_update_profile_without_changing_company_settings(): void
     {
         $admin = User::factory()->create([
             'name' => 'Old Name',
@@ -56,28 +56,10 @@ class AdminSettingsTest extends TestCase
             ->assertRedirect(route('admin.settings'))
             ->assertSessionHas('success', 'Pengaturan berhasil diperbarui.');
 
-        $this->actingAs($admin)
-            ->from(route('admin.settings'))
-            ->post(route('admin.settings'), [
-                'section' => 'company',
-                'company_name' => 'R27 Creative',
-                'company_email' => 'hello@r27creative.com',
-                'company_phone' => '+628123456789',
-                'company_address' => 'Jakarta, Indonesia',
-                'company_description' => 'Creative event agency',
-            ])
-            ->assertRedirect(route('admin.settings'))
-            ->assertSessionHas('success', 'Pengaturan berhasil diperbarui.');
-
         $this->assertDatabaseHas('users', [
             'id' => $admin->id,
             'name' => 'Updated Admin',
             'email' => 'updated@example.com',
-            'company_name' => 'R27 Creative',
-            'company_email' => 'hello@r27creative.com',
-            'company_phone' => '+628123456789',
-            'company_address' => 'Jakarta, Indonesia',
-            'company_description' => 'Creative event agency',
         ]);
     }
 

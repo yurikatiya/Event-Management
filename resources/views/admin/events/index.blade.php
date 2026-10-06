@@ -12,12 +12,12 @@
                     <h1 class="text-3xl font-bold tracking-tight text-slate-900">Events</h1>
                     <p data-live-search-summary class="mt-2 text-sm text-slate-500">{{ $events->total() }} event terdaftar</p>
                 </div>
-                <form method="GET" data-live-search class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
-                    <div class="relative w-full sm:w-[220px]">
+                <form method="GET" data-live-search class="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(220px,1fr)_minmax(155px,0.8fr)_minmax(155px,0.8fr)] xl:w-auto xl:grid-cols-[220px_155px_155px_auto_auto]">
+                    <div class="relative min-w-0">
                         <i class="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-base text-sky-500"></i>
                         <input name="search" value="{{ request('search') }}" placeholder="Search events..." autocomplete="off" class="h-12 w-full rounded-full border border-blue-100 bg-blue-50/70 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                     </div>
-                    <div class="relative sm:w-[155px]">
+                    <div class="relative min-w-0">
                         <select name="category_id" class="h-12 w-full appearance-none rounded-full border border-blue-100 bg-blue-50/70 px-4 pr-9 text-sm text-slate-700 outline-none focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                             <option value="">All categories</option>
                             @foreach ($categories as $category)
@@ -26,7 +26,7 @@
                         </select>
                         <i class="bi bi-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-sky-500"></i>
                     </div>
-                    <div class="relative sm:w-[135px]">
+                    <div class="relative min-w-0">
                         <select name="status" class="h-12 w-full appearance-none rounded-full border border-blue-100 bg-blue-50/70 px-4 pr-9 text-sm text-slate-700 outline-none focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100">
                             <option value="">All status</option>
                             @foreach (['draft' => 'Draft', 'published' => 'Published', 'archived' => 'Archived'] as $value => $label)
